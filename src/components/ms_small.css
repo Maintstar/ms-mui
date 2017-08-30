@@ -1,0 +1,14 @@
+.ms_small .opts,
+.ms_small .mui-select__menu
+{
+  font-size: 13px;
+}
+.ms_small .opts li,
+.ms_small .mui-select__menu div {
+  padding: 0 12px;
+}
+
+.ms_small input,
+.ms_small select {
+  font-size: 15px;
+}

@@ -1,0 +1,11 @@
+.mui-table_xsmall .mui-table td,
+.mui-table_xsmall .mui-table th {
+    padding: 1px 3px;
+}
+.mui-table_xsmall {
+    margin-left: -4px;
+    margin-right: -4px;
+}
+.mui-table_xsmall .mui-table {
+    border-spacing: 0;
+}

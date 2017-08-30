@@ -1,0 +1,29 @@
+/**/
+.ms__message {
+    position: absolute;
+    top: 47px;
+    font-size: 12px;
+}
+
+/* error */
+.ms_error input, .ms_error select {
+    border-color: #F44336;
+    color: #F44336;
+}
+.ms_error .ms__message {
+    color: #F44336;
+}
+.ms_error .mui-checkbox label {
+    color: #F44336;
+}
+/* warning */
+.ms_warning input, .ms_warning select {
+    border-color: darkorange;
+    color: darkorange;
+}
+.ms_warning .ms__message {
+    color: darkorange;
+}
+.ms_warning .mui-checkbox label {
+    color: darkorange;
+}
