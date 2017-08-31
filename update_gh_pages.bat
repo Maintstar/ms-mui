@@ -1,4 +1,6 @@
-git chechout gh-pages
+git checkout gh-pages
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 git merge master
 npm run build
 git add .
