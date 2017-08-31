@@ -2,7 +2,7 @@ import React from 'react'
 import Input from 'muicss/lib/react/input'
 import Checkbox from 'muicss/lib/react/checkbox'
 import './msField.css'
-import { addSizeClassname, addErrorWarnClasses, groupBy } from './ms'
+import { addSizeClasses, addErrorWarnClasses, getClassName, groupBy, initClasses } from './ms'
 import Loading from '../components/loading'
 import PropTypes from 'prop-types';
 import MSChips from './msChips'
@@ -156,14 +156,14 @@ export default class MSField extends React.Component {
 
   render() {
 
-    let { error, warning, size, options, emptyValue, isLoading, hideDropIcon, idCol, nameCol, groupCol, onSelected, isMulti, isFree, dd, preventFilter, valueId, style, optionsStyle, onClear, ...rest } = this.props
+    let { className, error, warning, size, options, emptyValue, isLoading, hideDropIcon, idCol, nameCol, groupCol, onSelected, isMulti, isFree, dd, preventFilter, valueId, style, optionsStyle, onClear, ...rest } = this.props
 
     let showClear = (onClear && this.props.value) || (valueId != null && valueId !== '')
 
-    const classNames = ['ms-field']
+    const classes = initClasses(className, {'ms-field': 1})
 
-    addSizeClassname(classNames, size)
-    addErrorWarnClasses(classNames, error, warning)
+    addSizeClasses(classes, size)
+    addErrorWarnClasses(classes, error, warning)
 
     // for checkboxes, error,warning goes to label
     if (rest.type === 'checkbox')
@@ -171,7 +171,7 @@ export default class MSField extends React.Component {
 
     // show dropdown
     if (!hideDropIcon && Array.isArray(options) && !showClear)
-      classNames.push("show-dropdown")
+      classes["show-dropdown"] = 1
 
     // set floatingLabel by default, for all applicable fields
     if (rest.type !== 'checkbox' && rest.type !== 'date' && rest.floatingLabel == null)
@@ -221,7 +221,7 @@ export default class MSField extends React.Component {
     }
 
     return (
-      <div className={classNames.join(' ')} style={contStyle}>
+      <div className={getClassName(classes)} style={contStyle}>
         {
           // error message
           rest.type !== 'checkbox' &&

@@ -1,3 +1,8 @@
 body {
     background-color: rgba(0,0,0,0.03);
 }
+
+.grid-example .mui-row > div {
+    background-color: #E3F2FD;
+    border: 1px solid #BBDEFB;
+}

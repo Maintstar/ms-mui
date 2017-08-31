@@ -3,10 +3,11 @@ import {
   MSField,
   MSSelect
 } from '../components'
+import Button from '../components/button'
+import Table from '../components/table'
 import Row from 'muicss/lib/react/row'
 import Col from 'muicss/lib/react/col'
 import Panel from 'muicss/lib/react/panel'
-import Button from 'muicss/lib/react/button'
 
 import L from './components/label'
 import './index.css'
@@ -71,6 +72,8 @@ export default class extends React.Component {
     let fp = this.fp
     return (
       <div style={{width:300, margin: 'auto'}}>
+
+        <h1><a href="https://www.muicss.com/">MUI</a> extend</h1>
 
         <h2>MSSelect</h2>
         <Panel>
@@ -234,21 +237,21 @@ export default class extends React.Component {
 
         <h2>Small MSSelect</h2>
         <Panel>
-          <L>normal</L>
+          <L></L>
           <MSSelect {...fp("mss1")} label="options" options={[
             {id:1, name:'Option 1'},
             {id:2, name:'Option 2'},
             {id:3, name:'Option 3'},
             {id:4, name:'Option 4'}
           ]} />
-          <L>small</L>
+          <L>size="s"</L>
           <MSSelect size="s" {...fp("mss2")} label="options" options={[
             {id:1, name:'Option 1'},
             {id:2, name:'Option 2'},
             {id:3, name:'Option 3'},
             {id:4, name:'Option 4'}
           ]} />
-          <L>xsmall</L>
+          <L>size="xs"</L>
           <MSSelect size="xs" {...fp("mss3")} label="options" options={[
             {id:1, name:'Option 1'},
             {id:2, name:'Option 2'},
@@ -259,7 +262,7 @@ export default class extends React.Component {
 
         <h2>Small MSField</h2>
         <Panel>
-          <L>MSField</L>
+          <L></L>
           <MSField {...fp("msf1")} label="options" options={[
             {id:1, name:'Option 1'},
             {id:2, name:'Option 2'},
@@ -267,7 +270,7 @@ export default class extends React.Component {
             {id:4, name:'Option 4'}
           ]} />
 
-          <L>MSField.small</L>
+          <L>size="s"</L>
           <MSField {...fp("msf2")} size="s" label="options" options={[
             {id:1, name:'Option 1'},
             {id:2, name:'Option 2'},
@@ -275,7 +278,7 @@ export default class extends React.Component {
             {id:4, name:'Option 4'}
           ]} />
 
-          <L>MSField.xsmall</L>
+          <L>size="xs"</L>
           <MSField {...fp("msf3")} size="xs" label="options" options={[
             {id:1, name:'Option 1'},
             {id:2, name:'Option 2'},
@@ -290,66 +293,23 @@ export default class extends React.Component {
           <Button variant="raised" color="primary">Primary</Button><br/>
 
           <L>Button.small</L>
-          <Button className="ms-small" variant="raised" color="primary">Primary</Button><br/>
+          <Button size="s" variant="raised" color="primary">Primary</Button><br/>
 
           <L>Button.xsmall</L>
-          <Button className="ms-xsmall" variant="raised" color="primary">Primary</Button><br/>
+          <Button size="xs" variant="raised" color="primary">Primary</Button><br/>
         </Panel>
 
         <h2>Small Tables</h2>
         <Panel>
-          <L>.mui-table_norm table.mui-table</L>
-          <div className="mui-table_norm">
-          <table className="mui-table">
+          <L>size="n"</L>
+          <Table size="n">
             <thead>
-            <tr>
-              <th>Column 1</th>
-              <th>Column 2</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Cell 1-1</td>
-              <td>Cell 1-2</td>
-            </tr>
-            <tr>
-              <td>Cell 2-1</td>
-              <td>Cell 2-2</td>
-            </tr>
-            </tbody>
-          </table>
-          </div>
-          <L>.mui-table_small table.mui-table</L>
-          <div className="mui-table_small" style={{'fontSize':13}}>
-          <table className="mui-table">
-            <thead>
-            <tr>
-              <th>Column 1</th>
-              <th>Column 2</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Cell 1-1</td>
-              <td>Cell 1-2</td>
-            </tr>
-            <tr>
-              <td>Cell 2-1</td>
-              <td>Cell 2-2</td>
-            </tr>
-            </tbody>
-          </table>
-          </div>
-          <L>.mui-table_xsmall table.mui-table</L>
-          <div className="mui-table_xsmall" style={{'fontSize':12}}>
-            <table className="mui-table">
-              <thead>
               <tr>
                 <th>Column 1</th>
                 <th>Column 2</th>
               </tr>
               </thead>
-              <tbody>
+            <tbody>
               <tr>
                 <td>Cell 1-1</td>
                 <td>Cell 1-2</td>
@@ -358,12 +318,128 @@ export default class extends React.Component {
                 <td>Cell 2-1</td>
                 <td>Cell 2-2</td>
               </tr>
-              </tbody>
-            </table>
-          </div>
+            </tbody>
+          </Table>
+          <L>size="s"</L>
+          <Table size="s">
+            <thead>
+              <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cell 1-1</td>
+                <td>Cell 1-2</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1</td>
+                <td>Cell 2-2</td>
+              </tr>
+            </tbody>
+          </Table>
+          <L>size="xs"</L>
+          <Table size="xs">
+            <thead>
+              <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cell 1-1</td>
+                <td>Cell 1-2</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1</td>
+                <td>Cell 2-2</td>
+              </tr>
+            </tbody>
+          </Table>
         </Panel>
 
+        <h2>Small Grid</h2>
+        <div className="grid-example">
+          <div className="mui-container-fluid">
+            <div className="mui-row">
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-6">md-6</div>
+              <div className="mui-col-md-6">md-6</div>
+            </div>
+          </div>
 
+          <L>.mui-container_small</L>
+          <div className="mui-container-fluid mui-container_small">
+            <div className="mui-row">
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-6">md-6</div>
+              <div className="mui-col-md-6">md-6</div>
+            </div>
+          </div>
+
+          <L>.mui-container_xsmall</L>
+          <div className="mui-container-fluid mui-container_xsmall">
+            <div className="mui-row">
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-6">md-6</div>
+              <div className="mui-col-md-6">md-6</div>
+            </div>
+          </div>
+
+          <L>.mui-container_none</L>
+          <div className="mui-container-fluid mui-container_none">
+            <div className="mui-row">
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+              <div className="mui-col-md-3">md-3</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+              <div className="mui-col-md-4">md-4</div>
+            </div>
+            <div className="mui-row">
+              <div className="mui-col-md-6">md-6</div>
+              <div className="mui-col-md-6">md-6</div>
+            </div>
+          </div>
+        </div>
+
+
+        <h2 style={{margin:'100px 0', textAlign:'center'}}>That's all folks</h2>
 
       </div>
     )
