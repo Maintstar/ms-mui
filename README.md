@@ -1,6 +1,4 @@
 # MS-UI
 
 
-## todo
-
-- when select MSField it should change value 
+checkout [demo](https://maintstar.github.io/ms-ui/build/) 
