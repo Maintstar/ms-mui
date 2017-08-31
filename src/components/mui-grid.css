@@ -1,12 +1,8 @@
-.mui-container-fluid {
-    padding-left: 0;
-    padding-right: 0;
+.mui-container.mui-container_small,
+.mui-container-fluid.mui-container_small {
+    padding-left: 7px;
+    padding-right: 7px;
 }
-.mui-container {
-    padding-left: 0;
-    padding-right: 0;
-}
-
 .mui-container_small .mui-row {
     margin-left: -7px;
     margin-right: -7px;
@@ -63,6 +59,10 @@
     padding-right: 7px;
 }
 
+.mui-container_xsmall {
+    padding-left: 4px;
+    padding-right: 4px;
+}
 .mui-container_xsmall .mui-row {
     margin-left: -4px;
     margin-right: -4px;
@@ -119,6 +119,10 @@
     padding-right: 4px;
 }
 
+.mui-container_none {
+    padding-left: 0;
+    padding-right: 0;
+}
 .mui-container_none .mui-row {
     margin-left: 0;
     margin-right: 0;
