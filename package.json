@@ -2,12 +2,6 @@
   "name": "ms-ui",
   "version": "1.0.1",
   "private": true,
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0"
-    ]
-  },
   "dependencies": {
     "mui": "0.0.1",
     "muicss": "^0.9.24",
