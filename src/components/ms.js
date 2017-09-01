@@ -14,8 +14,9 @@ import './ms_message.css'
 // }
 
 export function initClasses(classNames, init) {
-  if (classNames && typeof(classNames) === 'string')
-    return classNames.split(' ').reduce((a,c)=>a[c]=1, init || {})
+  if (classNames && typeof(classNames) === 'string') {
+    return classNames.split(' ').reduce((a, c) => { a[c] = 1; return a }, init || {})
+  }
   return init || {}
 }
 

@@ -9,6 +9,7 @@ const prefix = 'mui-container'
 export default function _Container (props) {
 
   let { className, size, nopad, ...rest } = props
+  if (className) debugger;
   let classes = addSizeClasses(initClasses(className, {}), size, prefix)
   if (nopad) addSizeClassesSuffix(classes, size, prefix, 'nopad')
   return <Container className={getClassName(classes)} {...rest} />

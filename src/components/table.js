@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from 'muicss/lib/react/button'
 import { getClassName, addSizeClasses, initClasses } from './ms'
 import './table.css'
 import './table_small.css'

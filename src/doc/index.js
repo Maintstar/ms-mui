@@ -363,7 +363,7 @@ export default class extends React.Component {
         <h2>Small Grid</h2>
         <Panel className="grid-example">
           <L></L>
-          <Container>
+          <Container className="custom">
             <Row>
               <Col md="3">md-3</Col>
               <Col md="3">md-3</Col>
