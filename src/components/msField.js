@@ -41,19 +41,16 @@ export default class MSField extends React.Component {
 
     this.setState({filter: true})
 
-    // deselect if selected
-    // important to call Select before.
-    // because reducer will set value to value += ' ', to make field rerender
-    if (!isMulti && valueId != null) {
-      this.select(null, {skipOnChange: true})
-    }
-
-
     // on change
     if (onChange) {
-      //setTimeout(() => {
-        onChange.call(this, ev)
-      //})
+      onChange.call(this, ev)
+    }
+
+    // deselect if selected
+    if (!isMulti && valueId != null) {
+      setTimeout(() => {
+        this.select(null, {skipOnChange: true})
+      })
     }
   }
 

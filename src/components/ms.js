@@ -18,11 +18,16 @@ export function initClasses(classNames, init) {
   return init || {}
 }
 
-export function addSizeClasses(classNames, size, prefix = 'ms') {
-  if (size === 'n') classNames[prefix + '_norm'] = 1
-  if (size === 's') classNames[prefix + '_small'] = 1
-  if (size === 'xs') classNames[prefix + '_xsmall'] = 1
-  return classNames
+const aliases = {
+  "s": 'small',
+  "xs": 'xsmall',
+  "n": 'normal'
+}
+
+export function addSizeClasses(classes, size, prefix = 'ms') {
+  let sn = aliases[size] || size
+  classes[prefix + '_' + sn] = 1
+  return classes
 }
 
 export function addErrorWarnClasses(classNames, error, warning) {

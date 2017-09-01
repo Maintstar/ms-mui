@@ -1,6 +1,9 @@
 import React from 'react'
 import Button from 'muicss/lib/react/button'
 import { getClassName, addSizeClasses, initClasses } from './ms'
+import './table.css'
+import './table_small.css'
+import './table_xsmall.css'
 
 export default function _Table (props) {
   let { className, size, children, ...rest } = props
