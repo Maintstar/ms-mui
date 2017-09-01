@@ -1,20 +1,33 @@
 {
-  "name": "ms-ui",
+  "name": "ms-mui",
   "version": "1.0.1",
-  "private": true,
   "dependencies": {
-    "mui": "0.0.1",
     "muicss": "^0.9.24",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.12"
   },
-  "homepage": ".",
+  "homepage": "http://.",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "description": "checkout [demo](https://maintstar.github.io/ms-ui/build/)",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maintstar/ms-mui.git"
+  },
+  "keywords": [
+    "material"
+  ],
+  "author": "Vladimir Buskin @vulture19",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maintstar/ms-mui/issues"
   }
 }
