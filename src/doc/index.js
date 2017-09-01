@@ -1,8 +1,6 @@
 import React from 'react'
-import {
-  MSField,
-  MSSelect
-} from '../components'
+import MSField from '../components/msField'
+import MSSelect from '../components/msSelect'
 import Button from '../components/button'
 import Table from '../components/table'
 import Row from '../components/row'
@@ -363,167 +361,156 @@ export default class extends React.Component {
         </Panel>
 
         <h2>Small Grid</h2>
-        <Panel>
-          text
-          <div className="grid-example">
-            <div className="mui-container-fluid">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-
-            <L>.mui-container_small</L>
-            <div className="mui-container-fluid mui-container_small">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-
-            <L>.mui-container_xsmall</L>
-            <div className="mui-container-fluid mui-container_xsmall">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-
-            <L>.mui-container_none</L>
-            <div className="mui-container-fluid mui-container_none">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-          </div>
+        <Panel className="grid-example">
+          <L></L>
+          <Container>
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
+          <L>size="s"</L>
+          <Container size="s">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
+          <L>size="xs"</L>
+          <Container size="xs">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
+          <L>size="none"</L>
+          <Container size="none">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
           text
         </Panel>
 
         <h2>Small Grid nopad</h2>
-        <Panel>
-          text
-          <div className="grid-example">
-            <L>mui-container-fluid<br/> mui-container_nopad</L>
-            <div className="mui-container-fluid mui-container_nopad">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-
-            <L>.mui-container_small<br/> mui-container_small_nopad</L>
-            <div className="mui-container-fluid mui-container_small mui-container_small_nopad">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-
-            <L>.mui-container_xsmall<br/> mui-container_xsmall_nopad</L>
-            <div className="mui-container-fluid mui-container_xsmall mui-container_xsmall_nopad">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-
-            <L>.mui-container_none</L>
-            <div className="mui-container-fluid mui-container_none">
-              <div className="mui-row">
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-                <div className="mui-col-md-3">md-3</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-                <div className="mui-col-md-4">md-4</div>
-              </div>
-              <div className="mui-row">
-                <div className="mui-col-md-6">md-6</div>
-                <div className="mui-col-md-6">md-6</div>
-              </div>
-            </div>
-          </div>
+        <Panel className="grid-example">
+          <L>nopad=1</L>
+          <Container nopad="1">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
+          <L>size="s" nopad="1"</L>
+          <Container size="s" nopad="1">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
+          <L>size="xs" nopad="1"</L>
+          <Container size="xs" nopad="1">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
+          <L>size="none" nopad="1"</L>
+          <Container size="none" nopad="1">
+            <Row>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+              <Col md="3">md-3</Col>
+            </Row>
+            <Row>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+              <Col md="4">md-4</Col>
+            </Row>
+            <Row>
+              <Col md="6">md-6</Col>
+              <Col md="6">md-6</Col>
+            </Row>
+          </Container>
           text
         </Panel>
 

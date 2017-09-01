@@ -1,3 +1,4 @@
+import './base'
 import './ms_small.css'
 import './ms_xsmall.css'
 import './ms_message.css'
@@ -21,23 +22,31 @@ export function initClasses(classNames, init) {
 const aliases = {
   "s": 'small',
   "xs": 'xsmall',
-  "n": 'normal'
+  "n": 'normal',
+  "nn": 'none'
 }
 
 export function addSizeClasses(classes, size, prefix = 'ms') {
   let sn = aliases[size] || size
-  classes[prefix + '_' + sn] = 1
+  if (sn) classes[[prefix,sn].join("_")] = 1
   return classes
 }
 
-export function addErrorWarnClasses(classNames, error, warning) {
-  if (error) classNames['ms_error'] = 1
-  if (warning) classNames['ms_warning'] = 1
-  return classNames
+export function addSizeClassesSuffix(classes, size, prefix = 'ms', suffix) {
+  let sn = aliases[size] || size
+  let n = [prefix, sn, suffix].filter(x => x)
+  classes[n.join('_')] = 1
+  return classes
 }
 
-export function getClassName(classNames) {
-  return Object.keys(classNames).join(' ')
+export function addErrorWarnClasses(classes, error, warning) {
+  if (error) classes['ms_error'] = 1
+  if (warning) classes['ms_warning'] = 1
+  return classes
+}
+
+export function getClassName(classes) {
+  return Object.keys(classes||{}).join(' ')
 }
 
 
