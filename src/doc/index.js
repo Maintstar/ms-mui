@@ -75,6 +75,10 @@ export default class extends React.Component {
 
         <h1>ms-mui is <a href="https://www.muicss.com/">mui</a> extend</h1>
 
+        <p>
+          Check this page <a href="https://github.com/Maintstar/ms-mui/blob/master/src/doc/index.js">source file</a> with usage details
+        </p>
+
         <h2>MSSelect</h2>
         <Panel>
           <L>single value, narrow</L>
