@@ -73,7 +73,7 @@ export default class extends React.Component {
     return (
       <div style={{width:300, margin: 'auto'}}>
 
-        <h1>ms-mui is <a href="https://www.muicss.com/">mui</a> extend 1.0.1</h1>
+        <h1>ms-mui is <a href="https://www.muicss.com/">mui</a> extend</h1>
 
         <h2>MSSelect</h2>
         <Panel>
