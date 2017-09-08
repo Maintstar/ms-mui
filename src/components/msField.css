@@ -79,6 +79,12 @@
     color: rgba(0,0,0,0.7);
     font-weight: bold;
 }
+.ms_small .clear {
+    bottom: -5px;
+}
+.ms_xsmall .clear {
+    bottom: -7px;
+}
 
 
 /*.ms-field */
