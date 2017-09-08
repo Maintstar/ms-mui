@@ -1,3 +1,3 @@
-import _Tab from 'muicss/lib/react/tabs'
+import _Tab from 'muicss/lib/react/tab'
 const Tab = _Tab
 export default Tab
