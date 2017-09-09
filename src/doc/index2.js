@@ -29,9 +29,9 @@ export default class extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    Perf.stop()
-    Perf.printInclusive()
-    Perf.printWasted()
+    // Perf.stop()
+    // Perf.printInclusive()
+    // Perf.printWasted()
   }
 
   onChange = (ev) => {
@@ -75,7 +75,7 @@ export default class extends React.PureComponent {
 
 
         <h2>Check Perfomance</h2>
-        <MSField {...fp("dd2")} label="Option 1" options={[
+        <MSField {...fp("dd2")} label="Option 1" hideDropIcon={true} options={[
           {id:1, name:'Option 1'},
           {id:2, name:'Option 2'},
           {id:3, name:'Option 3'},

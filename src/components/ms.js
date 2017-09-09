@@ -14,10 +14,11 @@ import './ms_message.css'
 // }
 
 export function initClasses(classNames, init) {
+  let r = {...init}
   if (classNames && typeof(classNames) === 'string') {
-    return classNames.split(' ').reduce((a, c) => { a[c] = 1; return a }, init || {})
+    return classNames.split(' ').reduce((a, c) => { a[c] = 1; return a }, r)
   }
-  return init || {}
+  return r
 }
 
 const aliases = {

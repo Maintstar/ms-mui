@@ -167,51 +167,45 @@ export default class MSField extends React.PureComponent {
       nameCol,
       groupCol,
 
+      label,
+
+      value,
+      valueId,
+
+      options,
+
       className,
       error,
       warning,
       size,
-      label,
-      options,
       emptyValue,
       isLoading,
+
       hideDropIcon,
       onSelected,
       isMulti,
       isFree,
       dd,
       preventFilter,
-      valueId,
       style,
       onClear,
       ...rest
     } = this.props
 
-    let showClear = (onClear && this.props.value) || (valueId != null && valueId !== '')
+    let isEmpty = !value && !valueId
 
+    // make classes
     const classes = initClasses(className, defClass)
-
     addSizeClasses(classes, size)
     addErrorWarnClasses(classes, error, warning)
-
-    // for checkboxes, error,warning goes to label
-    // if (rest.type === 'checkbox')
-    //   rest.label = addLabel(rest.label, error || warning)
-
-    // show dropdown
-    if (!hideDropIcon && Array.isArray(options) && !showClear)
+    if (isEmpty && !hideDropIcon) {
       classes['ms-field--dd'] = 1
-
-    //set floatingLabel by default, for all applicable fields
-    // if (rest.type !== 'checkbox' && rest.type !== 'date' && rest.floatingLabel == null)
-    //   rest.floatingLabel = true
+    }
 
     let chips = null
     if (valueId != null) {
       chips = this.getSelectedOptions(valueId)
     }
-
-    Object.assign(rest, {onFocus: this.onFocus, onBlur: this.onBlur})
 
     // filter options
     let grouped = null;
@@ -222,10 +216,6 @@ export default class MSField extends React.PureComponent {
         filterValue = filterValue.split(' ')
         options = options.filter(o => filterValue.every(x => (o[nameCol] + '').toLowerCase().indexOf(x) >= 0))
       }
-
-      // remove duplicates, there should not be duplicates, don't send those
-      //options = uniqBy(options, idCol)
-
       if (options) {
         grouped = groupBy(options, groupCol)
       }
@@ -235,17 +225,6 @@ export default class MSField extends React.PureComponent {
     if (chips && chips.length && !isMulti) {
       rest.value = chips[0].value
       chips = null
-    }
-
-    // on change
-    rest.onChange = this.onChange
-
-    // get width into container style
-    let contStyle = {}
-    if (style) {
-      let {width, ...s} = style
-      contStyle = {width}
-      rest.style = s
     }
 
     // get label class
@@ -279,8 +258,16 @@ export default class MSField extends React.PureComponent {
         labelClass['ms-field_label--float'] = 1
     }
 
+    let inputProps = {
+      onFocus: this.onFocus,
+      onBlur: this.onBlur,
+      onChange: this.onChange,
+      value
+    }
+
+
     return (
-      <div className={getClassName(classes)} style={contStyle}>
+      <div className={getClassName(classes)}>
         {
           // error message
           (rest.type !== 'checkbox') && (error || warning) &&
@@ -292,16 +279,8 @@ export default class MSField extends React.PureComponent {
           <MSChips options={chips} onRemove={this.remove}/>
         }
         {
-          // label for ell except checkbox
-          rest.type !== 'checkbox' &&
-          <label className={getClassName(labelClass)}>{label}</label>
-        }
-        {
           // field
-          rest.type === 'checkbox' ?
-            <Checkbox {...rest} />
-            :
-            <input {...rest} />
+          <input {...inputProps} />
         }
         {
           // options
@@ -337,7 +316,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // clear button
-          showClear &&
+          !isEmpty &&
           <div className="clear" onClick={this.clear}>×</div>
         }
       </div>
