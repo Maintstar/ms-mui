@@ -43,7 +43,6 @@ export default class MSField extends React.PureComponent {
     name: propTypes.string.isRequired,
     value: propTypes.string,
     valueId: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
-    style: propTypes.object,
     options: propTypes.arrayOf(propTypes.object),
 
     className: propTypes.string,
@@ -94,9 +93,9 @@ export default class MSField extends React.PureComponent {
 
     // deselect if selected
     if (!isMulti && valueId != null) {
-      setTimeout(() => {
-        this.select(null, {skipOnChange: true})
-      })
+      //setTimeout(() => {
+      this.select(null, {skipOnChange: true})
+      //})
     }
   }
 
@@ -108,7 +107,7 @@ export default class MSField extends React.PureComponent {
     let { valueId } = this.props
     if ( valueId != null ) {
       valueId = valueId.filter(x => x !== id)
-      if (valueId.length == 0) valueId = null
+      if (valueId.length === 0) valueId = null
     }
     this.select(valueId, {setOnlySent: true})
   }
@@ -156,14 +155,14 @@ export default class MSField extends React.PureComponent {
       }
 
       // call on change when value changed
-      if (this.props.value != v)
+      if (this.props.value !== v)
       {
-        setTimeout(() => {
+        //setTimeout(() => {
           // i am doing an event
           onChangeFld.value = v
           onChangeFld.name = name
           onChange.call(this, onChangeEvent)
-        })
+        //})
       }
     }
   }
@@ -201,7 +200,6 @@ export default class MSField extends React.PureComponent {
   }
 
   render() {
-
     let {
       label,
       name,
@@ -224,6 +222,29 @@ export default class MSField extends React.PureComponent {
       hideDropIcon,
       preventFilter
     } = this.props
+
+    console.log('render', {
+      label,
+      name,
+      value,
+      valueId,
+      style,
+      options,
+
+      className,
+      error,
+      warning,
+      size,
+      emptyValue,
+
+      isLoading,
+      isMulti,
+      //isFree,
+
+      // should we hide dropicon
+      hideDropIcon,
+      preventFilter
+    })
 
     let {
       filter
