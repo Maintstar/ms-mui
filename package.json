@@ -16,7 +16,9 @@
   },
   "description": "checkout [demo](https://maintstar.github.io/ms-ui/build/)",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "react-addons-perf": "^15.4.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Maintstar/ms-mui.git"

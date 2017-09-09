@@ -2,15 +2,21 @@ import React from 'react'
 import Input from 'muicss/lib/react/input'
 import Checkbox from 'muicss/lib/react/checkbox'
 import './msField.css'
-import { addSizeClasses, addErrorWarnClasses, getClassName, groupBy, initClasses } from './ms'
+import {addSizeClasses, addErrorWarnClasses, getClassName, groupBy, initClasses} from './ms'
 import Loading from '../components/loading'
 import PropTypes from 'prop-types';
 import MSChips from './msChips'
 
 
+// perfomance tune
+// remove conversions to string and numbers everywhere, or do it once
+
+const defClass = {'ms-field': 1}
+
+const emptyArray = []
 const addLabel = (p, n) => n ? p + ` (${n})` : p
 
-export default class MSField extends React.Component {
+export default class MSField extends React.PureComponent {
 
   static defaultProps = {
     nameCol: 'name',
@@ -22,22 +28,21 @@ export default class MSField extends React.Component {
     super(props)
     this.state = {
       open: false,
-      filter: false
+      filter: false,
+      touched: false
     }
   }
 
   onFocus = () => {
-    this.setState({open: true})
+    this.setState({open: true, touched: true})
   }
 
   onBlur = () => {
-    setTimeout(() => {
-      this.setState({open: false, filter: false})
-    }, 0)
+    this.setState({open: false, filter: false})
   }
 
   onChange = ev => {
-    let { valueId, onChange, isMulti } = this.props
+    let {valueId, onChange, isMulti} = this.props
 
     this.setState({filter: true})
 
@@ -59,12 +64,12 @@ export default class MSField extends React.Component {
   }
 
   remove = id => {
-    let { valueId } = this.props
+    let {valueId} = this.props
     if (valueId != null) {
       id = id + ''
       valueId = valueId.filter(x => x + '' !== id)
     }
-    this.select(valueId, { setOnlySent: true } )
+    this.select(valueId, {setOnlySent: true})
   }
 
   onSelected = ev => {
@@ -75,7 +80,7 @@ export default class MSField extends React.Component {
   }
 
   select(newValueId, {setOnlySent, skipOnChange} = {}) {
-    let { valueId, isMulti, onSelected, onChange, onClear, name } = this.props
+    let {valueId, isMulti, onSelected, onChange, onClear, name} = this.props
     let chips = this.getSelectedOptions(valueId)
 
     if (newValueId != null) {
@@ -101,7 +106,7 @@ export default class MSField extends React.Component {
         newValueId = null
     }
 
-    if(onClear && newValueId == null){
+    if (onClear && newValueId == null) {
       onClear()
     }
 
@@ -114,9 +119,13 @@ export default class MSField extends React.Component {
       setTimeout(() => {
         let chips = this.getSelectedOptions(newValueId)
         let v = isMulti || chips.length === 0 ? '' : chips[0].value;
-        let f = { type: 'text', value: v, name }
+        let f = {type: 'text', value: v, name}
         // check \redux-form\es\events\getValue.js  how redux form, takes value
-        onChange.call(this, { target: f, currentTarget: f, stopPropagation:()=>{}, preventDefault:()=>{} })
+        onChange.call(this, {
+          target: f, currentTarget: f, stopPropagation: () => {
+          }, preventDefault: () => {
+          }
+        })
       })
     }
   }
@@ -124,7 +133,7 @@ export default class MSField extends React.Component {
   getSelectedOptions(valueId) {
     let {options, idCol, nameCol} = this.props
 
-    if (valueId == null || valueId === '') return []
+    if (valueId == null || valueId === '') return emptyArray
     if (!Array.isArray(valueId))
       valueId = [valueId + '']
     else
@@ -153,26 +162,49 @@ export default class MSField extends React.Component {
 
   render() {
 
-    let { className, error, warning, size, options, emptyValue, isLoading, hideDropIcon, idCol, nameCol, groupCol, onSelected, isMulti, isFree, dd, preventFilter, valueId, style, optionsStyle, onClear, ...rest } = this.props
+    let {
+      idCol,
+      nameCol,
+      groupCol,
+
+      className,
+      error,
+      warning,
+      size,
+      label,
+      options,
+      emptyValue,
+      isLoading,
+      hideDropIcon,
+      onSelected,
+      isMulti,
+      isFree,
+      dd,
+      preventFilter,
+      valueId,
+      style,
+      onClear,
+      ...rest
+    } = this.props
 
     let showClear = (onClear && this.props.value) || (valueId != null && valueId !== '')
 
-    const classes = initClasses(className, {'ms-field': 1})
+    const classes = initClasses(className, defClass)
 
     addSizeClasses(classes, size)
     addErrorWarnClasses(classes, error, warning)
 
     // for checkboxes, error,warning goes to label
-    if (rest.type === 'checkbox')
-      rest.label = addLabel(rest.label, error || warning)
+    // if (rest.type === 'checkbox')
+    //   rest.label = addLabel(rest.label, error || warning)
 
     // show dropdown
     if (!hideDropIcon && Array.isArray(options) && !showClear)
-      classes["show-dropdown"] = 1
+      classes['ms-field--dd'] = 1
 
-    // set floatingLabel by default, for all applicable fields
-    if (rest.type !== 'checkbox' && rest.type !== 'date' && rest.floatingLabel == null)
-      rest.floatingLabel = true
+    //set floatingLabel by default, for all applicable fields
+    // if (rest.type !== 'checkbox' && rest.type !== 'date' && rest.floatingLabel == null)
+    //   rest.floatingLabel = true
 
     let chips = null
     if (valueId != null) {
@@ -183,8 +215,7 @@ export default class MSField extends React.Component {
 
     // filter options
     let grouped = null;
-    if (Array.isArray(options))
-    {
+    if (Array.isArray(options)) {
       if (this.state.filter && !preventFilter && rest.value != null) {
 
         let filterValue = rest.value.trim().toLowerCase()
@@ -212,54 +243,91 @@ export default class MSField extends React.Component {
     // get width into container style
     let contStyle = {}
     if (style) {
-      let { width, ...s} = style
-      contStyle = { width }
+      let {width, ...s} = style
+      contStyle = {width}
       rest.style = s
+    }
+
+    // get label class
+    let labelClass = initClasses(null, {'ms-field_label':1})
+    if (isMulti === true)
+    {
+      // value selected
+      if (valueId)
+      {
+        if (this.state.open) {
+          labelClass['ms-field_label--hide'] = 1
+          labelClass['ms-field_label--float'] = 1
+        }
+        else {
+          labelClass['ms-field_label--float'] = 1
+        }
+      }
+      // no value selected
+      else
+      {
+        if (this.state.open) {
+
+        }
+        else {
+          labelClass['ms-field_label--float'] = 1
+        }
+      }
+    }
+    else {
+      if (!rest.value && !this.state.open)
+        labelClass['ms-field_label--float'] = 1
     }
 
     return (
       <div className={getClassName(classes)} style={contStyle}>
         {
           // error message
-          rest.type !== 'checkbox' &&
+          (rest.type !== 'checkbox') && (error || warning) &&
           <div className="ms__message">{error || warning}</div>
         }
         {
           // chips
           chips &&
-          <MSChips options={chips} onRemove={this.remove} />
+          <MSChips options={chips} onRemove={this.remove}/>
+        }
+        {
+          // label for ell except checkbox
+          rest.type !== 'checkbox' &&
+          <label className={getClassName(labelClass)}>{label}</label>
         }
         {
           // field
           rest.type === 'checkbox' ?
             <Checkbox {...rest} />
             :
-            <Input {...rest} />
+            <input {...rest} />
         }
         {
           // options
-          Array.isArray(options) && this.state.open &&
-          <div className="opts-cont" style={optionsStyle}>
-            <div className="opts">
-            {
-              Object.keys(grouped).map((k,i) => {
-                let options = grouped[k]
-                return (
-                  <div className="group" key={i}>
-                    {
-                      k !== 'undefined' &&
-                      <div className="name">{k}</div>
-                    }
-                    <ul onMouseDown={this.onSelected}>
-                      { emptyValue && <li value="">{emptyValue}</li> }
-                      { options.map(x => <li key={x[idCol]} className={x.thick ? 'thick':null} value={x[idCol]}>{x[nameCol] || (
-                        <span className="empty">no value</span>)}</li>)
+          Array.isArray(options) && this.state.touched &&
+          <div className="ms-field_opts_cont" style={{display: this.state.open ? '' : 'none'}}>
+            <div className="ms-field_opts">
+              {
+                Object.keys(grouped).map((k, i) => {
+                  let options = grouped[k]
+                  return (
+                    <div className="group" key={i}>
+                      {
+                        k !== 'undefined' &&
+                        <div className="name">{k}</div>
                       }
-                    </ul>
-                  </div>
-                )
-              })
-            }
+                      <ul onMouseDown={this.onSelected}>
+                        { emptyValue && <li value="">{emptyValue}</li> }
+                        { options.map(x => <li key={x[idCol]} className={x.thick ? 'thick' : null}
+                                               value={x[idCol]}>{x[nameCol] || (
+                          <span className="empty">no value</span>)}</li>)
+                        }
+                      </ul>
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
         }

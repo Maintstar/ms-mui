@@ -1,43 +1,88 @@
-
-
-/*opts*/
 .ms-field {
+    display: block;
+    padding-top: 15px;
+    margin-bottom: 20px;
     position: relative;
 }
-.ms-field .opts-cont {
-    position: relative;
+.ms-field > input {
+    height: 32px;
+    box-sizing: border-box;
+    display: block;
+    background: transparent none;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.13);
+    outline: 0;
+    width: 100%;
+    padding: 0;
+    font-size: 16px;
 }
-
-.ms-field.show-dropdown input {
+.ms-field > input:focus {
+    /*compensate border size increase*/
+    height: 33px;
+    margin-bottom: -1px;
+    border-bottom: 2px solid #2196F3;
+}
+.ms-field--dd input {
     cursor: pointer;
     background-color: transparent;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
     background-repeat: no-repeat;
     background-position: right center;
 }
-.ms-field .opts {
+
+/*label*/
+.ms-field_label {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: rgba(0,0,0,.7);
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 15px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: .3s;
+    pointer-events: none;
+    transform-origin: left;
+    margin-top: -15px;
+}
+.ms-field_label--float {
+    transform: translate(0, 24px) scale(1.31, 1.4);
+    opacity: 0.5;
+}
+.ms-field_label--hide {
+    opacity: 0.01;
+}
+
+/*opts*/
+.ms-field_opts_cont {
+    position: relative;
+}
+
+.ms-field_opts {
     width: 100%;
     padding-left: 0;
     list-style-type: none;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
     position: absolute;
-    top: -18px;
+    top: 1px;
     background-color: white;
     z-index: 1000;
     max-height: 400px;
     overflow-y: auto;
 }
-.ms-field .opts .group .name {
+.ms-field_opts .group .name {
     padding: 5px;
     font-size: 13px;
     font-weight: bold;
 }
-.ms-field .opts ul {
+.ms-field_opts ul {
     padding-left: 0;
     list-style-type: none;
     margin: 0;
 }
-.ms-field .opts li {
+.ms-field_opts li {
     clear: both;
     color: rgba(0,0,0,0.87);
     cursor: pointer;
@@ -47,19 +92,15 @@
     padding: 0 12px;
     display: block;
 }
-.ms-field .opts li.thick {
+.ms-field_opts li.thick {
     background-color: lightyellow
 }
-.ms-field .opts li:hover {
+.ms-field_opts li:hover {
     background-color: #eee;
 }
-.ms-field .opts li .empty {
+.ms-field_opts li .empty {
     color: #aaa;
     font-style: italic;
-}
-.ms-field .chips {
-    position: relative;
-    top: 4px;
 }
 
 /*clear*/

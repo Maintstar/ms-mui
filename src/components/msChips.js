@@ -16,9 +16,9 @@ export default class MSChips extends React.Component {
   render() {
     let { options } = this.props
     options = options || []
-    return (<div className="chips">
+    return (<div className="ms-chips">
       {options.map(c =>
-        (<div className="chip" key={c.id}>{c.value}<i className="close" onClick={this.onRemove} value={c.id}>×</i></div>)
+        (<div className="ms-chips_it" key={c.id}>{c.value}<i className="ms-chips_close" onClick={this.onRemove} value={c.id}>×</i></div>)
       )}
     </div>)
   }
