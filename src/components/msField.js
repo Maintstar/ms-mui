@@ -270,13 +270,18 @@ export default class MSField extends React.PureComponent {
       <div className={getClassName(classes)}>
         {
           // error message
-          (rest.type !== 'checkbox') && (error || warning) &&
+          (error || warning) &&
           <div className="ms__message">{error || warning}</div>
         }
         {
           // chips
           chips &&
           <MSChips options={chips} onRemove={this.remove}/>
+        }
+        {
+          // label
+          label &&
+          <label className={getClassName(labelClass)}>{label}</label>
         }
         {
           // field
