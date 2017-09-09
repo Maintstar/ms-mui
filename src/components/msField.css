@@ -31,7 +31,7 @@
 }
 
 /*label*/
-.ms-field_label {
+.ms-label {
     position: absolute;
     display: block;
     width: 100%;
@@ -48,11 +48,11 @@
     margin-top: -15px;
     will-change: transform, opacity;
 }
-.ms-field_label--float {
+.ms-label--float {
     transform: translate(0, 24px) scale(1.31, 1.4);
     opacity: 0.5;
 }
-.ms-field_label--hide {
+.ms-label--hide {
     opacity: 0.01;
 }
 

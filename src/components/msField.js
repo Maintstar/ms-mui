@@ -272,18 +272,18 @@ export default class MSField extends React.PureComponent {
     }
 
     // get label class
-    let labelClass = initClasses(null, {'ms-field_label':1})
+    let labelClass = initClasses(null, {'ms-label':1})
     if (isMulti === true)
     {
       // value selected
       if (valueId)
       {
         if (this.state.open) {
-          labelClass['ms-field_label--hide'] = 1
-          labelClass['ms-field_label--float'] = 1
+          labelClass['ms-label--hide'] = 1
+          labelClass['ms-label--float'] = 1
         }
         else {
-          labelClass['ms-field_label--float'] = 1
+          labelClass['ms-label--float'] = 1
         }
       }
       // no value selected
@@ -293,13 +293,13 @@ export default class MSField extends React.PureComponent {
 
         }
         else {
-          labelClass['ms-field_label--float'] = 1
+          labelClass['ms-label--float'] = 1
         }
       }
     }
     else {
       if (!value && !this.state.open)
-        labelClass['ms-field_label--float'] = 1
+        labelClass['ms-label--float'] = 1
     }
 
     let inputProps = {
