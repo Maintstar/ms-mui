@@ -2,24 +2,30 @@ import React from 'react'
 import './msChips.css'
 
 
-export default class MSChips extends React.Component {
+const empty = []
 
-  onRemove = (e) => {
-    const {onRemove} = this.props
-    const a = e.currentTarget.getAttribute('value')
-    if (onRemove)
-    {
-      onRemove.call(this, a)
+export default class MSChips extends React.PureComponent {
+  render() {
+    let options = this.props.options || empty
+    return <div className="ms-chips">
+      { options.map(o => <MSChip key={o.id} onRemove={this.props.onRemove} id={o.id} value={o.value}/>)}
+    </div>
+  }
+}
+
+class MSChip extends React.PureComponent {
+
+  handleRemove = () => {
+    const {onRemove, id} = this.props
+    if (onRemove) {
+      onRemove.call(this, id)
     }
   }
 
   render() {
-    let { options } = this.props
-    options = options || []
-    return (<div className="ms-chips">
-      {options.map(c =>
-        (<div className="ms-chips_it" key={c.id}>{c.value}<i className="ms-chips_close" onClick={this.onRemove} value={c.id}>×</i></div>)
-      )}
+    return (<div className="ms-chips_it">
+      {this.props.value}
+      <i className="ms-chips_close" onClick={this.handleRemove}>×</i>
     </div>)
   }
 }

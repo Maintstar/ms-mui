@@ -3,6 +3,7 @@ import MSField from '../components/msField'
 import Perf from 'react-addons-perf'
 import './index.css'
 
+window.Perf = Perf
 
 export default class extends React.PureComponent {
 
@@ -11,21 +12,6 @@ export default class extends React.PureComponent {
     this.state = {
 
     }
-
-    setTimeout(()=>{
-      Perf.start("mark")
-    },1000)
-    // click
-    // setTimeout(()=>{
-    //
-    //   let evt = document.createEvent("MouseEvents");
-    //   evt.initMouseEvent("click", true, true, window,
-    //     0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    //   let a = document.getElementsByName("dd1")[0];
-    //   a.dispatchEvent(evt);
-    //   console.log('dispatched')
-    //
-    // }, 1000)
   }
 
   componentDidUpdate() {
@@ -74,7 +60,6 @@ export default class extends React.PureComponent {
         ]} />
 
 
-        <h2>Check Perfomance</h2>
         <MSField {...fp("dd2")} label="Option 1" hideDropIcon={true} options={[
           {id:1, name:'Option 1'},
           {id:2, name:'Option 2'},
