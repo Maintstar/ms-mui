@@ -1,12 +1,10 @@
 import React from 'react'
-import Input from 'muicss/lib/react/input'
-import Checkbox from 'muicss/lib/react/checkbox'
 import './msField.css'
-import {addSizeClasses, addErrorWarnClasses, getClassName, groupBy, initClasses} from './ms'
+import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses} from './ms'
 import Loading from '../components/loading'
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types'
 import MSChips from './msChips'
-
+import MSFieldOptions from './msFieldOptions'
 
 // perfomance tune
 // remove conversions to string and numbers everywhere, or do it once
@@ -14,7 +12,8 @@ import MSChips from './msChips'
 const defClass = {'ms-field': 1}
 
 const emptyArray = []
-const addLabel = (p, n) => n ? p + ` (${n})` : p
+
+//const addLabel = (p, n) => n ? p + ` (${n})` : p
 
 export default class MSField extends React.PureComponent {
 
@@ -22,6 +21,14 @@ export default class MSField extends React.PureComponent {
     nameCol: 'name',
     idCol: 'id',
     groupCol: 'group'
+  }
+
+  static propTypes = {
+    nameCol: propTypes.string,
+    idCol: propTypes.string,
+    groupCol: propTypes.string,
+
+    onClear: propTypes.func
   }
 
   constructor(props) {
@@ -38,13 +45,17 @@ export default class MSField extends React.PureComponent {
   }
 
   onBlur = () => {
-    this.setState({open: false, filter: false})
+    // otherwise, click will not be able to fire, and options will be hidden already
+    setTimeout(() => {
+      this.setState({open: false, filter: false})
+    })
   }
 
   onChange = ev => {
     let {valueId, onChange, isMulti} = this.props
 
-    this.setState({filter: true})
+    if (this.state.filter === false)
+      this.setState({filter: true})
 
     // on change
     if (onChange) {
@@ -59,11 +70,11 @@ export default class MSField extends React.PureComponent {
     }
   }
 
-  clear = () => {
+  handleClear = () => {
     this.select(null)
   }
 
-  remove = id => {
+  handleRemove = id => {
     let {valueId} = this.props
     if (valueId != null) {
       id = id + ''
@@ -72,11 +83,8 @@ export default class MSField extends React.PureComponent {
     this.select(valueId, {setOnlySent: true})
   }
 
-  onSelected = ev => {
-    let selValue = ev.target.getAttribute("value")
-    if (selValue) {
-      this.select(selValue)
-    }
+  handleSelect = id => {
+    this.select(id)
   }
 
   select(newValueId, {setOnlySent, skipOnChange} = {}) {
@@ -163,12 +171,8 @@ export default class MSField extends React.PureComponent {
   render() {
 
     let {
-      idCol,
-      nameCol,
-      groupCol,
-
       label,
-
+      name,
       value,
       valueId,
 
@@ -179,18 +183,19 @@ export default class MSField extends React.PureComponent {
       warning,
       size,
       emptyValue,
-      isLoading,
 
-      hideDropIcon,
-      onSelected,
+      isLoading,
       isMulti,
-      isFree,
-      dd,
-      preventFilter,
-      style,
-      onClear,
-      ...rest
+      //isFree,
+
+      // should we hide dropicon
+      hideDropIcon,
+      preventFilter
     } = this.props
+
+    let {
+      filter
+    } = this.state
 
     let isEmpty = !value && !valueId
 
@@ -207,23 +212,9 @@ export default class MSField extends React.PureComponent {
       chips = this.getSelectedOptions(valueId)
     }
 
-    // filter options
-    let grouped = null;
-    if (Array.isArray(options)) {
-      if (this.state.filter && !preventFilter && rest.value != null) {
-
-        let filterValue = rest.value.trim().toLowerCase()
-        filterValue = filterValue.split(' ')
-        options = options.filter(o => filterValue.every(x => (o[nameCol] + '').toLowerCase().indexOf(x) >= 0))
-      }
-      if (options) {
-        grouped = groupBy(options, groupCol)
-      }
-    }
-
     // if single value dropdown, then select one
     if (chips && chips.length && !isMulti) {
-      rest.value = chips[0].value
+      value = chips[0].value
       chips = null
     }
 
@@ -254,7 +245,7 @@ export default class MSField extends React.PureComponent {
       }
     }
     else {
-      if (!rest.value && !this.state.open)
+      if (!value && !this.state.open)
         labelClass['ms-field_label--float'] = 1
     }
 
@@ -262,9 +253,9 @@ export default class MSField extends React.PureComponent {
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       onChange: this.onChange,
+      name,
       value
     }
-
 
     return (
       <div className={getClassName(classes)}>
@@ -276,7 +267,7 @@ export default class MSField extends React.PureComponent {
         {
           // chips
           chips &&
-          <MSChips options={chips} onRemove={this.remove}/>
+          <MSChips options={chips} onRemove={this.handleRemove}/>
         }
         {
           // label
@@ -290,29 +281,13 @@ export default class MSField extends React.PureComponent {
         {
           // options
           Array.isArray(options) && this.state.touched &&
-          <div className="ms-field_opts_cont" style={{display: this.state.open ? '' : 'none'}}>
-            <div className="ms-field_opts">
-              {
-                Object.keys(grouped).map((k, i) => {
-                  let options = grouped[k]
-                  return (
-                    <div className="group" key={i}>
-                      {
-                        k !== 'undefined' &&
-                        <div className="name">{k}</div>
-                      }
-                      <ul onMouseDown={this.onSelected}>
-                        { emptyValue && <li value="">{emptyValue}</li> }
-                        { options.map(x => <li key={x[idCol]} className={x.thick ? 'thick' : null}
-                                               value={x[idCol]}>{x[nameCol] || (
-                          <span className="empty">no value</span>)}</li>)
-                        }
-                      </ul>
-                    </div>
-                  )
-                })
-              }
-            </div>
+          <div className="ms-field_opts_cont" style={ { display: this.state.open ? '' : 'none' } }>
+            <MSFieldOptions 
+              options={ options } 
+              filter={ (!preventFilter && filter) ? value : null }
+              onSelect={ this.handleSelect }
+              emptyValue= { emptyValue }
+              />
           </div>
         }
         {
@@ -322,15 +297,11 @@ export default class MSField extends React.PureComponent {
         {
           // clear button
           !isEmpty &&
-          <div className="clear" onClick={this.clear}>×</div>
+          <div className="clear" onClick={this.handleClear}>×</div>
         }
       </div>
     )
   }
 }
 
-MSField.propTypes = {
-  nameCol: PropTypes.string.isRequired,
-  idCol: PropTypes.string.isRequired,
-  groupCol: PropTypes.string.isRequired
-}
+

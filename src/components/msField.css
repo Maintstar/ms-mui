@@ -46,6 +46,7 @@
     pointer-events: none;
     transform-origin: left;
     margin-top: -15px;
+    will-change: transform, opacity;
 }
 .ms-field_label--float {
     transform: translate(0, 24px) scale(1.31, 1.4);

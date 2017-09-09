@@ -7,17 +7,18 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
-  "homepage": ".",
+  "homepage": "https://github.com/Maintstar/ms-mui",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "description": "checkout [demo](https://maintstar.github.io/ms-ui/build/)",
+  "description": "checkout [demo](https://maintstar.github.io/ms-mui/build/)",
   "main": "index.js",
   "devDependencies": {
-    "react-addons-perf": "^15.4.2"
+    "react-addons-perf": "^15.4.2",
+    "react-scripts": "^1.0.13"
   },
   "repository": {
     "type": "git",

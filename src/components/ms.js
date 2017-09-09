@@ -59,8 +59,9 @@ export function getClassName(classes) {
 //   ]
 //   ...
 // }
+const empty = {}
 export function groupBy(ar, groupCol = "group") {
-  if (!ar) return {}
+  if (!ar) return empty
   let g = ar.reduce(function(a, c) {
     let id = c[groupCol]
     if (!a[id]) {
