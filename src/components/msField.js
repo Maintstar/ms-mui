@@ -10,8 +10,15 @@ import MSFieldOptions from './msFieldOptions'
 // remove conversions to string and numbers everywhere, or do it once
 
 const defClass = {'ms-field': 1}
-
 const emptyArray = []
+
+const onChangeFld = { type: 'text', value: "", name: "" }
+const onChangeEvent = {
+  target: onChangeFld, 
+  currentTarget: onChangeFld, 
+  stopPropagation: () => {}, 
+  preventDefault: () => {}
+}
 
 //const addLabel = (p, n) => n ? p + ` (${n})` : p
 
@@ -20,7 +27,8 @@ export default class MSField extends React.PureComponent {
   static defaultProps = {
     nameCol: 'name',
     idCol: 'id',
-    groupCol: 'group'
+    groupCol: 'group',
+    isMulti: false
   }
 
   static propTypes = {
@@ -28,7 +36,29 @@ export default class MSField extends React.PureComponent {
     idCol: propTypes.string,
     groupCol: propTypes.string,
 
-    onClear: propTypes.func
+    style: propTypes.object,
+    onClear: propTypes.func,
+    
+    label: propTypes.string,
+    name: propTypes.string.isRequired,
+    value: propTypes.string,
+    valueId: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
+    style: propTypes.object,
+    options: propTypes.arrayOf(propTypes.object),
+
+    className: propTypes.string,
+    error: propTypes.string,
+    warning: propTypes.string,
+    size: propTypes.string,
+    emptyValue: propTypes.string,
+
+    isLoading: propTypes.bool,
+    isMulti: propTypes.bool,
+    //isFree,
+
+    // should we hide dropicon
+    hideDropIcon: propTypes.bool,
+    preventFilter: propTypes.bool
   }
 
   constructor(props) {
@@ -75,10 +105,10 @@ export default class MSField extends React.PureComponent {
   }
 
   handleRemove = id => {
-    let {valueId} = this.props
-    if (valueId != null) {
-      id = id + ''
-      valueId = valueId.filter(x => x + '' !== id)
+    let { valueId } = this.props
+    if ( valueId != null ) {
+      valueId = valueId.filter(x => x !== id)
+      if (valueId.length == 0) valueId = null
     }
     this.select(valueId, {setOnlySent: true})
   }
@@ -87,31 +117,25 @@ export default class MSField extends React.PureComponent {
     this.select(id)
   }
 
-  select(newValueId, {setOnlySent, skipOnChange} = {}) {
-    let {valueId, isMulti, onSelected, onChange, onClear, name} = this.props
-    let chips = this.getSelectedOptions(valueId)
+  select(newValueId, { setOnlySent, skipOnChange } = {}) {
+    let { valueId, isMulti, onSelected, onChange, onClear, name } = this.props
+    let sentValueId = newValueId
 
     if (newValueId != null) {
-      chips = this.getSelectedOptions(newValueId)
       if (isMulti) {
-
         // skip selected
         if (!setOnlySent) {
           // check if selected values already selected
-          let curChips = this.getSelectedOptions(valueId)
-          if (curChips.find(x => x.id + '' === newValueId + ''))
-            return
+          if (valueId && valueId.find(x => x === newValueId)) return
           // new chips list
-          chips = [...curChips, ...chips]
+          if (valueId == null)
+            newValueId = [newValueId]
+          else if (newValueId != null)
+            newValueId = [...valueId, newValueId]
+          else
+            newValueId = null
         }
-
-        newValueId = chips.map(x => x.id)
-        if (newValueId.length === 0) newValueId = null
       }
-      else if (chips.length > 0)
-        newValueId = chips[0].id
-      else
-        newValueId = null
     }
 
     if (onClear && newValueId == null) {
@@ -119,50 +143,58 @@ export default class MSField extends React.PureComponent {
     }
 
     if (onSelected) {
-      onSelected.call(this, newValueId, chips, this)
+      onSelected.call(this, newValueId, sentValueId, this)
     }
 
     // call onChange callback
     if (!skipOnChange && onChange) {
-      setTimeout(() => {
-        let chips = this.getSelectedOptions(newValueId)
-        let v = isMulti || chips.length === 0 ? '' : chips[0].value;
-        let f = {type: 'text', value: v, name}
-        // check \redux-form\es\events\getValue.js  how redux form, takes value
-        onChange.call(this, {
-          target: f, currentTarget: f, stopPropagation: () => {
-          }, preventDefault: () => {
-          }
+      let v = ''
+      if (!isMulti && newValueId != null)
+      {
+        let opt = this.getOption(newValueId)
+        v = opt[this.props.nameCol]
+      }
+
+      // call on change when value changed
+      if (this.props.value != v)
+      {
+        setTimeout(() => {
+          // i am doing an event
+          onChangeFld.value = v
+          onChangeFld.name = name
+          onChange.call(this, onChangeEvent)
         })
-      })
+      }
+    }
+  }
+
+  getOption(valueId) {
+    let { options: opts, idCol } = this.props
+    for (var i = 0; i < opts.length; i++) {
+      let o = opts[i]
+      if (o[idCol] === valueId) {
+        return o
+      }
     }
   }
 
   getSelectedOptions(valueId) {
-    let {options, idCol, nameCol} = this.props
+    let { options, idCol, nameCol } = this.props
 
     if (valueId == null || valueId === '') return emptyArray
+
     if (!Array.isArray(valueId))
-      valueId = [valueId + '']
-    else
-      valueId = valueId.map(x => x + '')
+      valueId = [valueId]
+
     let chips = null;
     if (Array.isArray(options)) {
       chips = valueId.map(v => {
-        let f = options.find(f => f[idCol] + '' === v + '')
+        let f = options.find(f => f[idCol] === v)
         return f ?
-          {
-            id: f[idCol],
-            value: f[nameCol]
-          }
-          :
-          {
-            id: v,
-            value: v
-          }
+          { id: f[idCol], value: f[nameCol] } :
+          { id: v, value: v }
       })
-    }
-    else {
+    } else {
       chips = valueId.map(v => ({id: v, value: v}))
     }
     return chips
@@ -175,7 +207,7 @@ export default class MSField extends React.PureComponent {
       name,
       value,
       valueId,
-
+      style,
       options,
 
       className,
@@ -254,11 +286,11 @@ export default class MSField extends React.PureComponent {
       onBlur: this.onBlur,
       onChange: this.onChange,
       name,
-      value
+      value      
     }
 
     return (
-      <div className={getClassName(classes)}>
+      <div className={getClassName(classes)} style={style}>
         {
           // error message
           (error || warning) &&
@@ -280,7 +312,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // options
-          Array.isArray(options) && this.state.touched &&
+          Array.isArray(options) && options.length > 0 && this.state.touched &&
           <div className="ms-field_opts_cont" style={ { display: this.state.open ? '' : 'none' } }>
             <MSFieldOptions 
               options={ options } 

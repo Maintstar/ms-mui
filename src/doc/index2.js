@@ -5,6 +5,14 @@ import './index.css'
 
 window.Perf = Perf
 
+var opts1 = [
+  {id:1, name:'Option 1'},
+  {id:2, name:'Option 2'},
+  {id:3, name:'Option 3'},
+  {id:4, name:'Option 4'}
+]
+var emptyString = ""
+
 export default class extends React.PureComponent {
 
   constructor(props) {
@@ -29,6 +37,7 @@ export default class extends React.PureComponent {
   onSelected = (id, o, t) => {
     const s = {...this.state, [t.props.name + 'Id']: id}
     this.setState(s)
+    console.log('selected',s,id)
   }
 
   // form properties
@@ -36,7 +45,7 @@ export default class extends React.PureComponent {
 
     let v = ({
       name:n,
-      value: this.state[n] || "",
+      value: this.state[n] || emptyString,
       onChange: this.onChange,
       onSelected: this.onSelected
     })
@@ -47,26 +56,19 @@ export default class extends React.PureComponent {
     return v
   }
 
+  
+
   render() {
     let fp = this.fp
     return (
       <div style={{width:300, margin: 'auto', padding:'400px 0'}}>
 
         <h2>Check Perfomance</h2>
-        <MSField {...fp("dd1")} label="Option 1" isMulti={true} options={[
-          {id:1, name:'Option 1'},
-          {id:2, name:'Option 2'},
-          {id:3, name:'Option 3'},
-          {id:4, name:'Option 4'}
-        ]} />
+        <MSField {...fp("dd1")} label="Option 1" isMulti={true} options={opts1} />
 
 
-        <MSField {...fp("dd2")} label="Option 1" hideDropIcon={true} options={[
-          {id:1, name:'Option 1'},
-          {id:2, name:'Option 2'},
-          {id:3, name:'Option 3'},
-          {id:4, name:'Option 4'}
-        ]} />
+        <MSField {...fp("dd2")} label="Option 1" hideDropIcon={true} options={opts1} 
+          style={{marginTop:300}}/>
 
         hello
 
