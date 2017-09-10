@@ -35,6 +35,8 @@ export default class MSFieldOptions extends React.PureComponent {
       grouped = groupBy(options, groupCol)
     }
 
+    // todo: optimize here, render always, but hide with display:none
+
     return <div className="ms-field_opts">
       {
         Object.keys(grouped).map((k, i) => {

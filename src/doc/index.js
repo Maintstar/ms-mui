@@ -12,6 +12,112 @@ import L from './components/label'
 import './index.css'
 
 
+var states = [
+  {id:'AL', name:'Alabama'},
+  {id:'AK', name:'Alaska'},
+  {id:'AZ', name:'Arizona'},
+  {id:'AR', name:'Arkansas'},
+  {id:'CA', name:'California'},
+  {id:'CO', name:'Colorado'},
+  {id:'CT', name:'Connecticut'},
+  {id:'DE', name:'Delaware'},
+  {id:'FL', name:'Florida'},
+  {id:'GA', name:'Georgia'},
+  {id:'HI', name:'Hawaii'},
+  {id:'ID', name:'Idaho'},
+  {id:'IL', name:'Illinois'},
+  {id:'IN', name:'Indiana'},
+  {id:'IA', name:'Iowa'},
+  {id:'KS', name:'Kansas'},
+  {id:'KY', name:'Kentucky'},
+  {id:'LA', name:'Louisiana'},
+  {id:'ME', name:'Maine'},
+  {id:'MD', name:'Maryland'},
+  {id:'MA', name:'Massachusetts'},
+  {id:'MI', name:'Michigan'},
+  {id:'MN', name:'Minnesota'},
+  {id:'MS', name:'Mississippi'},
+  {id:'MO', name:'Missouri'},
+  {id:'MT', name:'Montana'},
+  {id:'NE', name:'Nebraska'},
+  {id:'NV', name:'Nevada'},
+  {id:'NH', name:'New Hampshire'},
+  {id:'NJ', name:'New Jersey'},
+  {id:'NM', name:'New Mexico'},
+  {id:'NY', name:'New York'},
+  {id:'NC', name:'North Carolina'},
+  {id:'ND', name:'North Dakota'},
+  {id:'OH', name:'Ohio'},
+  {id:'OK', name:'Oklahoma'},
+  {id:'OR', name:'Oregon'},
+  {id:'PA', name:'Pennsylvania'},
+  {id:'RI', name:'Rhode Island'},
+  {id:'SC', name:'South Carolina'},
+  {id:'SD', name:'South Dakota'},
+  {id:'TN', name:'Tennessee'},
+  {id:'TX', name:'Texas'},
+  {id:'UT', name:'Utah'},
+  {id:'VT', name:'Vermont'},
+  {id:'VA', name:'Virginia'},
+  {id:'WA', name:'Washington'},
+  {id:'WV', name:'West Virginia'},
+  {id:'WI', name:'Wisconsin'},
+  {id:'WY', name:'Wyoming'}
+]
+
+var statesGroups = [
+  {id:'AL', name:'Alabama', group: 'A'},
+  {id:'AK', name:'Alaska', group: 'A'},
+  {id:'AZ', name:'Arizona', group: 'A'},
+  {id:'AR', name:'Arkansas', group: 'A'},
+  {id:'CA', name:'California', group: 'C'},
+  {id:'CO', name:'Colorado', group: 'C'},
+  {id:'CT', name:'Connecticut', group: 'C'},
+  {id:'DE', name:'Delaware', group: 'D'},
+  {id:'FL', name:'Florida', group: 'F'},
+  {id:'GA', name:'Georgia', group: 'G'},
+  {id:'HI', name:'Hawaii', group: 'H'},
+  {id:'ID', name:'Idaho', group: 'I'},
+  {id:'IL', name:'Illinois', group: 'I'},
+  {id:'IN', name:'Indiana', group: 'I'},
+  {id:'IA', name:'Iowa', group: 'I'},
+  {id:'KS', name:'Kansas', group: 'K'},
+  {id:'KY', name:'Kentucky', group: 'K'},
+  {id:'LA', name:'Louisiana', group: 'L'},
+  {id:'ME', name:'Maine', group: 'M'},
+  {id:'MD', name:'Maryland', group: 'M'},
+  {id:'MA', name:'Massachusetts', group: 'M'},
+  {id:'MI', name:'Michigan', group: 'M'},
+  {id:'MN', name:'Minnesota', group: 'M'},
+  {id:'MS', name:'Mississippi', group: 'M'},
+  {id:'MO', name:'Missouri', group: 'M'},
+  {id:'MT', name:'Montana', group: 'M'},
+  {id:'NE', name:'Nebraska', group: 'N'},
+  {id:'NV', name:'Nevada', group: 'N'},
+  {id:'NH', name:'New Hampshire', group: 'N'},
+  {id:'NJ', name:'New Jersey', group: 'N'},
+  {id:'NM', name:'New Mexico', group: 'N'},
+  {id:'NY', name:'New York', group: 'N'},
+  {id:'NC', name:'North Carolina', group: 'N'},
+  {id:'ND', name:'North Dakota', group: 'N'},
+  {id:'OH', name:'Ohio', group: 'O'},
+  {id:'OK', name:'Oklahoma', group: 'O'},
+  {id:'OR', name:'Oregon', group: 'O'},
+  {id:'PA', name:'Pennsylvania', group: 'P'},
+  {id:'RI', name:'Rhode Island', group: 'R'},
+  {id:'SC', name:'South Carolina', group: 'S'},
+  {id:'SD', name:'South Dakota', group: 'S'},
+  {id:'TN', name:'Tennessee', group: 'T'},
+  {id:'TX', name:'Texas', group: 'T'},
+  {id:'UT', name:'Utah', group: 'U'},
+  {id:'VT', name:'Vermont', group: 'V'},
+  {id:'VA', name:'Virginia', group: 'V'},
+  {id:'WA', name:'Washington', group: 'W'},
+  {id:'WV', name:'West Virginia', group: 'W'},
+  {id:'WI', name:'Wisconsin', group: 'W'},
+  {id:'WY', name:'Wyoming', group: 'W'}
+]
+
 const getOptions = n => {
   const a = []
   for (let i=0; i<n; i++) {
@@ -19,6 +125,27 @@ const getOptions = n => {
   }
   return a
 }
+var bigOptions = getOptions(1000)
+
+var sel1 = [
+  {id:1, name:'Option 1'},
+  {id:2, name:'Option 2'},
+  {id:3, name:'Option 3'},
+  {id:4, name:'Option 4'}
+]
+
+var statesOtherCol = [
+  {id2:'AL', name2:'Alabama', group2: 'A'},
+  {id2:'AK', name2:'Alaska', group2: 'A'},
+  {id2:'AZ', name2:'Arizona', group2: 'A'},
+  {id2:'AR', name2:'Arkansas', group2: 'A'},
+  {id2:'CA', name2:'California', group2: 'C'},
+  {id2:'CO', name2:'Colorado', group2: 'C'},
+  {id2:'CT', name2:'Connecticut', group2: 'C'},
+  {id2:'DE', name2:'Delaware', group2: 'D'}
+]
+
+
 
 
 export default class extends React.Component {
@@ -26,14 +153,6 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      d11Id: 2,
-      d5: '2',
-      // mss1Id: 1,
-      // mss2Id: 1,
-      // mss3Id: 1,
-      // msf1Id: 1,
-      // msf2Id: 1,
-      // msf3Id: 1
     }
   }
 
@@ -81,133 +200,48 @@ export default class extends React.Component {
 
         <h2>MSSelect</h2>
         <Panel>
-          <L>single value, narrow</L>
-            <MSSelect {...fp("d1")} label="options" options={[
-              {id:1, name:'Option 1'},
-              {id:2, name:'Option 2'},
-              {id:3, name:'Option 3'},
-              {id:4, name:'Option 4'}
-            ]} />
-          <L>error</L>
-          <MSSelect {...fp("d1")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} error="Required" />
-          <L>warning</L>
-          <MSSelect {...fp("d1")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} warning="Value is not valid" />
-          <L>emptyValue</L>
-          <MSSelect {...fp("d1")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} emptyValue=" " />
+          <MSSelect {...fp("sel1")} label="State" options={states} />
+          <L>error="Error"</L>
+          <MSSelect {...fp("sel2")} label="State" options={states} error="Error" />
+          <L>error="Warning"</L>
+          <MSSelect {...fp("sel3")} label="State" options={states} warning="Warning" />
+          <L>grouped</L>
+          <MSSelect {...fp("sel4")} label="State" options={statesGroups} />
+          <L>emptyValue={"{"}null{"}"}</L>
+          <MSSelect {...fp("sel5")} label="State" options={states} emptyValue={null} />
         </Panel>
 
         <h2>MSField with options</h2>
         <Panel>
-        <L>dropdown</L>
-        <MSField {...fp("dd1")} label="options" options={[
-          {id:1, name:'Option 1'},
-          {id:2, name:'Option 2'},
-          {id:3, name:'Option 3'},
-          {id:4, name:'Option 4'}
-        ]} dd={true} />
+          <MSField {...fp("msf1")} label="options" options={states} />
 
-        <L>init value</L>
-        <MSField {...fp("d11")} label="options" options={[
-          {id:1, name:'Option 1'},
-          {id:2, name:'Option 2'},
-          {id:3, name:'Option 3'},
-          {id:4, name:'Option 4'}
-        ]} />
+          <L>value="NE"</L>
+          <MSField {...fp("msf2")} label="options" options={states} />
 
-        <L>group value</L>
-        <MSField {...fp("d12")} label="options" options={[
-          {id:1, group:'My Address', name:'Option 1'},
-          {id:2, group:'My Address', name:'Option 2'},
-          {id:3, group:'Other', name:'Option 3'},
-          {id:4, group:'Other', name:'Option 4'}
-        ]} />
+          <L>grouped</L>
+          <MSField {...fp("msf3")} label="options" options={statesGroups} />
 
-        <L>multi value</L>
-        <MSField {...fp("d2")} label="options" options={[
-          {id:1, name:'Option 1'},
-          {id:2, name:'Option 2'},
-          {id:3, name:'Option 3'},
-          {id:4, name:'Option 4'}
-        ]} isMulti={true} />
+          <L>isMulti={"{"}true{"}"}</L>
+          <MSField {...fp("msf4")} label="options" options={states} isMulti={true} />
 
-        <L>two fields in a row</L>
-        <Row>
-          <Col xs="6">
-            <MSField {...fp("df1")} label="options" options={[
-              {id:1, name:'Option 1'},
-              {id:2, name:'Option 2'},
-              {id:3, name:'Option 3'},
-              {id:4, name:'Option 4'}
-            ]} />
-          </Col>
-          <Col xs="6">
-            <MSField {...fp("df2")} label="options" options={[
-              {id:1, name:'Option 1'},
-              {id:2, name:'Option 2'},
-              {id:3, name:'Option 3'},
-              {id:4, name:'Option 4'}
-            ]} />
-          </Col>
-        </Row>
+          <L>preventFilter={"{"}true{"}"}</L>
+          <MSField {...fp("msf5")} label="options" options={states} preventFilter={true} />
 
-        <L>big list</L>
-        <MSField {...fp("d3")} label="options" options={getOptions(1000)} isMulti={true} />
+          <L>1000 options</L>
+          <MSField {...fp("msf6")} label="options" options={bigOptions} />
 
-        <L><b>idCol</b>, <b>nameCol</b></L>
-        <MSField {...fp("d4")} label="options" options={[
-          {v:1, value:'Option 1'},
-          {v:2, value:'Option 2'},
-          {v:3, value:'Option 3'},
-          {v:4, value:'Option 4'}
-        ]} idCol="v" nameCol="value" />
-
-        <L>Filter</L>
-        <MSField {...fp("d5")} label="options" options={[
-          {v:1, value:'Option 1'},
-          {v:2, value:'Option 2'},
-          {v:3, value:'Option 3'},
-          {v:4, value:'Option 4'}
-        ]} idCol="v" nameCol="value" />
-
-        <L>Selected wrong value</L>
-        <MSField {...fp("d6")} label="options" options={[
-          {v:1, value:'Option 1'},
-          {v:2, value:'Option 2'},
-          {v:3, value:'Option 3'},
-          {v:4, value:'Option 4'}
-        ]} idCol="v" nameCol="value" />
+          <L>idCol="id2", nameCol="name2", groupCol="group2"</L>
+          <MSField {...fp("msf7")} label="options" options={statesOtherCol} idCol="id2" nameCol="name2" groupCol="group2" />
         </Panel>
 
         <h2>MSField</h2>
         <Panel>
-          <L>Non floating label</L>
-          <MSField {...fp("t1")} label="field label" floatingLabel={false} />
-
-          <L>Floating label</L>
           <MSField {...fp("t2")} label="label" />
 
-          <L>Error field</L>
+          <L>error="error"</L>
           <MSField {...fp("t3")} label="label" error="error" />
 
-          <L>Error field with value</L>
-          <MSField label="label" error="error" defaultValue="value" />
-
-          <L>Loading field:</L>
+          <L>isLoading={"{"}true{"}"}</L>
           <MSField {...fp("t4")} label="loading" isLoading={true} />
         </Panel>
 

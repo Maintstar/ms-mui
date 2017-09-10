@@ -27,7 +27,8 @@ export default class MSField extends React.PureComponent {
     nameCol: 'name',
     idCol: 'id',
     groupCol: 'group',
-    isMulti: false
+    isMulti: false,
+    preventFilter: false
   }
 
   static propTypes = {
