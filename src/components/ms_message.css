@@ -13,7 +13,7 @@
 .ms_error .ms__message {
     color: #F44336;
 }
-.ms_error .mui-checkbox label {
+.ms_error label {
     color: #F44336;
 }
 /* warning */
@@ -24,6 +24,7 @@
 .ms_warning .ms__message {
     color: darkorange;
 }
-.ms_warning .mui-checkbox label {
+.ms_warning label
+{
     color: darkorange;
 }
