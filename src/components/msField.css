@@ -74,6 +74,7 @@ option {
 /*opts*/
 .ms-options_cont {
     position: relative;
+    height: 250px;
 }
 
 .ms-options {
@@ -88,7 +89,7 @@ option {
     max-height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 250px;
+    height: 100%;
 }
 .ms-options_gr, .ms-options_it, .ms-options_last {
     position: absolute;

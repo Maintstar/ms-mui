@@ -7,14 +7,28 @@ function getRoundedFromIndex(scrollTop, itemHeight) {
   let from = scrollTop / itemHeight;
 
   // let we round by 3,  so index will go as: 0, 3, 6, 9, 12
-  from = (from / 3 << 0) * 3
+  from = (from / 3 << 0) * 3 - 1
 
   if (from < 0) from = 0;
 
   return from
 }
 
+
+
+
+// margin to see group header, because group is beetween values and first value
 const marginTop = 7
+const contHeight = 250
+
+function itemTop(index, itemHeight, group) {
+  return (group ? marginTop : 0) + index * itemHeight
+}
+
+function groupTop(index, itemHeight, group) {
+  return marginTop + index * itemHeight - ( itemHeight * 0.35 << 0 )
+}
+
 
 export default class MSFieldOptions extends React.PureComponent {
 
@@ -57,20 +71,26 @@ export default class MSFieldOptions extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.div.addEventListener('scroll', this.handleScroll)
+    this.div.addEventListener('scroll', this.handleDivScroll)
+    //document.addEventListener('scroll', this.handleDocScroll)
   }
 
   componentWillUnmount() {
-    this.div.removeEventListener('scroll', this.handleScroll)
+    this.div.removeEventListener('scroll', this.handleDivScroll)
+    //document.removeEventListener('scroll', this.handleDocScroll)
   }
 
-  handleScroll = () => {
+  handleDivScroll = () => {
     this.scrollTop = this.div.scrollTop
     let from = getRoundedFromIndex(this.scrollTop, this.props.itemHeight)
     if (this.state.from !== from)
     {
       this.setState({from})
     }
+  }
+
+  handleDocScroll = () => {
+    console.log('window', window.pageYOffset)
   }
 
   render() {
@@ -87,18 +107,18 @@ export default class MSFieldOptions extends React.PureComponent {
     // render items
     let items = []
     let lastGroup = null
-    for (let i = this.state.from; i < this.state.from + 10; i++) {
+    for (let i = this.state.from; i < this.state.from + 13; i++) {
       let o = options[i]
       if (o) {
         let g = o[groupCol]
         // add group name
         if ((lastGroup == null && g != null) || (lastGroup != g)) {
-          items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: marginTop + i * itemHeight - ( itemHeight*0.35 << 0 )}}>{g}</div>)
+          items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(i, itemHeight) }}>{g}</div>)
           lastGroup = g
         }
         // add option
         items.push(<div key={o[idCol]} value={o[idCol]} className="ms-options_it"
-                        style={{top: marginTop + i * itemHeight}}>{o[nameCol]}</div>)
+                        style={{top: itemTop(i, itemHeight, lastGroup) }}>{o[nameCol]}</div>)
       }
     }
 
