@@ -216,7 +216,7 @@ export default class Perfomance extends React.PureComponent {
           */
         }
 
-        <MSField {...fp("dd1")} label="Option 2" options={ bigOptions } />
+        <MSField {...fp("dd1")} label="Option 2" options={ statesGroups } />
 
 
         {/*<MSFieldOptions options={ statesGroups } onSelect={this.handleSelect} />*/}

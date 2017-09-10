@@ -2,6 +2,20 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { groupBy } from './ms'
 
+function getRoundedFromIndex(scrollTop, itemHeight) {
+  // we search for index
+  let from = scrollTop / itemHeight;
+
+  // let we round by 3,  so index will go as: 0, 3, 6, 9, 12
+  from = (from / 3 << 0) * 3
+
+  if (from < 0) from = 0;
+
+  return from
+}
+
+const marginTop = 7
+
 export default class MSFieldOptions extends React.PureComponent {
 
   constructor(props) {
@@ -38,6 +52,10 @@ export default class MSFieldOptions extends React.PureComponent {
     this.props.onSelect(v)
   }
 
+  setRef = (el) => {
+    this.div = el
+  }
+
   componentDidMount() {
     this.div.addEventListener('scroll', this.handleScroll)
   }
@@ -48,21 +66,11 @@ export default class MSFieldOptions extends React.PureComponent {
 
   handleScroll = () => {
     this.scrollTop = this.div.scrollTop
-
-    // we search for index
-    let from = this.scrollTop / this.props.itemHeight;
-    if (from < 0) from = 0;
-
-    // let we round by 3,  so index will go as: 0, 3, 6, 9, 12
-    from = (from / 3 << 0) * 3
+    let from = getRoundedFromIndex(this.scrollTop, this.props.itemHeight)
     if (this.state.from !== from)
     {
       this.setState({from})
     }
-  }
-
-  setRef = (el) => {
-    this.div = el
   }
 
   render() {
@@ -85,12 +93,12 @@ export default class MSFieldOptions extends React.PureComponent {
         let g = o[groupCol]
         // add group name
         if ((lastGroup == null && g != null) || (lastGroup != g)) {
-          items.push(<div key={'group_' + g} className="ms-options_gr">{g}</div>)
+          items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: marginTop + i * itemHeight - ( itemHeight*0.35 << 0 )}}>{g}</div>)
           lastGroup = g
         }
         // add option
         items.push(<div key={o[idCol]} value={o[idCol]} className="ms-options_it"
-                        style={{top: i * itemHeight}}>{o[nameCol]}</div>)
+                        style={{top: marginTop + i * itemHeight}}>{o[nameCol]}</div>)
       }
     }
 

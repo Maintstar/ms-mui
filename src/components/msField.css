@@ -95,14 +95,24 @@ option {
     width:100%;
 }
 .ms-options_last {
-    width:5px;
-    height:5px;
-    background-color: red;
+    width:1px;
+    height:1px;
 }
 .ms-options_gr {
     padding: 5px;
-    font-size: 13px;
+    font-size: 10px;
     font-weight: bold;
+    pointer-events: none;
+    z-index: 1000;
+    text-align: center;
+}
+.ms-options_gr:after {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid #eee;
+    height: 5px;
+    margin-top: -13px;
+    margin-left: -5px;
 }
 .ms-options_it {
     clear: both;
