@@ -173,7 +173,8 @@ export default class extends React.Component {
   }
 
   // form properties
-  fp = (n) => {
+  fp = (i) => {
+    let n = 'f'+i
     let v = ({
       name:n,
       value: this.state[n] || "",
@@ -189,6 +190,7 @@ export default class extends React.Component {
 
   render() {
     let fp = this.fp
+    let i = 0
     return (
       <div style={{width:300, margin: 'auto'}}>
 
@@ -200,97 +202,97 @@ export default class extends React.Component {
 
         <h2>MSSelect</h2>
         <Panel>
-          <MSSelect {...fp("sel1")} label="State" options={states} />
+          <MSSelect {...fp(i++)} label="State" options={states} />
           <L>error="Error"</L>
-          <MSSelect {...fp("sel2")} label="State" options={states} error="Error" />
+          <MSSelect {...fp(i++)} label="State" options={states} error="Error" />
           <L>error="Warning"</L>
-          <MSSelect {...fp("sel3")} label="State" options={states} warning="Warning" />
+          <MSSelect {...fp(i++)} label="State" options={states} warning="Warning" />
           <L>grouped</L>
-          <MSSelect {...fp("sel4")} label="State" options={statesGroups} />
+          <MSSelect {...fp(i++)} label="State" options={statesGroups} />
           <L>emptyValue={"{"}null{"}"}</L>
-          <MSSelect {...fp("sel5")} label="State" options={states} emptyValue={null} />
+          <MSSelect {...fp(i++)} label="State" options={states} emptyValue={null} />
           <L>idCol="id2", nameCol="name2", groupCol="group2"</L>
-          <MSSelect {...fp("sel5")} label="State" options={statesOtherCol} emptyValue={null} 
+          <MSSelect {...fp(i++)} label="State" options={statesOtherCol} emptyValue={null} 
             idCol="id2" nameCol="name2" groupCol="group2" />
         </Panel>
 
         <h2>MSField with options</h2>
         <Panel>
           <L>1000 options</L>
-          <MSField {...fp("msf6")} label="options" options={bigOptions} />
+          <MSField {...fp(i++)} label="options" options={bigOptions} />
 
           <L>grouped</L>
-          <MSField {...fp("msf3")} label="options" options={statesGroups} />
+          <MSField {...fp(i++)} label="options" options={statesGroups} />
 
           <L>isMulti={"{"}true{"}"}</L>
-          <MSField {...fp("msf4")} label="options" options={states} isMulti={true} />
+          <MSField {...fp(i++)} label="options" options={states} isMulti={true} />
 
           <L>preventFilter={"{"}true{"}"}</L>
-          <MSField {...fp("msf5")} label="options" options={states} preventFilter={true} />
+          <MSField {...fp(i++)} label="options" options={states} preventFilter={true} />
 
           <L>idCol="id2", nameCol="name2", groupCol="group2"</L>
-          <MSField {...fp("msf1")} label="options" options={statesOtherCol} idCol="id2" nameCol="name2" groupCol="group2" />
+          <MSField {...fp(i++)} label="options" options={statesOtherCol} idCol="id2" nameCol="name2" groupCol="group2" />
         </Panel>
 
         <h2>MSField</h2>
         <Panel>
-          <MSField {...fp("t2")} label="label" />
+          <MSField {...fp(i++)} label="label" />
 
           <L>error="error"</L>
-          <MSField {...fp("t3")} label="label" error="error" />
+          <MSField {...fp(i++)} label="label" error="error" />
 
           <L>isLoading={"{"}true{"}"}</L>
-          <MSField {...fp("t4")} label="loading" isLoading={true} />
+          <MSField {...fp(i++)} label="loading" isLoading={true} />
         </Panel>
 
         <h2>MSField checkbox</h2>
         <p>among empty Fields</p>
         <Panel>
-          <MSField {...fp("cf1")} label="Before (to see withing form)" />
+          <MSField {...fp(i++)} label="Before (to see withing form)" />
 
           <L>Simple</L>
-          <MSField {...fp("c1")} type="checkbox" label="label" />
+          <MSField {...fp(i++)} type="checkbox" label="label" />
 
           <L>With error:</L>
-          <MSField {...fp("c2")} type="checkbox" label="label" error="error text" />
+          <MSField {...fp(i++)} type="checkbox" label="label" error="error text" />
 
-          <MSField {...fp("cf2")} label="After (to see withing form)" />
+          <MSField {...fp(i++)} label="After (to see withing form)" />
         </Panel>
 
         <h2>MSField checkbox</h2>
         <p>among filled Fields</p>
         <Panel>
-          <MSField {...fp("c20")} label="Before (to see withing form)" defaultValue="asdf" />
+          <MSField {...fp(i++)} label="Before (to see withing form)" defaultValue="asdf" />
 
           <L>Simple</L>
-          <MSField {...fp("c21")} type="checkbox" label="label" />
+          <MSField {...fp(i++)} type="checkbox" label="label" />
 
           <L>With warning:</L>
-          <MSField {...fp("c22")} type="checkbox" label="label" warning="warning text" />
+          <MSField {...fp(i++)} type="checkbox" label="label" warning="warning text" />
 
-          <MSField {...fp("c23")} label="After (to see withing form)" defaultValue="asdf" />
+          <MSField {...fp(i++)} label="After (to see withing form)" defaultValue="asdf" />
         </Panel>
 
         <h2>Small MSSelect</h2>
         <Panel>
           <L></L>
-          <MSSelect {...fp("mss1")} label="options" options={states} />
+          <MSSelect {...fp(i++)} label="options" options={states} />
           <L>size="s"</L>
-          <MSSelect size="s" {...fp("mss2")} label="options" options={states} />
+          <MSSelect size="s" {...fp(i++)} label="options" options={states} />
           <L>size="xs"</L>
-          <MSSelect size="xs" {...fp("mss3")} label="options" options={states} />
+          <MSSelect size="xs" {...fp(i++)} label="options" options={states} />
         </Panel>
 
         <h2>Small MSField</h2>
         <Panel>
           <L></L>
-          <MSField {...fp("msf1")} label="options" options={states} />
+          <MSField {...fp(i++)} label="options" options={states} />
 
           <L>size="s"</L>
-          <MSField {...fp("msf2")} size="s" label="options" options={states} />
+          <MSField {...fp(i++)} size="s" label="options" options={states} />
 
           <L>size="xs"</L>
-          <MSField {...fp("msf3")} size="xs" label="options" options={states} />
+          <MSField {...fp(i++)} size="xs" label="options" options={states} />
         </Panel>
 
         <h2>Small Button</h2>
