@@ -4,4 +4,4 @@ import './index.css';
 import Doc from './doc/index'
 import Perfomance from './doc/perfomance'
 
-ReactDOM.render(<Doc />, document.getElementById('root'));
+ReactDOM.render(<Perfomance />, document.getElementById('root'));

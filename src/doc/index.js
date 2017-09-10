@@ -158,16 +158,14 @@ export default class extends React.Component {
 
   onChange = (ev) => {
     let v = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value
-    const s = {...this.state, [ev.target.name]: v}
-    //if (v == null || v === '') delete s[ev.target.name]
+    const s = {[ev.target.name]: v}
     this.setState(s)
     console.log('onChange form: ', s);
   }
 
   onSelected = (id, o, t) => {
     console.log('onSelected form start');
-    const s = {...this.state, [t.props.name + 'Id']: id}
-    //if (id == null || id === '') s[k] = null
+    const s = {[t.props.name + 'Id']: id}
     this.setState(s)
     console.log('onSelected form: ',s);
   }

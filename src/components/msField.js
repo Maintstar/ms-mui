@@ -71,9 +71,9 @@ export default class MSField extends React.PureComponent {
   onFocus = () => {
     // we make timeout, so browser already scroll to that field, and keyboard opened without lag
     // user has time to input something, and we don't see lags
-    setTimeout(() => {
+    //setTimeout(() => {
       this.setState({open: true, touched: true})
-    }, 300)
+    //}, 300)
   }
 
   onBlur = () => {
@@ -317,7 +317,7 @@ export default class MSField extends React.PureComponent {
         {
           // options
           Array.isArray(options) && options.length > 0 && this.state.touched &&
-          <div className="ms-field_opts_cont" style={ { display: this.state.open ? '' : 'none' } }>
+          <div className="ms-options_cont" style={ { display: this.state.open ? '' : 'none' } }>
             <MSFieldOptions 
               options={ options } 
               filter={ (!preventFilter && filter) ? value : null }

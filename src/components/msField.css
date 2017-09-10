@@ -50,7 +50,6 @@ option {
 .ms-label {
     position: absolute;
     display: block;
-    width: 100%;
     color: rgba(0,0,0,.7);
     font-size: 12px;
     font-weight: normal;
@@ -73,11 +72,11 @@ option {
 }
 
 /*opts*/
-.ms-field_opts_cont {
+.ms-options_cont {
     position: relative;
 }
 
-.ms-field_opts {
+.ms-options {
     width: 100%;
     padding-left: 0;
     list-style-type: none;
@@ -86,38 +85,44 @@ option {
     top: 1px;
     background-color: white;
     z-index: 1000;
-    max-height: 400px;
+    max-height: 250px;
     overflow-y: auto;
+    overflow-x: hidden;
+    height: 250px;
 }
-.ms-field_opts .group .name {
+.ms-options_gr, .ms-options_it, .ms-options_last {
+    position: absolute;
+    width:100%;
+}
+.ms-options_last {
+    width:5px;
+    height:5px;
+    background-color: red;
+}
+.ms-options_gr {
     padding: 5px;
     font-size: 13px;
     font-weight: bold;
 }
-.ms-field_opts ul {
-    padding-left: 0;
-    list-style-type: none;
-    margin: 0;
-}
-.ms-field_opts li {
+.ms-options_it {
     clear: both;
     color: rgba(0,0,0,0.87);
     cursor: pointer;
-    line-height: 37px;
+    line-height: 35px;
     text-align: left;
     text-transform: none;
     padding: 0 12px;
     display: block;
 }
-.ms-field_opts li.thick {
+.ms-options_it--thick {
     background-color: lightyellow
 }
-.ms-field_opts li:hover {
-    background-color: #eee;
-}
-.ms-field_opts li .empty {
+.ms-options_it--empty {
     color: #aaa;
     font-style: italic;
+}
+.ms-options_it:hover {
+    background-color: #eee;
 }
 
 /*clear*/
