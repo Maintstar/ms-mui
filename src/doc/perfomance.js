@@ -1,5 +1,6 @@
 import React from 'react'
 import MSField from '../components/msField'
+import MSSelect from '../components/msSelect'
 import Perf from 'react-addons-perf'
 import './index.css'
 
@@ -12,11 +13,21 @@ window.p = () => {
 }
 
 var opts1 = [
+  {id:11, name:''},
   {id:1, name:'Option 1'},
   {id:2, name:'Option 2'},
   {id:3, name:'Option 3'},
   {id:4, name:'Option 4'}
 ]
+
+var sel1 = [
+  {id:1, name:'Option 1'},
+  {id:2, name:'Option 2'},
+  {id:3, name:'Option 3'},
+  {id:4, name:'Option 4'}
+]
+
+
 var emptyString = ""
 
 export default class Perfomance extends React.PureComponent {
@@ -38,6 +49,7 @@ export default class Perfomance extends React.PureComponent {
     let v = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value
     const s = {[ev.target.name]: v}
     this.setState(s)
+    //console.log('onchagne',s)
   }
 
   onSelected = (id, o, t) => {
@@ -58,13 +70,12 @@ export default class Perfomance extends React.PureComponent {
     if (this.state[n+'Id'])
       v.valueId = this.state[n+'Id']
 
-    //console.log(v)
-
+    //console.log('fp',v,this.state)
+    
     return v
   }
 
   
-
   render() {
     let fp = this.fp
     return (
@@ -72,13 +83,16 @@ export default class Perfomance extends React.PureComponent {
 
         <h2>Check Perfomance</h2>
 
-        <MSField {...fp("dd1")} label="Option 1" isMulti={true} options={opts1} />
+        {
+          /*
+          <MSField {...fp("dd1")} label="Option 1" isMulti={true} options={opts1} />
+          <MSField {...fp("dd2")} label="Option 1" hideDropIcon={true} options={opts1} />
+          */
+        }
 
-        <MSField {...fp("dd2")} label="Option 1" hideDropIcon={true} options={opts1} 
-          />
-
-        <MSField label="Option 2" name="f3"
-          />
+        <MSField {...fp("dd2")} label="Option 1" options={opts1} isMulti={true} />
+        <MSSelect {...fp("dd1")} label="Option 2" options={sel1} />
+        <MSField {...fp("f1")} label="Option 3" />
 
 
       </div>

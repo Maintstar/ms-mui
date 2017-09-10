@@ -4,7 +4,8 @@
     margin-bottom: 20px;
     position: relative;
 }
-.ms-field > input {
+.ms-field > input, 
+.ms-field > select {
     height: 32px;
     box-sizing: border-box;
     display: block;
@@ -15,19 +16,34 @@
     width: 100%;
     padding: 0;
     font-size: 16px;
+    background-color: transparent;
 }
-.ms-field > input:focus {
+.ms-field > select,
+.ms-field--dd input {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+    background-repeat: no-repeat;
+    background-position: right center;
+
+    /*padding: 0 25px 0 0;*/
+}
+.ms-field > select {
+    padding: 0 25px 0 0;
+    appearance: none;
+    cursor: pointer;
+}
+option {
+    font-weight: normal;
+    display: block;
+    white-space: pre;
+    min-height: 1.2em;
+    padding: 5px;
+}
+.ms-field > input:focus,
+.ms-field > select:focus {
     /*compensate border size increase*/
     height: 33px;
     margin-bottom: -1px;
     border-bottom: 2px solid #2196F3;
-}
-.ms-field--dd input {
-    cursor: pointer;
-    background-color: transparent;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
-    background-repeat: no-repeat;
-    background-position: right center;
 }
 
 /*label*/
@@ -121,6 +137,11 @@
     color: rgba(0,0,0,0.7);
     font-weight: bold;
 }
+
+.ms-field > input:focus + .clear {
+    bottom: -3px;
+}
+
 .ms_small .clear {
     bottom: -5px;
 }

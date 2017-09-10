@@ -7,7 +7,6 @@ import MSChips from './msChips'
 import MSFieldOptions from './msFieldOptions'
 
 // perfomance tune
-// remove conversions to string and numbers everywhere, or do it once
 
 const defClass = {'ms-field': 1}
 const emptyArray = []
@@ -41,7 +40,7 @@ export default class MSField extends React.PureComponent {
     
     label: propTypes.string,
     name: propTypes.string.isRequired,
-    value: propTypes.string,
+    value: propTypes.string.isRequired,
     valueId: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
     options: propTypes.arrayOf(propTypes.object),
 
@@ -49,7 +48,6 @@ export default class MSField extends React.PureComponent {
     error: propTypes.string,
     warning: propTypes.string,
     size: propTypes.string,
-    emptyValue: propTypes.string,
 
     isLoading: propTypes.bool,
     isMulti: propTypes.bool,
@@ -212,7 +210,6 @@ export default class MSField extends React.PureComponent {
       error,
       warning,
       size,
-      emptyValue,
 
       isLoading,
       isMulti,
@@ -222,29 +219,6 @@ export default class MSField extends React.PureComponent {
       hideDropIcon,
       preventFilter
     } = this.props
-
-    console.log('render', {
-      label,
-      name,
-      value,
-      valueId,
-      style,
-      options,
-
-      className,
-      error,
-      warning,
-      size,
-      emptyValue,
-
-      isLoading,
-      isMulti,
-      //isFree,
-
-      // should we hide dropicon
-      hideDropIcon,
-      preventFilter
-    })
 
     let {
       filter
@@ -256,7 +230,7 @@ export default class MSField extends React.PureComponent {
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
     addErrorWarnClasses(classes, error, warning)
-    if (isEmpty && !hideDropIcon) {
+    if (isEmpty && !hideDropIcon && options) {
       classes['ms-field--dd'] = 1
     }
 
@@ -339,7 +313,6 @@ export default class MSField extends React.PureComponent {
               options={ options } 
               filter={ (!preventFilter && filter) ? value : null }
               onSelect={ this.handleSelect }
-              emptyValue= { emptyValue }
               />
           </div>
         }

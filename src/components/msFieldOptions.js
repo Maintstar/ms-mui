@@ -11,9 +11,9 @@ export default class MSFieldOptions extends React.PureComponent {
 
     onSelect: propTypes.func.isRequired,
     options: propTypes.arrayOf(propTypes.object),
+
     //selIndex: propTypes.number,
     filter: propTypes.string,
-    emptyValue: propTypes.string
   }
 
   render() {
@@ -22,7 +22,7 @@ export default class MSFieldOptions extends React.PureComponent {
     const idCol = 'id'
     const nameCol = 'name'
 
-    let { options, filter, onSelect, emptyValue } = this.props
+    let { options, filter, onSelect } = this.props
 
     // filter/group options
     let grouped = null;
@@ -36,36 +36,32 @@ export default class MSFieldOptions extends React.PureComponent {
     }
 
     return <div className="ms-field_opts">
-        {
-          Object.keys(grouped).map((k, i) => {
-            let options = grouped[k]
-            // add empty value at the top.
-            if (emptyValue) {
-              options.splice(0, 0, { [idCol]:null, [nameCol]:emptyValue })
-            }
-            return (
-              <div className="group" key={k}>
-                {
-                  k !== 'undefined' && <div className="name">{k}</div>
+      {
+        Object.keys(grouped).map((k, i) => {
+          let options = grouped[k]
+          return (
+            <div className="group" key={k}>
+              {
+                k !== 'undefined' && <div className="name">{k}</div>
+              }
+              <ul>
+                { 
+                  options.map(o => 
+                    <MSFieldOption 
+                      key={o[idCol]} 
+                      id={o[idCol]} 
+                      name={o[nameCol]} 
+                      thick={o.thick} 
+                      onClick={onSelect} 
+                    />
+                  )
                 }
-                <ul>
-                  { 
-                    options.map(o => 
-                      <MSFieldOption 
-                        key={o[idCol]} 
-                        id={o[idCol]} 
-                        name={o[nameCol]} 
-                        thick={o.thick} 
-                        onClick={onSelect} 
-                      />
-                    )
-                  }
-                </ul>
-              </div>
-            )
-          })
-        }
-      </div>
+              </ul>
+            </div>
+          )
+        })
+      }
+    </div>
   }
 }
 
@@ -80,7 +76,7 @@ class MSFieldOption extends React.PureComponent {
     thick: propTypes.bool,
     id: propTypes.oneOfType([propTypes.number, propTypes.string]).isRequired,
     name: propTypes.string.isRequired,
-    onClick: propTypes.func.isRequired,
+    onClick: propTypes.func.isRequired
   }
 
   handleClick = () => {
@@ -89,10 +85,6 @@ class MSFieldOption extends React.PureComponent {
 
   render() {
     let { name, thick } = this.props
-    return <li 
-      className={ thick && 'thick' }
-      onMouseDown={ this.handleClick }>
-        {name || <span className="empty">no value</span>}
-    </li>
+    return <li className={ thick && 'thick' } onMouseDown={ this.handleClick }>{name}</li>
   }
 }
