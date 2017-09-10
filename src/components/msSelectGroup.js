@@ -12,14 +12,17 @@ export default class MSSelectGroup extends React.PureComponent {
   }
 
   render() {
-    const idCol = 'id'
-    const nameCol = 'name'
+    let { 
+      nameCol,
+      idCol,
 
-    let { options, group } = this.props
+      options, 
+      group
+    } = this.props
 
     return <optgroup label={group}>{        
       options.map(o => 
-        <option value={o[idCol]}>{o[nameCol]}</option>
+        <option key={o[idCol]} value={o[idCol]}>{o[nameCol]}</option>
       )
     }
     </optgroup>

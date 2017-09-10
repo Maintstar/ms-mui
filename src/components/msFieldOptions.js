@@ -18,11 +18,17 @@ export default class MSFieldOptions extends React.PureComponent {
 
   render() {
 
-    const groupCol = 'group'
-    const idCol = 'id'
-    const nameCol = 'name'
+    let { 
+      options, 
+      filter, 
+      nameCol, 
+      idCol, 
+      groupCol, 
+      onSelect 
+    } = this.props
 
-    let { options, filter, onSelect } = this.props
+    console.log(nameCol, idCol, options)
+
 
     // filter/group options
     let grouped = null;

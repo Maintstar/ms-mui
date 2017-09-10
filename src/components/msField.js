@@ -218,7 +218,11 @@ export default class MSField extends React.PureComponent {
 
       // should we hide dropicon
       hideDropIcon,
-      preventFilter
+      preventFilter,
+      
+      nameCol,
+      idCol,
+      groupCol
     } = this.props
 
     let {
@@ -314,6 +318,9 @@ export default class MSField extends React.PureComponent {
               options={ options } 
               filter={ (!preventFilter && filter) ? value : null }
               onSelect={ this.handleSelect }
+              nameCol={nameCol}
+              idCol={idCol}
+              groupCol={groupCol}
               />
           </div>
         }

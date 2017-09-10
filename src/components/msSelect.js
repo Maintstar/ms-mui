@@ -125,12 +125,19 @@ export default class MSSelect extends React.PureComponent {
           { 
             // render groups
             groups.length > 1 &&
-            groups.map(g => <MSSelectGroup group={g} options={grouped[g]} />)
+            groups.map(g => <MSSelectGroup
+              idCol={idCol} 
+              nameCol={nameCol}
+              groupCol={groupCol}
+              key={g}
+              group={g} 
+              options={grouped[g]} 
+            />)
           }
           { 
             // render options
             groups.length === 1 &&
-            options.map(x => <option key={x.id} value={x.id}>{x.value || x.name}</option>)
+            options.map(x => <option key={x[idCol]} value={x[idCol]}>{x[nameCol]}</option>)
           }
         </select>
       </div>

@@ -209,14 +209,15 @@ export default class extends React.Component {
           <MSSelect {...fp("sel4")} label="State" options={statesGroups} />
           <L>emptyValue={"{"}null{"}"}</L>
           <MSSelect {...fp("sel5")} label="State" options={states} emptyValue={null} />
+          <L>idCol="id2", nameCol="name2", groupCol="group2"</L>
+          <MSSelect {...fp("sel5")} label="State" options={statesOtherCol} emptyValue={null} 
+            idCol="id2" nameCol="name2" groupCol="group2" />
         </Panel>
 
         <h2>MSField with options</h2>
         <Panel>
-          <MSField {...fp("msf1")} label="options" options={states} />
-
-          <L>value="NE"</L>
-          <MSField {...fp("msf2")} label="options" options={states} />
+          <L>1000 options</L>
+          <MSField {...fp("msf6")} label="options" options={bigOptions} />
 
           <L>grouped</L>
           <MSField {...fp("msf3")} label="options" options={statesGroups} />
@@ -227,11 +228,8 @@ export default class extends React.Component {
           <L>preventFilter={"{"}true{"}"}</L>
           <MSField {...fp("msf5")} label="options" options={states} preventFilter={true} />
 
-          <L>1000 options</L>
-          <MSField {...fp("msf6")} label="options" options={bigOptions} />
-
           <L>idCol="id2", nameCol="name2", groupCol="group2"</L>
-          <MSField {...fp("msf7")} label="options" options={statesOtherCol} idCol="id2" nameCol="name2" groupCol="group2" />
+          <MSField {...fp("msf1")} label="options" options={statesOtherCol} idCol="id2" nameCol="name2" groupCol="group2" />
         </Panel>
 
         <h2>MSField</h2>
@@ -262,7 +260,7 @@ export default class extends React.Component {
         <h2>MSField checkbox</h2>
         <p>among filled Fields</p>
         <Panel>
-          <MSField label="Before (to see withing form)" defaultValue="asdf" />
+          <MSField {...fp("c20")} label="Before (to see withing form)" defaultValue="asdf" />
 
           <L>Simple</L>
           <MSField {...fp("c21")} type="checkbox" label="label" />
@@ -270,59 +268,29 @@ export default class extends React.Component {
           <L>With warning:</L>
           <MSField {...fp("c22")} type="checkbox" label="label" warning="warning text" />
 
-          <MSField label="After (to see withing form)" defaultValue="asdf" />
+          <MSField {...fp("c23")} label="After (to see withing form)" defaultValue="asdf" />
         </Panel>
 
         <h2>Small MSSelect</h2>
         <Panel>
           <L></L>
-          <MSSelect {...fp("mss1")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} />
+          <MSSelect {...fp("mss1")} label="options" options={states} />
           <L>size="s"</L>
-          <MSSelect size="s" {...fp("mss2")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} />
+          <MSSelect size="s" {...fp("mss2")} label="options" options={states} />
           <L>size="xs"</L>
-          <MSSelect size="xs" {...fp("mss3")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} />
+          <MSSelect size="xs" {...fp("mss3")} label="options" options={states} />
         </Panel>
 
         <h2>Small MSField</h2>
         <Panel>
           <L></L>
-          <MSField {...fp("msf1")} label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} />
+          <MSField {...fp("msf1")} label="options" options={states} />
 
           <L>size="s"</L>
-          <MSField {...fp("msf2")} size="s" label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} />
+          <MSField {...fp("msf2")} size="s" label="options" options={states} />
 
           <L>size="xs"</L>
-          <MSField {...fp("msf3")} size="xs" label="options" options={[
-            {id:1, name:'Option 1'},
-            {id:2, name:'Option 2'},
-            {id:3, name:'Option 3'},
-            {id:4, name:'Option 4'}
-          ]} />
+          <MSField {...fp("msf3")} size="xs" label="options" options={states} />
         </Panel>
 
         <h2>Small Button</h2>
