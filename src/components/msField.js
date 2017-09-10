@@ -69,7 +69,11 @@ export default class MSField extends React.PureComponent {
   }
 
   onFocus = () => {
-    this.setState({open: true, touched: true})
+    // we make timeout, so browser already scroll to that field, and keyboard opened without lag
+    // user has time to input something, and we don't see lags
+    setTimeout(() => {
+      this.setState({open: true, touched: true})
+    }, 300)
   }
 
   onBlur = () => {

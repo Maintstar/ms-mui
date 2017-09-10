@@ -55,14 +55,11 @@ export default class MSFieldOptions extends React.PureComponent {
               <ul>
                 { 
                   options.map(o => 
-                    <MSFieldOption 
-                      key={o[idCol]} 
-                      id={o[idCol]} 
-                      name={o[nameCol]} 
-                      thick={o.thick} 
-                      onClick={onSelect} 
-                    />
-                  )
+                  <li className={ o.thick && 'thick' } 
+                    key={ o[idCol] }
+                    onMouseDown={ this.onSelect }>
+                    { o[nameCol] }
+                  </li>)
                 }
               </ul>
             </div>
@@ -73,7 +70,14 @@ export default class MSFieldOptions extends React.PureComponent {
   }
 }
 
-class MSFieldOption extends React.PureComponent {
+function MSFieldOption2(props) {
+  var { o } = props
+  return <li key={o.id}>
+    {o.name}
+  </li>
+}
+
+class MSFieldOption extends React.Component {
   
   constructor(props) {
     super(props)

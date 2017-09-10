@@ -7,7 +7,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
-  "homepage": "https://github.com/Maintstar/ms-mui",
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
