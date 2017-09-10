@@ -72,12 +72,10 @@ export default class MSFieldOptions extends React.PureComponent {
 
   componentDidMount() {
     this.div.addEventListener('scroll', this.handleDivScroll)
-    //document.addEventListener('scroll', this.handleDocScroll)
   }
 
   componentWillUnmount() {
     this.div.removeEventListener('scroll', this.handleDivScroll)
-    //document.removeEventListener('scroll', this.handleDocScroll)
   }
 
   handleDivScroll = () => {
@@ -87,10 +85,6 @@ export default class MSFieldOptions extends React.PureComponent {
     {
       this.setState({from})
     }
-  }
-
-  handleDocScroll = () => {
-    console.log('window', window.pageYOffset)
   }
 
   render() {

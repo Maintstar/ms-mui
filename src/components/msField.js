@@ -21,6 +21,19 @@ const onChangeEvent = {
 
 //const addLabel = (p, n) => n ? p + ` (${n})` : p
 
+const fieldHeight = 35
+const topK = 0.2
+function getOptionsStyle(fieldTop) {
+  let windowsHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+  let showOnTop = fieldTop / windowsHeight > topK
+
+  console.log('showOnTop', fieldTop, windowsHeight)
+
+  if (showOnTop) {
+    return { height: Math.min(fieldTop, 250), bottom: 35 }
+  }
+}
+
 export default class MSField extends React.PureComponent {
 
   static defaultProps = {
@@ -74,6 +87,7 @@ export default class MSField extends React.PureComponent {
     //setTimeout(() => {
       this.setState({open: true, touched: true})
     //}, 300)
+    window.addEventListener('scroll', this.windowScroll)
   }
 
   onBlur = () => {
@@ -81,6 +95,7 @@ export default class MSField extends React.PureComponent {
     setTimeout(() => {
       this.setState({open: false, filter: false})
     })
+    window.addEventListener('scroll', this.windowScroll)
   }
 
   onChange = ev => {
@@ -202,6 +217,38 @@ export default class MSField extends React.PureComponent {
     return chips
   }
 
+  setRef = el => {
+    this.optionsDiv = el
+  }
+  setIRef = el => {
+    this.input = el
+  }
+
+  componentDidUpdate() {
+    this.updatePos()
+  }
+
+  windowScroll = () => {
+    if (requestAnimationFrame)
+      requestAnimationFrame(this.updatePos)
+    else
+      this.updatePos()
+  }
+
+  updatePos = () => {
+    if (this.optionsDiv) {
+      let st = getOptionsStyle(this.input.getBoundingClientRect().top)
+      if (st) {
+        this.optionsDiv.style.bottom = st.bottom + 'px'
+        this.optionsDiv.style.height = st.height + 'px'
+      }
+      else {
+        this.optionsDiv.style.bottom = ''
+        this.optionsDiv.style.height = ''
+      }
+    }
+  }
+
   render() {
     let {
       label,
@@ -293,6 +340,7 @@ export default class MSField extends React.PureComponent {
       value      
     }
 
+    let optionsVisible = Array.isArray(options) && options.length > 0 && this.state.touched
     return (
       <div className={getClassName(classes)} style={style}>
         {
@@ -312,12 +360,12 @@ export default class MSField extends React.PureComponent {
         }
         {
           // field
-          <input {...inputProps} />
+          <input ref={this.setIRef} {...inputProps} />
         }
         {
           // options
           Array.isArray(options) && options.length > 0 && this.state.touched &&
-          <div className="ms-options_cont" style={ { display: this.state.open ? '' : 'none' } }>
+          <div className="ms-options_cont" ref={this.setRef} style={ { display: this.state.open ? '' : 'none' } }>
             <MSFieldOptions 
               options={ options } 
               filter={ (!preventFilter && filter) ? value : null }
