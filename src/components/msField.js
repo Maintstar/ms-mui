@@ -56,7 +56,7 @@ export default class MSField extends React.PureComponent {
     
     label: propTypes.string,
     name: propTypes.string.isRequired,
-    value: propTypes.string.isRequired,
+    value: propTypes.oneOfType(propTypes.number, propTypes.string).isRequired,
     valueId: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
     options: propTypes.arrayOf(propTypes.object),
 
