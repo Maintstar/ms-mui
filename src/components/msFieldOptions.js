@@ -1,6 +1,5 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { groupBy } from './ms'
 
 function getRoundedFromIndex(scrollTop, itemHeight) {
   // we search for index
@@ -15,11 +14,8 @@ function getRoundedFromIndex(scrollTop, itemHeight) {
 }
 
 
-
-
 // margin to see group header, because group is beetween values and first value
 const marginTop = 7
-const contHeight = 250
 
 function itemTop(index, itemHeight, group) {
   return (group ? marginTop : 0) + index * itemHeight
@@ -116,7 +112,7 @@ export default class MSFieldOptions extends React.PureComponent {
       if (o) {
         let g = o[groupCol]
         // add group name
-        if ((lastGroup == null && g != null) || (lastGroup != g)) {
+        if ((lastGroup == null && g != null) || (lastGroup !== g)) {
           items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(i, itemHeight) }}>{g}</div>)
           lastGroup = g
         }

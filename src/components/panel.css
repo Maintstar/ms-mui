@@ -1,0 +1,31 @@
+/**
+ * MUI Panel module
+ */
+.mui-panel {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 0;
+  background-color: #FFF;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.mui-panel:before, .mui-panel:after {
+  content: " ";
+  display: table;
+}
+
+.mui-panel:after {
+  clear: both;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .mui-panel {
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .mui-panel {
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.12), -1px 0px 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
+  }
+}

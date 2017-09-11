@@ -1,22 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Container from 'muicss/lib/react/container'
 import { getClassName, addSizeClasses, addSizeClassesSuffix, initClasses } from './ms'
+
+import './containerMui.css'
 import './container.css'
 
 const prefix = 'mui-container'
 
-export default function _Container (props) {
-  let { className, size, nopad, ...rest } = props
-  let classes = addSizeClasses(initClasses(className, {}), size, prefix)
-  if (nopad) addSizeClassesSuffix(classes, size, prefix, 'nopad')
-  return <Container className={getClassName(classes)} {...rest} />
-}
+export default class Container extends React.PureComponent {
 
-_Container.propTypes = {
-  nopad: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool
-  ]),
+  static defaultProps = {
+    nopad: false,
+    fluid: false
+  };
+
+  static propTypes = {
+    nopad: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.bool
+    ]),
+  }
+
+
+  render() {
+    const { children, className, size, nopad, fluid, ...rest } = this.props;
+
+    let cls = addSizeClasses(initClasses(className), size, prefix)
+    if (nopad) addSizeClassesSuffix(cls, size, prefix, 'nopad')
+
+    cls[fluid ? 'mui-container-fluid' : 'mui-container'] = 1
+
+    return (
+      <div { ...rest } className={getClassName(cls)}>
+        {children}
+      </div>
+    );
+  }
 }

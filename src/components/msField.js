@@ -21,15 +21,16 @@ const onChangeEvent = {
 }
 
 //const addLabel = (p, n) => n ? p + ` (${n})` : p
-
+const contHeight = 250
 const fieldHeight = 35
 const topK = 0.2
+
 function getOptionsStyle(fieldTop) {
   if (isMobile()) {
     let windowsHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
     let showOnTop = fieldTop / windowsHeight > topK
     if (showOnTop) {
-      return {height: Math.min(fieldTop, 250), bottom: 35}
+      return {height: Math.min(fieldTop, contHeight), bottom: fieldHeight}
     }
   }
 }
@@ -340,7 +341,8 @@ export default class MSField extends React.PureComponent {
       value      
     }
 
-    let optionsVisible = Array.isArray(options) && options.length > 0 && this.state.touched
+    let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
+
     return (
       <div className={getClassName(classes)} style={style}>
         {
@@ -364,7 +366,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // options
-          Array.isArray(options) && options.length > 0 && this.state.touched &&
+          optionsAreVisible &&
           <div className="ms-options_cont" ref={this.setRef} style={ { display: this.state.open ? '' : 'none' } }>
             <MSFieldOptions 
               options={ options } 

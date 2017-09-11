@@ -12,7 +12,7 @@ import L from './components/label'
 import './index.css'
 
 
-var states = [
+const states = [
   {id:'AL', name:'Alabama'},
   {id:'AK', name:'Alaska'},
   {id:'AZ', name:'Arizona'},
@@ -65,7 +65,7 @@ var states = [
   {id:'WY', name:'Wyoming'}
 ]
 
-var statesGroups = [
+const statesGroups = [
   {id:'AL', name:'Alabama', group: 'A'},
   {id:'AK', name:'Alaska', group: 'A'},
   {id:'AZ', name:'Arizona', group: 'A'},
@@ -125,16 +125,10 @@ const getOptions = n => {
   }
   return a
 }
-var bigOptions = getOptions(1000)
+const bigOptions = getOptions(1000)
 
-var sel1 = [
-  {id:1, name:'Option 1'},
-  {id:2, name:'Option 2'},
-  {id:3, name:'Option 3'},
-  {id:4, name:'Option 4'}
-]
 
-var statesOtherCol = [
+const statesOtherCol = [
   {id2:'AL', name2:'Alabama', group2: 'A'},
   {id2:'AK', name2:'Alaska', group2: 'A'},
   {id2:'AZ', name2:'Arizona', group2: 'A'},
@@ -160,14 +154,14 @@ export default class extends React.Component {
     let v = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value
     const s = {[ev.target.name]: v}
     this.setState(s)
-    console.log('onChange form: ', s);
+    //console.log('onChange form: ', s);
   }
 
   onSelected = (id, o, t) => {
-    console.log('onSelected form start');
+    //console.log('onSelected form start');
     const s = {[t.props.name + 'Id']: id}
     this.setState(s)
-    console.log('onSelected form: ',s);
+    //console.log('onSelected form: ',s);
   }
 
   // form properties
@@ -446,7 +440,7 @@ export default class extends React.Component {
         <h2>Small Grid nopad</h2>
         <Panel className="grid-example">
           <L>nopad=1</L>
-          <Container nopad="1">
+          <Container nopad={1}>
             <Row>
               <Col md="3">md-3</Col>
               <Col md="3">md-3</Col>
@@ -463,8 +457,8 @@ export default class extends React.Component {
               <Col md="6">md-6</Col>
             </Row>
           </Container>
-          <L>size="s" nopad="1"</L>
-          <Container size="s" nopad="1">
+          <L>size="s" nopad={1}</L>
+          <Container size="s" nopad={1}>
             <Row>
               <Col md="3">md-3</Col>
               <Col md="3">md-3</Col>
@@ -481,8 +475,8 @@ export default class extends React.Component {
               <Col md="6">md-6</Col>
             </Row>
           </Container>
-          <L>size="xs" nopad="1"</L>
-          <Container size="xs" nopad="1">
+          <L>size="xs" nopad={1}</L>
+          <Container size="xs" nopad={1}>
             <Row>
               <Col md="3">md-3</Col>
               <Col md="3">md-3</Col>
@@ -499,8 +493,8 @@ export default class extends React.Component {
               <Col md="6">md-6</Col>
             </Row>
           </Container>
-          <L>size="none" nopad="1"</L>
-          <Container size="none" nopad="1">
+          <L>size="none" nopad={1}</L>
+          <Container size="none" nopad={1}>
             <Row>
               <Col md="3">md-3</Col>
               <Col md="3">md-3</Col>
