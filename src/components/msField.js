@@ -254,6 +254,7 @@ export default class MSField extends React.PureComponent {
       name,
       value,
       valueId,
+      type,
       style,
       options,
 
@@ -336,7 +337,8 @@ export default class MSField extends React.PureComponent {
       onBlur: this.onBlur,
       onChange: this.onChange,
       name,
-      value      
+      value,
+      type
     }
 
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
