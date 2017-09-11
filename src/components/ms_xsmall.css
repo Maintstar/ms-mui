@@ -1,18 +1,18 @@
-.ms_xsmall .ms-options_it {
+.ms-field.ms_xsmall .ms-options_it {
     font-size: 13px;
 }
-.ms_xsmall > input,
-.ms_xsmall > select {
+.ms-field.ms_xsmall > input,
+.ms-field.ms_xsmall > select {
     font-size: 14px;
     height: 26px;
 }
-.ms_xsmall > input:focus,
-.ms_xsmall > select:focus {
+.ms-field.ms_xsmall > input:focus,
+.ms-field.ms_xsmall > select:focus {
     height: 27px;
 }
 .ms-field.ms_xsmall > input:focus + .clear {
     bottom: -6px;
 }
-.ms_xsmall .ms-label--float {
+.ms-field.ms_xsmall > .ms-label--float {
     transform: translate(0, 18px) scale(1.31, 1.4)
 }

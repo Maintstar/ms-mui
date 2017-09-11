@@ -1,15 +1,15 @@
-.ms_small .ms-options_it {
+.ms-field.ms_small .ms-options_it {
   font-size: 13px;
 }
-.ms_small > input,
-.ms_small > select {
+.ms-field.ms_small > input,
+.ms-field.ms_small > select {
   font-size: 15px;
 }
-.ms_small > input:focus,
-.ms_small > select:focus {
+.ms-field.ms_small > input:focus,
+.ms-field.ms_small > select:focus {
 }
 .ms-field.ms_small > input:focus + .clear {
   bottom: -4px;
 }
-.ms_small .ms-label--float {
+.ms-field.ms_small > .ms-label--float {
 }
