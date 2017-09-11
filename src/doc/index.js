@@ -1,6 +1,8 @@
 import React from 'react'
 import MSField from '../components/msField'
 import MSSelect from '../components/msSelect'
+import MSCheckbox from '../components/msCheckbox'
+
 import Button from '../components/button'
 import Table from '../components/table'
 import Row from '../components/row'
@@ -238,31 +240,17 @@ export default class extends React.Component {
         </Panel>
 
         <h2>MSField checkbox</h2>
-        <p>among empty Fields</p>
+        <p>among Fields</p>
         <Panel>
           <MSField {...fp(i++)} label="Before (to see withing form)" />
 
           <L>Simple</L>
-          <MSField {...fp(i++)} type="checkbox" label="label" />
+          <MSCheckbox {...fp(i++)} label="label" />
 
           <L>With error:</L>
-          <MSField {...fp(i++)} type="checkbox" label="label" error="error text" />
+          <MSCheckbox {...fp(i++)} label="label" error="error text" />
 
           <MSField {...fp(i++)} label="After (to see withing form)" />
-        </Panel>
-
-        <h2>MSField checkbox</h2>
-        <p>among filled Fields</p>
-        <Panel>
-          <MSField {...fp(i++)} label="Before (to see withing form)" defaultValue="asdf" />
-
-          <L>Simple</L>
-          <MSField {...fp(i++)} type="checkbox" label="label" />
-
-          <L>With warning:</L>
-          <MSField {...fp(i++)} type="checkbox" label="label" warning="warning text" />
-
-          <MSField {...fp(i++)} label="After (to see withing form)" defaultValue="asdf" />
         </Panel>
 
         <h2>Small MSSelect</h2>

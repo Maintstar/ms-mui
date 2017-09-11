@@ -1,0 +1,63 @@
+/*opts*/
+.ms-options_cont {
+  height: 250px;
+  width: 100%;
+  position: absolute;
+  bottom: -250px;
+}
+.ms-options {
+  padding-left: 0;
+  list-style-type: none;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  background-color: white;
+  z-index: 1000;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+.ms-options_gr, .ms-options_it, .ms-options_last {
+  position: absolute;
+  width:100%;
+}
+.ms-options_last {
+  width:1px;
+  height:1px;
+}
+.ms-options_gr {
+  padding: 5px;
+  font-size: 10px;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 1000;
+  text-align: center;
+}
+.ms-options_gr:after {
+  content: " ";
+  display: block;
+  border-bottom: 1px solid #eee;
+  height: 5px;
+  margin-top: -13px;
+  margin-left: -5px;
+}
+.ms-options_it {
+  clear: both;
+  color: rgba(0,0,0,0.87);
+  cursor: pointer;
+  line-height: 35px;
+  text-align: left;
+  text-transform: none;
+  padding: 0 12px;
+  display: block;
+}
+.ms-options_it--thick {
+  background-color: lightyellow
+}
+.ms-options_it--empty {
+  color: #aaa;
+  font-style: italic;
+}
+.ms-options_it:hover {
+  background-color: #eee;
+}

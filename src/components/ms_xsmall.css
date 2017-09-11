@@ -1,22 +1,18 @@
-.ms_xsmall .opts,
-.ms_xsmall .mui-select__menu {
+.ms_xsmall .ms-options_it {
     font-size: 13px;
 }
-.ms_xsmall input,
-.ms_xsmall select {
-    font-size: 14px;
-    height: 25px;
-}
-.ms_xsmall input:focus,
-.ms_xsmall .mui-select:focus>select {
+.ms_xsmall > input,
+.ms_xsmall > select {
     font-size: 14px;
     height: 26px;
 }
-.ms_xsmall .mui-textfield--float-label>label,
-.ms_xsmall.mui-textfield--float-label>label {
-    transform: translate(0, 9px);
+.ms_xsmall > input:focus,
+.ms_xsmall > select:focus {
+    height: 27px;
 }
-.ms_xsmall .opts li,
-.ms_xsmall .mui-select__menu div {
-    padding: 0 12px;
+.ms-field.ms_xsmall > input:focus + .clear {
+    bottom: -6px;
+}
+.ms_xsmall .ms-label--float {
+    transform: translate(0, 18px) scale(1.31, 1.4)
 }

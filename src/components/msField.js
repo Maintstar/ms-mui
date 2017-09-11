@@ -22,7 +22,6 @@ const onChangeEvent = {
   preventDefault: () => {}
 }
 
-//const addLabel = (p, n) => n ? p + ` (${n})` : p
 const contHeight = 250
 const fieldHeight = 35
 const topK = 0.2
@@ -364,6 +363,11 @@ export default class MSField extends React.PureComponent {
           <input ref={this.setIRef} {...inputProps} />
         }
         {
+          // clear button
+          !isEmpty &&
+          <div className="clear" onClick={this.handleClear}>×</div>
+        }
+        {
           // options
           optionsAreVisible &&
           <div className="ms-options_cont" ref={this.setRef} style={ { display: this.state.open ? '' : 'none' } }>
@@ -380,11 +384,6 @@ export default class MSField extends React.PureComponent {
         {
           // loading spinner
           isLoading && <Loading />
-        }
-        {
-          // clear button
-          !isEmpty &&
-          <div className="clear" onClick={this.handleClear}>×</div>
         }
       </div>
     )

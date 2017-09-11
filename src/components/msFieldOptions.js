@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import './msFieldOptions.css'
 
 function getRoundedFromIndex(scrollTop, itemHeight) {
   // we search for index
