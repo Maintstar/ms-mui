@@ -1,32 +1,28 @@
 import React from 'react'
 import MSField from '../components/msField'
 import MSSelect from '../components/msSelect'
-import MSFieldOptions from '../components/msFieldOptions'
-import Perf from 'react-addons-perf'
+import MSCheckbox from '../components/msCheckbox'
+
+import Button from '../components/button'
+import Table from '../components/table'
+import Row from '../components/row'
+import Col from '../components/col'
+import Container from '../components/container'
+import Panel from '../components/panel'
+
+import L from './components/label'
 import './index.css'
 
+
+import Perf from 'react-addons-perf'
 window.Perf = Perf
 window.s = Perf.start
 window.f = Perf.stop
 window.p = () => {
-  Perf.printInclusive()
+  Perf.printExclusive()
   Perf.printWasted()
 }
 
-var opts1 = [
-  {id:11, name:''},
-  {id:1, name:'Option 1'},
-  {id:2, name:'Option 2'},
-  {id:3, name:'Option 3'},
-  {id:4, name:'Option 4'}
-]
-
-var sel1 = [
-  {id:1, name:'Option 1'},
-  {id:2, name:'Option 2'},
-  {id:3, name:'Option 3'},
-  {id:4, name:'Option 4'}
-]
 
 const states = [
   {id:'AL', name:'Alabama'},
@@ -82,7 +78,7 @@ const states = [
 ]
 
 
-var statesGroups = [
+const statesGroups = [
   {id:'AL', name:'Alabama', group: 'A'},
   {id:'AK', name:'Alaska', group: 'A'},
   {id:'AZ', name:'Arizona', group: 'A'},
@@ -142,30 +138,22 @@ const getOptions = n => {
   }
   return a
 }
-var bigOptions = getOptions(1000)
+const bigOptions = getOptions(1000)
 
-var emptyString = ""
+const emptyString = ""
 
 export default class Perfomance extends React.PureComponent {
 
   constructor(props) {
     super(props)
     this.state = {
-
     }
-  }
-
-  componentDidUpdate() {
-    // Perf.stop()
-    // Perf.printInclusive()
-    // Perf.printWasted()
   }
 
   onChange = (ev) => {
     let v = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value
     const s = {[ev.target.name]: v}
     this.setState(s)
-    //console.log('onchagne',s)
   }
 
   onSelected = (id, o, t) => {
@@ -174,8 +162,8 @@ export default class Perfomance extends React.PureComponent {
   }
 
   // form properties
-  fp = (n) => {
-
+  fp = (i) => {
+    let n = 'f'+i
     let v = ({
       name:n,
       value: this.state[n] || emptyString,
@@ -186,8 +174,6 @@ export default class Perfomance extends React.PureComponent {
     if (this.state[n+'Id'])
       v.valueId = this.state[n+'Id']
 
-    //console.log('fp',v,this.state)
-    
     return v
   }
 
@@ -197,6 +183,8 @@ export default class Perfomance extends React.PureComponent {
   
   render() {
     let fp = this.fp
+    let i = 0
+
     return (
       <div style={{width:300, margin: 'auto', padding:'400px 0'}}>
 
@@ -216,11 +204,33 @@ export default class Perfomance extends React.PureComponent {
           */
         }
 
-        <MSField {...fp("dd1")} label="Option 2" options={ statesGroups } />
+        <h2>MSSelect</h2>
+        <Panel>
+          <MSSelect {...fp(i++)} label="State" options={states} />
+          <L>error="Error"</L>
+          <MSSelect {...fp(i++)} label="State" options={states} error="Error" />
+          <L>error="Warning"</L>
+          <MSSelect {...fp(i++)} label="State" options={states} warning="Warning" />
+          <L>grouped</L>
+          <MSSelect {...fp(i++)} label="State" options={statesGroups} />
+          <L>emptyValue={"{"}null{"}"}</L>
+          <MSSelect {...fp(i++)} label="State" options={states} emptyValue={null} />
+        </Panel>
 
-        after
+        <h2>MSField with options</h2>
+        <Panel>
+          <L>1000 options</L>
+          <MSField {...fp(i++)} label="options" options={bigOptions} />
 
-        {/*<MSFieldOptions options={ statesGroups } onSelect={this.handleSelect} />*/}
+          <L>grouped</L>
+          <MSField {...fp(i++)} label="options" options={statesGroups} />
+
+          <L>isMulti={"{"}true{"}"}</L>
+          <MSField {...fp(i++)} label="options" options={states} isMulti={true} />
+
+          <L>preventFilter={"{"}true{"}"}</L>
+          <MSField {...fp(i++)} label="options" options={states} preventFilter={true} />
+        </Panel>
 
       </div>
     )

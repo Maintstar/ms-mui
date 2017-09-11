@@ -1,20 +1,13 @@
 import React from 'react';
 import './panel.css'
 
-class Panel extends React.Component {
-  static defaultProps = {
-    className: ''
-  };
 
-  render() {
-    const {children, className, ...rest} = this.props;
-    return (
-      <div { ...rest } className={'mui-panel ' + className}>
-        {children}
-      </div>
-    );
-  }
+export default function Panel(props) {
+  let {children, className, ...rest} = props;
+  className = className ? 'mui-panel ' + className : 'mui-panel'
+  return (
+    <div { ...rest } className={className}>
+      {children}
+    </div>
+  );
 }
-
-/** Define module API */
-export default Panel;
