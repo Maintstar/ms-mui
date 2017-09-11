@@ -5,6 +5,7 @@ import Loading from '../components/loading'
 import propTypes from 'prop-types'
 import MSChips from './msChips'
 import MSFieldOptions from './msFieldOptions'
+import isMobile from '../utils/isMobile'
 
 // perfomance tune
 
@@ -24,13 +25,12 @@ const onChangeEvent = {
 const fieldHeight = 35
 const topK = 0.2
 function getOptionsStyle(fieldTop) {
-  let windowsHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-  let showOnTop = fieldTop / windowsHeight > topK
-
-  console.log('showOnTop', fieldTop, windowsHeight)
-
-  if (showOnTop) {
-    return { height: Math.min(fieldTop, 250), bottom: 35 }
+  if (isMobile()) {
+    let windowsHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+    let showOnTop = fieldTop / windowsHeight > topK
+    if (showOnTop) {
+      return {height: Math.min(fieldTop, 250), bottom: 35}
+    }
   }
 }
 
