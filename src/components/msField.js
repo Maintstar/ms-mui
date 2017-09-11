@@ -6,6 +6,8 @@ import propTypes from 'prop-types'
 import MSChips from './msChips'
 import MSFieldOptions from './msFieldOptions'
 import isMobile from '../utils/isMobile'
+import requestAnimationFrame from '../utils/requestAnimationFrame'
+import getElementBBox from '../utils/getElementBBox'
 
 // perfomance tune
 
@@ -230,15 +232,12 @@ export default class MSField extends React.PureComponent {
   }
 
   windowScroll = () => {
-    if (requestAnimationFrame)
-      requestAnimationFrame(this.updatePos)
-    else
-      this.updatePos()
+    requestAnimationFrame(this.updatePos)
   }
 
   updatePos = () => {
     if (this.optionsDiv) {
-      let st = getOptionsStyle(this.input.getBoundingClientRect().top)
+      let st = getOptionsStyle(getElementBBox(this.input).top)
       if (st) {
         this.optionsDiv.style.bottom = st.bottom + 'px'
         this.optionsDiv.style.height = st.height + 'px'
