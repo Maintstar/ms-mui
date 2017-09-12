@@ -1,15 +1,15 @@
 import React from 'react'
-import './msField.css'
 import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses} from './ms'
 import Loading from '../components/loading'
 import propTypes from 'prop-types'
 import MSChips from './msChips'
 import MSFieldOptions from './msFieldOptions'
-import isMobile from '../utils/isMobile'
+import { isMobile } from '../utils/mobile'
 import requestAnimationFrame from '../utils/requestAnimationFrame'
 import getElementBBox from '../utils/getElementBBox'
 
-// perfomance tune
+import './msField.css'
+import './msFieldDate.css'
 
 const defClass = {'ms-field': 1}
 const emptyArray = []
@@ -43,7 +43,8 @@ export default class MSField extends React.PureComponent {
     idCol: 'id',
     groupCol: 'group',
     isMulti: false,
-    preventFilter: false
+    preventFilter: false,
+    floatingLabel: true
   }
 
   static propTypes = {
@@ -257,6 +258,7 @@ export default class MSField extends React.PureComponent {
       type,
       style,
       options,
+      floatingLabel,
 
       className,
       error,
@@ -290,6 +292,10 @@ export default class MSField extends React.PureComponent {
       classes['ms-field--dd'] = 1
     }
 
+    if (value) {
+      classes['ms-field--filled'] = 1
+    }
+
     let chips = null
     if (valueId != null) {
       chips = this.getSelectedOptions(valueId)
@@ -303,33 +309,32 @@ export default class MSField extends React.PureComponent {
 
     // get label class
     let labelClass = initClasses(null, {'ms-label':1})
-    if (isMulti === true)
-    {
-      // value selected
-      if (valueId)
-      {
-        if (this.state.open) {
-          labelClass['ms-label--hide'] = 1
-          labelClass['ms-label--float'] = 1
+    if (floatingLabel) {
+      if (isMulti === true) {
+        // value selected
+        if (valueId) {
+          if (this.state.open) {
+            labelClass['ms-label--hide'] = 1
+            labelClass['ms-label--float'] = 1
+          }
+          else {
+            labelClass['ms-label--float'] = 1
+          }
         }
+        // no value selected
         else {
-          labelClass['ms-label--float'] = 1
-        }
-      }
-      // no value selected
-      else
-      {
-        if (this.state.open) {
+          if (this.state.open) {
 
-        }
-        else {
-          labelClass['ms-label--float'] = 1
+          }
+          else {
+            labelClass['ms-label--float'] = 1
+          }
         }
       }
-    }
-    else {
-      if (!value && !this.state.open)
-        labelClass['ms-label--float'] = 1
+      else {
+        if (!value && !this.state.open)
+          labelClass['ms-label--float'] = 1
+      }
     }
 
     let inputProps = {
@@ -339,6 +344,10 @@ export default class MSField extends React.PureComponent {
       name,
       value,
       type
+    }
+
+    if (type === 'date') {
+      inputProps.placeholder="Впиши сюда что-нибудь"
     }
 
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
@@ -366,7 +375,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // clear button
-          !isEmpty &&
+          valueId &&
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {

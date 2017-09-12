@@ -14,7 +14,6 @@ function getRoundedFromIndex(scrollTop, itemHeight) {
   return from
 }
 
-
 // margin to see group header, because group is beetween values and first value
 const marginTop = 7
 

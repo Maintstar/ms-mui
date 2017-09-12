@@ -1,0 +1,43 @@
+/*
+
+http://qnimate.com/guide-to-styling-html5-input-elements/
+
+::-webkit-datetime-edit { padding: 1em; }
+::-webkit-datetime-edit-fields-wrapper { background: silver; }
+::-webkit-datetime-edit-text { color: red; padding: 0 0.3em; }
+::-webkit-datetime-edit-month-field { color: blue; }
+::-webkit-datetime-edit-day-field { color: green; }
+::-webkit-datetime-edit-year-field { color: purple; }
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { background: orange; }
+
+
+
+::-webkit-datetime-edit {
+    color: white
+}
+input[type=date]:focus {
+    color: inherit;
+}
+
+::-webkit-calendar-picker-indicator:hover,
+::-webkit-calendar-picker-indicator { color: #aaa }
+*/
+
+.ms-field > input[type="date"]
+{
+    -webkit-appearance: none;
+    padding: 4px 0px;
+}
+.ms-field > input[type=date]::-webkit-datetime-edit {
+    color: white;
+}
+.ms-field > input[type=date]:focus::-webkit-datetime-edit,
+.ms-field.ms-field--filled > input[type="date"]::-webkit-datetime-edit {
+    color: inherit;
+}
+.ms-field > input[type=date]::-webkit-inner-spin-button { display: none; }
+.ms-field > input[type=date]::-webkit-calendar-picker-indicator {
+    color: #aaa;
+    background-color: transparent;
+}

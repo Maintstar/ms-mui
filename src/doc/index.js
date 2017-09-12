@@ -232,11 +232,19 @@ export default class extends React.Component {
         <Panel>
           <MSField {...fp(i++)} label="label" />
 
+          <L>floatingLabel={'{'}false{'}'}</L>
+          <MSField {...fp(i++)} label="label" floatingLabel={false} />
+
           <L>error="error"</L>
           <MSField {...fp(i++)} label="label" error="error" />
 
           <L>isLoading={"{"}true{"}"}</L>
           <MSField {...fp(i++)} label="loading" isLoading={true} />
+        </Panel>
+
+        <h2>MSField date</h2>
+        <Panel>
+          <MSField {...fp(i++)} type="date" label="label" />
         </Panel>
 
         <h2>MSField checkbox</h2>
