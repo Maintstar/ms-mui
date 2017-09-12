@@ -1,5 +1,6 @@
 .ms-field.ms--xsmall .ms-options_it {
     font-size: 13px;
+    padding: 0 10px;
 }
 .ms-field.ms--xsmall > input,
 .ms-field.ms--xsmall > select {

@@ -1,0 +1,15 @@
+.mui-container .ms-field.mui-col > .ms-options_cont {
+    width: auto;
+    left: 15px;
+    right: 15px;
+}
+.mui-container--small .ms-field.mui-col > .ms-options_cont {
+    width: auto;
+    left: 7px;
+    right: 7px;
+}
+.mui-container--xsmall .ms-field.mui-col > .ms-options_cont {
+    width: auto;
+    left: 4px;
+    right: 4px;
+}

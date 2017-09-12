@@ -1,8 +1,8 @@
 import React from 'react'
 import { getClassName, addSizeClasses, initClasses } from './ms'
 import './table.css'
-import './table_small.css'
-import './table_xsmall.css'
+import './tableSmall.css'
+import './tableXSmall.css'
 
 export default function _Table (props) {
   let { className, size, children, ...rest } = props

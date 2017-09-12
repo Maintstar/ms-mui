@@ -1,5 +1,6 @@
 .ms-field.ms--small .ms-options_it {
   font-size: 13px;
+  padding: 0 10px;
 }
 .ms-field.ms--small > input,
 .ms-field.ms--small > select {
@@ -10,6 +11,4 @@
 }
 .ms-field.ms--small > input:focus + .clear {
   bottom: -4px;
-}
-.ms-field.ms--small > .ms-label--float {
 }

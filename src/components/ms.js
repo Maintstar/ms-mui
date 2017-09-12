@@ -1,6 +1,3 @@
-import './base'
-import './ms_small.css'
-import './ms_xsmall.css'
 import './ms_message.css'
 
 // export function addSizeClasses(classNames, size) {
@@ -22,10 +19,21 @@ export function initClasses(classNames, init) {
 }
 
 const aliases = {
-  "s": 'small',
-  "xs": 'xsmall',
-  "n": 'normal',
-  "nn": 'none'
+  's': 'small',
+  'xs': 'xsmall',
+  'n': 'normal',
+  'nn': 'none',
+  '': ''
+}
+
+const heightBySizeMap = {
+  '': 32,
+  'small': 32,
+  'xsmall': 30
+}
+
+export function getFieldHeightBySize(size) {
+  return heightBySizeMap[aliases[size] || '']
 }
 
 export function addSizeClasses(classes, size, prefix = 'ms') {
@@ -44,11 +52,14 @@ export function addGridClasses(classes, props, changeProps = true) {
 
     // add mui-col-{bk}-{val}
     val = props[bk];
-    if (val) classes[baseCls + '-' + val] = true;
+    if (val) {
+      classes['mui-col'] = 1;
+      classes[baseCls + '-' + val] = 1;
+    }
 
     // add mui-col-{bk}-offset-{val}
     val = props[bk + '-offset'];
-    if (val) classes[baseCls + '-offset-' + val] = true;
+    if (val) classes[baseCls + '-offset-' + val] = 1;
 
     // remove from rest
     if (changeProps) {
@@ -56,7 +67,7 @@ export function addGridClasses(classes, props, changeProps = true) {
       delete props[bk + '-offset'];
     }
   }
-  return props
+  return classes['mui-col'] === 1
 }
 
 export function addErrorWarnClasses(classes, error, warning) {
@@ -67,28 +78,4 @@ export function addErrorWarnClasses(classes, error, warning) {
 
 export function getClassName(classes) {
   return Object.keys(classes||{}).join(' ')
-}
-
-
-// in: [{id:1, name:'asdf', group: 'g1'}...]
-// out: {
-//   'g1': [
-//      {id:1, name:'asdf'}
-//   ]
-//   ...
-// }
-const empty = {}
-export function groupBy(ar, groupCol = "group") {
-  if (!ar) return empty
-  let g = ar.reduce(function(a, c) {
-    let id = c[groupCol]
-    if (!a[id]) {
-      a[id] = [c]
-    }
-    else {
-      a[id].push(c)
-    }
-    return a
-  }, {})
-  return g
 }

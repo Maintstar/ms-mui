@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import './msSelect.css'
 import { addSizeClasses, addErrorWarnClasses, initClasses, getClassName, addGridClasses } from './ms'
 import MSSelectGroup from './msSelectGroup'
-import { groupBy } from './ms'
+import { groupBy } from '../utils/groupBy'
 
 const defOptions = []
 const defClass = {'ms-field':1}

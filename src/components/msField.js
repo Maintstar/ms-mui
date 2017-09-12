@@ -1,5 +1,5 @@
 import React from 'react'
-import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses, addGridClasses} from './ms'
+import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses, addGridClasses, getFieldHeightBySize} from './ms'
 import Loading from '../components/loading'
 import propTypes from 'prop-types'
 import MSChips from './msChips'
@@ -9,10 +9,14 @@ import requestAnimationFrame from '../utils/requestAnimationFrame'
 import getElementBBox from '../utils/getElementBBox'
 
 import './msField.css'
+import './msFieldSmall.css'
+import './msFieldXSmall.css'
+import './msFieldContainer.css'
 import './msFieldDate.css'
 
 const defClass = {'ms-field': 1}
 const emptyArray = []
+const styleHidden = {display:'none'}
 
 const onChangeFld = { type: 'text', value: "", name: "" }
 const onChangeEvent = {
@@ -22,11 +26,24 @@ const onChangeEvent = {
   preventDefault: () => {}
 }
 
-const contHeight = 250
-const fieldHeight = 35
+
+const maxContHeight = 250
+// coefficient when options show at the top
 const topK = 0.2
 
-function getOptionsStyle(fieldTop) {
+
+function getOptionsStyle(fieldTop, props, grid) {
+  let { size, itemHeight, options } = props
+  let optionsCount = (options && options.length) || 0
+  let fieldHeight = getFieldHeightBySize(size)
+  let contHeight = Math.min(optionsCount * itemHeight + 1, maxContHeight)
+
+  // because when field is in grid mode xs=6...
+  // box-sizing: border-box; which makes size to be different because of border calc
+  // as i understand
+  grid = grid ? 1 : 0
+
+  // if mobile and show on top
   if (isMobile()) {
     let windowsHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
     let showOnTop = fieldTop / windowsHeight > topK
@@ -34,6 +51,9 @@ function getOptionsStyle(fieldTop) {
       return {height: Math.min(fieldTop, contHeight), bottom: fieldHeight}
     }
   }
+
+  // otherwise
+  return {height: contHeight, bottom: -(contHeight + grid)}
 }
 
 export default class MSField extends React.PureComponent {
@@ -44,7 +64,8 @@ export default class MSField extends React.PureComponent {
     groupCol: 'group',
     isMulti: false,
     preventFilter: false,
-    floatingLabel: true
+    floatingLabel: true,
+    itemHeight: 35
   }
 
   static propTypes = {
@@ -65,6 +86,7 @@ export default class MSField extends React.PureComponent {
     error: propTypes.string,
     warning: propTypes.string,
     size: propTypes.string,
+    itemHeight: propTypes.number,
 
     isLoading: propTypes.bool,
     isMulti: propTypes.bool,
@@ -237,15 +259,11 @@ export default class MSField extends React.PureComponent {
 
   updatePos = () => {
     if (this.optionsDiv) {
-      let st = getOptionsStyle(getElementBBox(this.input).top)
-      if (st) {
-        this.optionsDiv.style.bottom = st.bottom + 'px'
-        this.optionsDiv.style.height = st.height + 'px'
-      }
-      else {
-        this.optionsDiv.style.bottom = ''
-        this.optionsDiv.style.height = ''
-      }
+      let st = getOptionsStyle(getElementBBox(this.input).top, this.props, this.grid)
+
+      this.optionsDiv.style.bottom = st.bottom != null ? st.bottom + 'px' : ''
+      this.optionsDiv.style.top = st.top != null ? st.top + 'px' : ''
+      this.optionsDiv.style.height = st.height != null ? st.height + 'px' : ''
     }
   }
 
@@ -259,6 +277,7 @@ export default class MSField extends React.PureComponent {
       style,
       options,
       floatingLabel,
+      itemHeight,
 
       className,
       error,
@@ -283,12 +302,14 @@ export default class MSField extends React.PureComponent {
     } = this.state
 
     let isEmpty = !value && !valueId
+    let optionsCount = (options && options.length) || 0
 
     // make classes
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
     addErrorWarnClasses(classes, error, warning)
-    addGridClasses(classes, this.props, false)
+    this.grid = addGridClasses(classes, this.props, false)
+
     if (isEmpty && !hideDropIcon && options) {
       classes['ms-field--dd'] = 1
     }
@@ -382,11 +403,12 @@ export default class MSField extends React.PureComponent {
         {
           // options
           optionsAreVisible &&
-          <div className="ms-options_cont" ref={this.setRef} style={ { display: this.state.open ? '' : 'none' } }>
+          <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
             <MSFieldOptions 
               options={ options } 
               filter={ (!preventFilter && filter) ? value : null }
               onSelect={ this.handleSelect }
+              itemHeight={itemHeight}
               nameCol={nameCol}
               idCol={idCol}
               groupCol={groupCol}

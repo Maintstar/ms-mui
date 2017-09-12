@@ -2,6 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import './msFieldOptions.css'
 
+
 function getRoundedFromIndex(scrollTop, itemHeight) {
   // we search for index
   let from = scrollTop / itemHeight;
@@ -15,7 +16,7 @@ function getRoundedFromIndex(scrollTop, itemHeight) {
 }
 
 // margin to see group header, because group is beetween values and first value
-const marginTop = 7
+export const marginTop = 7
 
 function itemTop(index, itemHeight, group) {
   return (group ? marginTop : 0) + index * itemHeight
