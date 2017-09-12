@@ -242,6 +242,45 @@ export default class extends React.Component {
           <MSField {...fp(i++)} label="loading" isLoading={true} />
         </Panel>
 
+        <h2>MSFields MSSelect grid</h2>
+        <Panel>
+          <L>MSField[xs="6"] container[size="n" nopad={'{'}1{'}'}]]</L>
+          <Container nopad={1}>
+            <Row>
+              <MSField {...fp(i++)} label="left" xs="6" />
+              <MSField {...fp(i++)} label="right" xs="6" />
+            </Row>
+          </Container>
+          <L>MSField[xs="6"] container[size="s" nopad={'{'}1{'}'}]]</L>
+          <Container nopad={1} size="s">
+            <Row>
+              <MSField {...fp(i++)} label="left" xs="6" />
+              <MSField {...fp(i++)} label="right" xs="6" />
+            </Row>
+          </Container>
+          <L>MSField[xs="6"] container[size="xs" nopad={'{'}1{'}'}]]</L>
+          <Container nopad={1} size="xs">
+            <Row>
+              <MSField {...fp(i++)} label="left" xs="6" />
+              <MSField {...fp(i++)} label="right" xs="6" />
+            </Row>
+          </Container>
+          <L>MSField[xs="6"] container[size="none" nopad={'{'}1{'}'}]</L>
+          <Container nopad={1} size="none">
+            <Row>
+              <MSField {...fp(i++)} label="left" xs="6" />
+              <MSField {...fp(i++)} label="right" xs="6" />
+            </Row>
+          </Container>
+          <L>MSSelect[xs="6"] container nopad={'{'}1{'}'}]</L>
+          <Container nopad={1}>
+            <Row>
+              <MSSelect {...fp(i++)} label="left" xs="6" />
+              <MSSelect {...fp(i++)} label="right" xs="6" />
+            </Row>
+          </Container>
+        </Panel>
+
         <h2>MSField date</h2>
         <Panel>
           <MSField {...fp(i++)} type="date" label="label" />
@@ -358,7 +397,7 @@ export default class extends React.Component {
 
         <h2>Small Grid</h2>
         <Panel className="grid-example">
-          <L></L>
+          <L>default</L>
           <Container className="custom">
             <Row>
               <Col md="3">md-3</Col>

@@ -1,11 +1,11 @@
-.mui-table_small .mui-table td,
-.mui-table_small .mui-table th {
+.mui-table--small .mui-table td,
+.mui-table--small .mui-table th {
     padding: 5px;
 }
-.mui-table_small {
+.mui-table--small {
     margin-left: -6px;
     margin-right: -6px;
 }
-.mui-table_small .mui-table {
+.mui-table--small .mui-table {
     border-spacing: 0;
 }

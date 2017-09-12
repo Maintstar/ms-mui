@@ -1,5 +1,5 @@
 import React from 'react'
-import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses} from './ms'
+import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses, addGridClasses} from './ms'
 import Loading from '../components/loading'
 import propTypes from 'prop-types'
 import MSChips from './msChips'
@@ -275,7 +275,7 @@ export default class MSField extends React.PureComponent {
       
       nameCol,
       idCol,
-      groupCol
+      groupCol,
     } = this.props
 
     let {
@@ -288,6 +288,7 @@ export default class MSField extends React.PureComponent {
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
     addErrorWarnClasses(classes, error, warning)
+    addGridClasses(classes, this.props, false)
     if (isEmpty && !hideDropIcon && options) {
       classes['ms-field--dd'] = 1
     }

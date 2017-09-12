@@ -30,15 +30,33 @@ const aliases = {
 
 export function addSizeClasses(classes, size, prefix = 'ms') {
   let sn = aliases[size] || size
-  if (sn) classes[[prefix,sn].join("_")] = 1
+  if (sn) classes[[prefix,sn].join("--")] = 1
   return classes
 }
 
-export function addSizeClassesSuffix(classes, size, prefix = 'ms', suffix) {
-  let sn = aliases[size] || size
-  let n = [prefix, sn, suffix].filter(x => x)
-  classes[n.join('_')] = 1
-  return classes
+let i, bk, val, baseCls;
+export const gridBreakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
+export function addGridClasses(classes, props, changeProps = true) {
+  // add mui-col classes
+  for (i=gridBreakpoints.length - 1; i > -1; i--) {
+    bk = gridBreakpoints[i];
+    baseCls = 'mui-col-' + bk;
+
+    // add mui-col-{bk}-{val}
+    val = props[bk];
+    if (val) classes[baseCls + '-' + val] = true;
+
+    // add mui-col-{bk}-offset-{val}
+    val = props[bk + '-offset'];
+    if (val) classes[baseCls + '-offset-' + val] = true;
+
+    // remove from rest
+    if (changeProps) {
+      delete props[bk];
+      delete props[bk + '-offset'];
+    }
+  }
+  return props
 }
 
 export function addErrorWarnClasses(classes, error, warning) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getClassName, addSizeClasses, addSizeClassesSuffix, initClasses } from './ms'
+import { getClassName, addSizeClasses, initClasses } from './ms'
 
 import './containerMui.css'
 import './container.css'
@@ -11,7 +11,7 @@ export default class Container extends React.PureComponent {
 
   static defaultProps = {
     nopad: false,
-    fluid: false
+    fluid: false,
   };
 
   static propTypes = {
@@ -26,7 +26,7 @@ export default class Container extends React.PureComponent {
     const { children, className, size, nopad, fluid, ...rest } = this.props;
 
     let cls = addSizeClasses(initClasses(className), size, prefix)
-    if (nopad) addSizeClassesSuffix(cls, size, prefix, 'nopad')
+    if (nopad) cls[prefix + '--0pad'] = 1
 
     cls[fluid ? 'mui-container-fluid' : 'mui-container'] = 1
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import './msSelect.css'
-import { addSizeClasses, addErrorWarnClasses, initClasses, getClassName } from './ms'
+import { addSizeClasses, addErrorWarnClasses, initClasses, getClassName, addGridClasses } from './ms'
 import MSSelectGroup from './msSelectGroup'
 import { groupBy } from './ms'
 
@@ -71,6 +71,7 @@ export default class MSSelect extends React.PureComponent {
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
     addErrorWarnClasses(classes, error, warning)
+    addGridClasses(classes, this.props, false)
 
     // get label class
     let labelClass = initClasses(null, defLabelClass)

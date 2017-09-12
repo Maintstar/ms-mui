@@ -1,15 +1,15 @@
-.ms-field.ms_small .ms-options_it {
+.ms-field.ms--small .ms-options_it {
   font-size: 13px;
 }
-.ms-field.ms_small > input,
-.ms-field.ms_small > select {
+.ms-field.ms--small > input,
+.ms-field.ms--small > select {
   font-size: 15px;
 }
-.ms-field.ms_small > input:focus,
-.ms-field.ms_small > select:focus {
+.ms-field.ms--small > input:focus,
+.ms-field.ms--small > select:focus {
 }
-.ms-field.ms_small > input:focus + .clear {
+.ms-field.ms--small > input:focus + .clear {
   bottom: -4px;
 }
-.ms-field.ms_small > .ms-label--float {
+.ms-field.ms--small > .ms-label--float {
 }

@@ -94,9 +94,9 @@ option {
     bottom: -3px;
 }
 
-.ms_small .clear {
+.ms--small .clear {
     bottom: -5px;
 }
-.ms_xsmall .clear {
+.ms--xsmall .clear {
     bottom: -7px;
 }
