@@ -11,14 +11,14 @@ function animate() {
 
   for (let n of animateEl) {
     n.classList.add(classNameAnim1)
-    setTimeout(()=>{
+    setTimeout(() => {
       n.classList.add(classNameAnim2)
-      setTimeout(()=>{
+      setTimeout(() => {
         n.classList.remove(classNameAnim1)
         n.classList.remove(classNameAnim2)
         animateEl.length = 0
       },800)
-    },0)
+    })
   }
 
   //setTimeout(removeClass)
@@ -48,15 +48,10 @@ function animate() {
 
 export default class Panel extends React.PureComponent {
 
-  constructor(props) {
-    super(props)
-    this.anim = false
-    this.id = Math.random()
-  }
-
   componentWillReceiveProps(props) {
     if (this.props.fadeIn !== props.fadeIn) {
-      this.anim = true
+      animateEl.push(this.div)
+      animate()
     }
   }
 
@@ -64,19 +59,9 @@ export default class Panel extends React.PureComponent {
     this.div = div
   }
 
-  animate = () => {
-    animateEl.push(this.div)
-    animate()
-  }
-
   render() {
     let {children, className, fadeIn, ...rest} = this.props;
     let cls = initClasses(className, {'mui-panel':1})
-    if (this.anim) {
-      // start
-      setTimeout(this.animate)
-      this.anim = false
-    }
     return (
       <div { ...rest } ref={ this.setRef } className={ getClassName(cls) }>
         {children}
