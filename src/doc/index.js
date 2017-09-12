@@ -149,6 +149,7 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      fadein: 0
     }
   }
 
@@ -194,8 +195,10 @@ export default class extends React.Component {
           Check this page <a href="https://github.com/Maintstar/ms-mui/blob/master/src/doc/index.js">source file</a> with usage details
         </p>
 
+        <button onClick={()=>{this.setState({fadein:1})}}>aaa</button>
+
         <h2>MSSelect</h2>
-        <Panel>
+        <Panel fadeIn={this.state.fadein}>
           <MSSelect {...fp(i++)} label="State" options={states} />
           <L>error="Error"</L>
           <MSSelect {...fp(i++)} label="State" options={states} error="Error" />
