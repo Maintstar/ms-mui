@@ -37,7 +37,7 @@ export default class MSSelect extends React.PureComponent {
     error: propTypes.string,
     warning: propTypes.string,
     name: propTypes.string.isRequired,
-    value: propTypes.string.isRequired,
+    value: propTypes.oneOfType([propTypes.number, propTypes.string]).isRequired,
 
     size: propTypes.string,
 
