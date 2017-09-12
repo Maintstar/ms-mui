@@ -5,8 +5,8 @@ import MSCheckbox from '../components/msCheckbox'
 
 import Button from '../components/button'
 import Table from '../components/table'
-import Row from '../components/row'
-import Col from '../components/col'
+import Row from '../components/containerRow'
+import Col from '../components/containerCol'
 import Container from '../components/container'
 import Panel from '../components/panel'
 

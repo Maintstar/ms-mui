@@ -5,9 +5,11 @@ import MSCheckbox from '../components/msCheckbox'
 
 import Button from '../components/button'
 import Table from '../components/table'
-import Row from '../components/row'
-import Col from '../components/col'
+
 import Container from '../components/container'
+import Row from '../components/containerRow'
+import Col from '../components/containerCol'
+
 import Panel from '../components/panel'
 
 import L from './components/label'
@@ -141,6 +143,11 @@ const statesOtherCol = [
   {id2:'DE', name2:'Delaware', group2: 'D'}
 ]
 
+const optionsSmall = [
+  {id:'AL', name:'Alabama'},
+  {id:'AK', name:'Alaska'},
+  {id:'AZ', name:'Arizona'},
+]
 
 
 
@@ -246,12 +253,16 @@ export default class extends React.Component {
         </Panel>
 
         <h2>MSFields MSSelect grid</h2>
+        <p>
+          to decrease number of React elements in real forms (with a lot of fields),
+          grid functionality putinto MSField,MSSelect i think it worth it
+        </p>
         <Panel>
           <L>MSField[xs="6"] container[size="n" nopad={'{'}1{'}'}]]</L>
           <Container nopad={1}>
             <Row>
-              <MSField {...fp(i++)} label="left" xs="6" />
-              <MSField {...fp(i++)} label="right" xs="6" />
+              <MSField {...fp(i++)} label="left" xs="6" options={optionsSmall} />
+              <MSField {...fp(i++)} label="right" xs="6" options={optionsSmall} />
             </Row>
           </Container>
           <L>MSField[xs="6"] container[size="s" nopad={'{'}1{'}'}]]</L>

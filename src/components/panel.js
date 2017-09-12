@@ -4,7 +4,6 @@ import { initClasses, getClassName } from '../components/ms'
 
 
 let animateEl = []
-let animTimer = null
 const classNameAnim1 = "mui-panel--anim1"
 const classNameAnim2 = "mui-panel--anim2"
 
@@ -18,7 +17,7 @@ function animate() {
         n.classList.remove(classNameAnim1)
         n.classList.remove(classNameAnim2)
         animateEl.length = 0
-      },950)
+      },800)
     },0)
   }
 
@@ -74,7 +73,8 @@ export default class Panel extends React.PureComponent {
     let {children, className, fadeIn, ...rest} = this.props;
     let cls = initClasses(className, {'mui-panel':1})
     if (this.anim) {
-      this.animate()
+      // start
+      setTimeout(this.animate)
       this.anim = false
     }
     return (
