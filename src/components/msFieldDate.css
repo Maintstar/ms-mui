@@ -30,7 +30,7 @@ input[type=date]:focus {
     padding: 4px 0px;
 }
 .ms-field > input[type=date]::-webkit-datetime-edit {
-    color: white;
+    color: transparent;
 }
 .ms-field > input[type=date]:focus::-webkit-datetime-edit,
 .ms-field.ms-field--filled > input[type="date"]::-webkit-datetime-edit {
