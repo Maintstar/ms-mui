@@ -16,12 +16,10 @@ function animate() {
       setTimeout(()=>{
         n.classList.remove(classNameAnim1)
         n.classList.remove(classNameAnim2)
-        animateEl.length = 0
       },800)
     },0)
   }
-
-  //setTimeout(removeClass)
+  animateEl.length = 0
 }
 
 // function removeClass() {
