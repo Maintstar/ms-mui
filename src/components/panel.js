@@ -74,7 +74,7 @@ export default class Panel extends React.PureComponent {
     let cls = initClasses(className, {'mui-panel':1})
     if (this.anim) {
       // start
-      setTimeout(this.animate)
+      this.animate()
       this.anim = false
     }
     return (
