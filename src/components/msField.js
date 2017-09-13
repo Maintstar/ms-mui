@@ -89,7 +89,7 @@ export default class MSField extends React.PureComponent {
     itemHeight: propTypes.number,
 
     isLoading: propTypes.bool,
-    isMulti: propTypes.bool,
+    isMulti: propTypes.oneOfType([propTypes.bool, propTypes.number]),
     //isFree,
 
     // should we hide dropicon
@@ -137,7 +137,7 @@ export default class MSField extends React.PureComponent {
     // deselect if selected
     if (!isMulti && valueId != null) {
       //setTimeout(() => {
-      this.select(null, {skipOnChange: true})
+      this.select(null)
       //})
     }
   }
@@ -159,9 +159,10 @@ export default class MSField extends React.PureComponent {
     this.select(id)
   }
 
-  select(newValueId, { setOnlySent, skipOnChange } = {}) {
+  select(newValueId, { setOnlySent } = {}) {
     let { valueId, isMulti, onSelected, onChange, onClear, name } = this.props
     let sentValueId = newValueId
+    let value = null
 
     if (newValueId != null) {
       if (isMulti) {
@@ -178,33 +179,30 @@ export default class MSField extends React.PureComponent {
             newValueId = null
         }
       }
+      else {
+        let opt = this.getOption(newValueId)
+        value = opt[this.props.nameCol]
+      }
     }
 
     if (onClear && newValueId == null) {
       onClear()
     }
 
+    // call only selected if selected, or onChange if no onSelected
     if (onSelected) {
-      onSelected.call(this, newValueId, sentValueId, this)
+      // sentValueId
+      onSelected.call(this, newValueId, value, this, sentValueId)
     }
-
-    // call onChange callback
-    if (!skipOnChange && onChange) {
-      let v = ''
-      if (!isMulti && newValueId != null)
-      {
-        let opt = this.getOption(newValueId)
-        v = opt[this.props.nameCol]
-      }
-
+    else {
       // call on change when value changed
-      if (this.props.value !== v)
+      if (this.props.value !== value)
       {
         //setTimeout(() => {
           // i am doing an event
-          onChangeFld.value = v
-          onChangeFld.name = name
-          onChange.call(this, onChangeEvent)
+        onChangeFld.value = value
+        onChangeFld.name = name
+        onChange.call(this, onChangeEvent)
         //})
       }
     }
