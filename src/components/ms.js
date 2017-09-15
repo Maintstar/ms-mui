@@ -19,6 +19,8 @@ export function initClasses(classNames, init) {
 }
 
 const aliases = {
+  'l': 'large',
+  'm': 'medium',
   's': 'small',
   'xs': 'xsmall',
   'n': 'normal',
