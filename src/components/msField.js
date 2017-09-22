@@ -134,16 +134,14 @@ export default class MSField extends React.PureComponent {
     // otherwise, click will not be able to fire, and options will be hidden already
     setTimeout(() => {
       this.setState({open: false, filter: false})
-      let { name, value, text, isFree, onChange } = this.props
 
-      // if is not free, erase text
-      onChangeFld.value = ''
-      onChangeFld.name = name
-      if (onChange && value == null && !isFree) {
+      let { name, text, onChange } = this.props
+      if (onChange && this.isValueMode() && text) {
+        onChangeFld.value = null
+        onChangeFld.name = name + "Text"
         onChange.call(this, onChangeEvent)
       }
     })
-
     window.removeEventListener('scroll', this.windowScroll)
   }
 
@@ -155,21 +153,25 @@ export default class MSField extends React.PureComponent {
 
     // on change
     onChange = onChange || noop
-    if (isFree || options == null)
+
+    if (this.isValueMode())
     {
-      onChange.call(this, ev)
-    }
-    else
-    {
+      if (value && !isMulti)
+      {
+        this.select(null)
+      }
       onChangeFld.value = ev.target.value
       onChangeFld.name = name + "Text"
       onChange.call(this, onChangeEvent)
     }
-
-    // deselect if single value selected
-    if (!isFree && !isMulti && value != null) {
-      //this.select(null)
+    else
+    {
+      onChange.call(this, ev)
     }
+  }
+
+  isValueMode = () => {
+    return this.props.isFree === false && (this.props.options)
   }
 
   handleClear = () => {
@@ -190,7 +192,7 @@ export default class MSField extends React.PureComponent {
   }
 
   select(newValue, { setOnlySent } = {}) {
-    let { value, isMulti, isFree, onSelected, onChange, onClear, name } = this.props
+    let { value, isMulti, isFree, onSelected, onClear, name } = this.props
     let sentValue = newValue
     let valueText = null
 
@@ -230,7 +232,7 @@ export default class MSField extends React.PureComponent {
       {
         onChangeFld.value = valueText
         onChangeFld.name = name
-        onChange.call(this, onChangeEvent)
+        this.props.onChange.call(this, onChangeEvent)
       }
     }
   }
@@ -373,7 +375,7 @@ export default class MSField extends React.PureComponent {
     if (floatingLabel) {
       if (isMulti === true) {
         // value selected
-        if (value) {
+        if (chips.length > 0) {
           if (this.state.open) {
             labelClass['ms-label--hide'] = 1
             labelClass['ms-label--float'] = 1
@@ -419,7 +421,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // chips
-          isMulti && chips && chips.length &&
+          isMulti && chips && chips.length > 0 &&
           <MSChips options={chips} onRemove={this.handleRemove}/>
         }
         {
@@ -433,7 +435,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // clear button
-          value &&
+          !isEmpty &&
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {

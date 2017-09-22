@@ -164,14 +164,15 @@ export default class extends React.Component {
     let v = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value
     const s = {[ev.target.name]: v}
     this.setState(s)
-    console.log('onChange form: ', s);
+    //console.log('onChange form: ', s);
+    setTimeout(() => { console.log('onChange form: ',this.state) }, 300)
   }
 
   onSelected = (id, o, t) => {
     //console.log('onSelected form start', arguments);
     const s = {[t.props.name]: id, [t.props.name + 'Text']: null}
     this.setState(s)
-    console.log('onSelected form: ',s);
+    setTimeout(() => { console.log('onSelected form: ',this.state) }, 300)
   }
 
   // form properties
@@ -187,7 +188,7 @@ export default class extends React.Component {
     if (this.state[n+'Text'])
       v.text = this.state[n+'Text']
 
-    console.log(v)
+    //console.log(v)
     return v
   }
 
@@ -205,22 +206,24 @@ export default class extends React.Component {
           5. - msField [options, isFree, isMulti] <br/>
         </p>
         <Panel>
-          {/*
           <L>msField</L>
           <MSField {...fp(i++)} label="label" />
-*/}
+
           <L>msField [options]</L>
           <MSField {...fp(i++)} label="label" options={states} />
-          {/*
+
           <L>msField [options, isFree]</L>
           <MSField {...fp(i++)} label="label" options={states} isFree={true} />
 
           <L>msField [options, isMulti]</L>
           <MSField {...fp(i++)} label="label" options={states} isMulti={true}/>
 
-          <L>msField [options, isFree, isMulti]</L>
-          <MSField {...fp(i++)} label="label" options={states} isFree={true} isMulti={true} />
-          */}
+          {
+            /*
+            <L>msField [options, isFree, isMulti]</L>
+            < MSField {...fp(i++)} label="label" options={states} isFree={true} isMulti={true} />
+            */
+          }
         </Panel>
       </div>
     )
