@@ -98,5 +98,8 @@ option {
     bottom: -5px;
 }
 .ms--xsmall .clear {
-    bottom: -7px;
+    bottom: -8px;
+}
+.mui-col > .clear {
+  right: -3px;
 }
