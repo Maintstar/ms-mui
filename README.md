@@ -13,3 +13,5 @@ checkout [demo](https://maintstar.github.io/ms-mui/build/)
 - concept of field, which restricts free entry
 
 - descCol - make that description.
+
+когда нажимают на первое значение в дропдауне. превентить чтобы поле опять не фокусилось.
