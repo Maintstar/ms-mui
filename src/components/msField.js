@@ -30,7 +30,18 @@ const onChangeEvent = {
 const maxContHeight = 250
 // coefficient when options show at the top
 const topK = 0.2
+const noop = ()=>{}
 
+// variants
+/*
+
++ msField     text
+- msField     [options]                  - allow to select proper value only, selects idCol   to value
+- msField     [options, isFree]          - allow to enter whatever allowed,   select  nameCol to value
+- msField     [options, isMulti]         - allow to enter whatever allowed,   select  nameCol to value
+- msField     [options, isFree, isMulti] - allow to enter whatever allowed several times
+
+*/
 
 function getOptionsStyle(fieldTop, props, grid) {
   let { size, itemHeight, options } = props
@@ -62,6 +73,7 @@ export default class MSField extends React.PureComponent {
     nameCol: 'name',
     idCol: 'id',
     groupCol: 'group',
+    isFree: false,
     isMulti: false,
     preventFilter: false,
     floatingLabel: true,
@@ -78,8 +90,11 @@ export default class MSField extends React.PureComponent {
     
     label: propTypes.string,
     name: propTypes.string.isRequired,
-    value: propTypes.oneOfType([propTypes.number, propTypes.string]).isRequired,
-    valueId: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
+
+    // selected value of control
+    value: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
+    // text of control
+    text: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
     options: propTypes.arrayOf(propTypes.object),
 
     className: propTypes.string,
@@ -110,7 +125,7 @@ export default class MSField extends React.PureComponent {
     // we make timeout, so browser already scroll to that field, and keyboard opened without lag
     // user has time to input something, and we don't see lags
     //setTimeout(() => {
-      this.setState({open: true, touched: true})
+    this.setState({open: true, touched: true})
     //}, 300)
     window.addEventListener('scroll', this.windowScroll)
   }
@@ -119,26 +134,41 @@ export default class MSField extends React.PureComponent {
     // otherwise, click will not be able to fire, and options will be hidden already
     setTimeout(() => {
       this.setState({open: false, filter: false})
+      let { name, value, text, isFree, onChange } = this.props
+
+      // if is not free, erase text
+      onChangeFld.value = ''
+      onChangeFld.name = name
+      if (onChange && value == null && !isFree) {
+        onChange.call(this, onChangeEvent)
+      }
     })
-    window.addEventListener('scroll', this.windowScroll)
+
+    window.removeEventListener('scroll', this.windowScroll)
   }
 
   onChange = ev => {
-    let {valueId, onChange, isMulti} = this.props
+    let {isFree, value, text, name, options, onChange, isMulti} = this.props
 
     if (this.state.filter === false)
       this.setState({filter: true})
 
     // on change
-    if (onChange) {
+    onChange = onChange || noop
+    if (isFree || options == null)
+    {
       onChange.call(this, ev)
     }
+    else
+    {
+      onChangeFld.value = ev.target.value
+      onChangeFld.name = name + "Text"
+      onChange.call(this, onChangeEvent)
+    }
 
-    // deselect if selected
-    if (!isMulti && valueId != null) {
-      //setTimeout(() => {
-      this.select(null)
-      //})
+    // deselect if single value selected
+    if (!isFree && !isMulti && value != null) {
+      //this.select(null)
     }
   }
 
@@ -147,95 +177,92 @@ export default class MSField extends React.PureComponent {
   }
 
   handleRemove = id => {
-    let { valueId } = this.props
-    if ( valueId != null ) {
-      valueId = valueId.filter(x => x !== id)
-      if (valueId.length === 0) valueId = null
+    let { value } = this.props
+    if ( value != null ) {
+      value = value.filter(x => x !== id)
+      if (value.length === 0) value = null
     }
-    this.select(valueId, {setOnlySent: true})
+    this.select(value, {setOnlySent: true})
   }
 
   handleSelect = id => {
     this.select(id)
   }
 
-  select(newValueId, { setOnlySent } = {}) {
-    let { valueId, isMulti, onSelected, onChange, onClear, name } = this.props
-    let sentValueId = newValueId
-    let value = null
+  select(newValue, { setOnlySent } = {}) {
+    let { value, isMulti, isFree, onSelected, onChange, onClear, name } = this.props
+    let sentValue = newValue
+    let valueText = null
 
-    if (newValueId != null) {
+    if (newValue != null) {
       if (isMulti) {
         // skip selected
         if (!setOnlySent) {
           // check if selected values already selected
-          if (valueId && valueId.find(x => x === newValueId)) return
+          if (value && value.find(x => x === newValue)) return
           // new chips list
-          if (valueId == null)
-            newValueId = [newValueId]
-          else if (newValueId != null)
-            newValueId = [...valueId, newValueId]
+          if (value == null)
+            newValue = [newValue]
+          else if (newValue != null)
+            newValue = [...value, newValue]
           else
-            newValueId = null
+            newValue = null
         }
       }
       else {
-        let opt = this.getOption(newValueId)
-        value = opt[this.props.nameCol]
+        let opt = this.getOption(newValue)
+        valueText = opt[this.props.nameCol]
       }
     }
 
-    if (onClear && newValueId == null) {
+    if (onClear && newValue == null) {
       onClear()
     }
 
     // call only selected if selected, or onChange if no onSelected
-    if (onSelected) {
+    if (!isFree && onSelected) {
       // sentValueId
-      onSelected.call(this, newValueId, value, this, sentValueId)
+      onSelected.call(this, newValue, valueText, this, sentValue)
     }
     else {
       // call on change when value changed
-      if (this.props.value !== value)
+      if (this.props.value !== valueText)
       {
-        //setTimeout(() => {
-          // i am doing an event
-        onChangeFld.value = value
+        onChangeFld.value = valueText
         onChangeFld.name = name
         onChange.call(this, onChangeEvent)
-        //})
       }
     }
   }
 
-  getOption(valueId) {
+  getOption(value) {
     let { options: opts, idCol } = this.props
-    for (var i = 0; i < opts.length; i++) {
+    for (let i = 0; i < opts.length; i++) {
       let o = opts[i]
-      if (o[idCol] === valueId) {
+      if (o[idCol] === value) {
         return o
       }
     }
   }
 
-  getSelectedOptions(valueId) {
+  getSelectedOptions(value) {
     let { options, idCol, nameCol } = this.props
 
-    if (valueId == null || valueId === '') return emptyArray
+    if (value == null || value === '') return emptyArray
 
-    if (!Array.isArray(valueId))
-      valueId = [valueId]
+    if (!Array.isArray(value))
+      value = [value]
 
     let chips = null;
     if (Array.isArray(options)) {
-      chips = valueId.map(v => {
+      chips = value.map(v => {
         let f = options.find(f => f[idCol] === v)
         return f ?
           { id: f[idCol], value: f[nameCol] } :
           { id: v, value: v }
       })
     } else {
-      chips = valueId.map(v => ({id: v, value: v}))
+      chips = value.map(v => ({id: v, value: v}))
     }
     return chips
   }
@@ -270,7 +297,7 @@ export default class MSField extends React.PureComponent {
       label,
       name,
       value,
-      valueId,
+      text,
       type,
       style,
       options,
@@ -284,7 +311,7 @@ export default class MSField extends React.PureComponent {
 
       isLoading,
       isMulti,
-      //isFree,
+      isFree,
 
       // should we hide dropicon
       hideDropIcon,
@@ -299,7 +326,7 @@ export default class MSField extends React.PureComponent {
       filter
     } = this.state
 
-    let isEmpty = !value && !valueId
+    let isEmpty = !value
     let optionsCount = (options && options.length) || 0
 
     // make classes
@@ -316,15 +343,29 @@ export default class MSField extends React.PureComponent {
       classes['ms-field--filled'] = 1
     }
 
-    let chips = null
-    if (valueId != null) {
-      chips = this.getSelectedOptions(valueId)
+    let chips = this.getSelectedOptions(value)
+    if (isFree === true) {
+      // we are ok, value ==> value
     }
-
-    // if single value dropdown, then select one
-    if (chips && chips.length && !isMulti) {
-      value = chips[0].value
-      chips = null
+    else {
+      if (text != null) {
+        if (options)
+        {
+          value = text
+        }
+      }
+      else
+      {
+        if (isMulti) {
+          value = ''
+        }
+        else {
+          // if single value dropdown, then select one
+          if (chips && chips.length) {
+            value = chips[0].value
+          }
+        }
+      }
     }
 
     // get label class
@@ -332,7 +373,7 @@ export default class MSField extends React.PureComponent {
     if (floatingLabel) {
       if (isMulti === true) {
         // value selected
-        if (valueId) {
+        if (value) {
           if (this.state.open) {
             labelClass['ms-label--hide'] = 1
             labelClass['ms-label--float'] = 1
@@ -366,11 +407,8 @@ export default class MSField extends React.PureComponent {
       type
     }
 
-    if (type === 'date') {
-      inputProps.placeholder="Впиши сюда что-нибудь"
-    }
-
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
+    //console.log(value)
 
     return (
       <div className={getClassName(classes)} style={style}>
@@ -381,7 +419,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // chips
-          chips &&
+          isMulti && chips && chips.length &&
           <MSChips options={chips} onRemove={this.handleRemove}/>
         }
         {
@@ -395,7 +433,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // clear button
-          valueId &&
+          value &&
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {
@@ -404,7 +442,7 @@ export default class MSField extends React.PureComponent {
           <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
             <MSFieldOptions 
               options={ options } 
-              filter={ (!preventFilter && filter) ? value : null }
+              filter={ (!preventFilter && filter) ? text : null }
               onSelect={ this.handleSelect }
               itemHeight={itemHeight}
               nameCol={nameCol}

@@ -164,14 +164,14 @@ export default class extends React.Component {
     let v = ev.target.type === "checkbox" ? ev.target.checked : ev.target.value
     const s = {[ev.target.name]: v}
     this.setState(s)
-    //console.log('onChange form: ', s);
+    console.log('onChange form: ', s);
   }
 
   onSelected = (id, o, t) => {
-    //console.log('onSelected form start');
-    const s = {[t.props.name + 'Id']: id}
+    //console.log('onSelected form start', arguments);
+    const s = {[t.props.name]: id, [t.props.name + 'Text']: null}
     this.setState(s)
-    //console.log('onSelected form: ',s);
+    console.log('onSelected form: ',s);
   }
 
   // form properties
@@ -184,13 +184,49 @@ export default class extends React.Component {
       onSelected: this.onSelected
     })
 
-    if (this.state[n+'Id'])
-      v.valueId = this.state[n+'Id']
+    if (this.state[n+'Text'])
+      v.text = this.state[n+'Text']
 
+    console.log(v)
     return v
   }
 
   render() {
+    let fp = this.fp
+    let i = 0
+    return (
+      <div style={{width:300, margin: 'auto'}}>
+        <h2>MSField isFree</h2>
+        <p>
+          1. + msField text <br/>
+          2. - msField [options] <br/>
+          3. - msField [options, isFree] <br/>
+          4. - msField [options, isMulti] <br/>
+          5. - msField [options, isFree, isMulti] <br/>
+        </p>
+        <Panel>
+          {/*
+          <L>msField</L>
+          <MSField {...fp(i++)} label="label" />
+*/}
+          <L>msField [options]</L>
+          <MSField {...fp(i++)} label="label" options={states} />
+          {/*
+          <L>msField [options, isFree]</L>
+          <MSField {...fp(i++)} label="label" options={states} isFree={true} />
+
+          <L>msField [options, isMulti]</L>
+          <MSField {...fp(i++)} label="label" options={states} isMulti={true}/>
+
+          <L>msField [options, isFree, isMulti]</L>
+          <MSField {...fp(i++)} label="label" options={states} isFree={true} isMulti={true} />
+          */}
+        </Panel>
+      </div>
+    )
+  }
+
+  render2() {
     let fp = this.fp
     let i = 0
     return (
@@ -250,6 +286,31 @@ export default class extends React.Component {
 
           <L>isLoading={"{"}true{"}"}</L>
           <MSField {...fp(i++)} label="loading" isLoading={true} />
+        </Panel>
+
+        <h2>MSField isFree</h2>
+        <p>
+          1. + msField text <br/>
+          2. - msField [options] <br/>
+          3. - msField [options, isFree] <br/>
+          4. - msField [options, isMulti] <br/>
+          5. - msField [options, isFree, isMulti] <br/>
+        </p>
+        <Panel>
+          <L>msField</L>
+          <MSField {...fp(i++)} label="label" />
+
+          <L>msField [options]</L>
+          <MSField {...fp(i++)} label="label" options={states} />
+
+          <L>msField [options, isFree]</L>
+          <MSField {...fp(i++)} label="label" options={states} isFree={true} />
+
+          <L>msField [options, isMulti]</L>
+          <MSField {...fp(i++)} label="label" options={states} isMulti={true}/>
+
+          <L>msField [options, isFree, isMulti]</L>
+          <MSField {...fp(i++)} label="label" options={states} isFree={true} isMulti={true} />
         </Panel>
 
         <h2>MSFields MSSelect grid</h2>
