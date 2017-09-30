@@ -196,7 +196,7 @@ export default class extends React.Component {
     let fp = this.fp
     let i = 0
     return (
-      <div style={{width:300, margin: 'auto'}}>
+      <div style={{width:300, margin: '400px auto 400px auto'}}>
         <h2>MSField isFree</h2>
         <p>
           1. + msField text <br/>
