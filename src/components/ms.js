@@ -29,9 +29,9 @@ const aliases = {
 }
 
 const heightBySizeMap = {
-  '': 32,
-  'small': 32,
-  'xsmall': 30
+  '': 30,
+  'small': 30,
+  'xsmall': 28
 }
 
 export function getFieldHeightBySize(size) {
