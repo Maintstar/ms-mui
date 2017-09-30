@@ -29,7 +29,7 @@ const onChangeEvent = {
 
 const maxContHeight = 250
 // coefficient when options show at the top
-const topK = 0.2
+const topK = 0.30
 const noop = ()=>{}
 
 // variants
