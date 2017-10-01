@@ -148,10 +148,6 @@ export default class MSFieldOptions extends React.PureComponent {
   }
 }
 
-function getText(it, name) {
-  return it[name]
-}
-
 // function MSFieldOption2(props) {
 //   var { o } = props
 //   return <li key={o.id}>
