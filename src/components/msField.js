@@ -146,7 +146,7 @@ export default class MSField extends React.PureComponent {
   }
 
   onChange = ev => {
-    let {isFree, value, text, name, options, onChange, isMulti} = this.props
+    let { value, name, onChange, isMulti} = this.props
 
     if (this.state.filter === false)
       this.setState({filter: true})
@@ -215,7 +215,7 @@ export default class MSField extends React.PureComponent {
 
   onMouseMove = (ev) => {
     let i = ev.target.getAttribute("data-index");
-    if (this.activeIndex != i) {
+    if (this.activeIndex !== i) {
       this.activeIndex = i;
       this.highlightActive()
     }
@@ -382,7 +382,6 @@ export default class MSField extends React.PureComponent {
     this.resetActive();
 
     let isEmpty = !value
-    let optionsCount = (options && options.length) || 0
 
     // make classes
     const classes = initClasses(className, defClass)
