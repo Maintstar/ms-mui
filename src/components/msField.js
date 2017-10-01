@@ -150,6 +150,8 @@ export default class MSField extends React.PureComponent {
 
     if (this.state.filter === false)
       this.setState({filter: true})
+    if (this.state.open === false)
+      this.setState({open: true})
 
     // on change
     onChange = onChange || noop
@@ -167,6 +169,55 @@ export default class MSField extends React.PureComponent {
     else
     {
       onChange.call(this, ev)
+    }
+  }
+
+  /*
+   left = 37
+   up = 38
+   right = 39
+   down = 40
+  */
+
+  resetActive = () => {
+    let changed = this.activeIndex !== -1
+    this.activeIndex = -1;
+    if (changed)
+      this.highlightActive()
+  }
+
+  onKeyDown = (ev) => {
+    let kc = ev.keyCode;
+    if (kc === 40 || kc === 38 || kc === 13) {
+      if (kc === 40) this.activeIndex++;
+      if (kc === 38) this.activeIndex--;
+      if (kc === 13) {
+        let el = this.optionsDiv.querySelector('[data-index="' + this.activeIndex + '"]');
+        if (el) {
+          this.select(el.getAttribute('value'));
+          this.setState({open:false});
+        }
+      }
+      if (this.activeIndex < -1) this.activeIndex = -1
+      this.highlightActive()
+    }
+  }
+
+  highlightActive = () => {
+    if (this.optionsDiv) {
+      const hglCls = "ms-options_it--active"
+      let pr = document.querySelector('.' + hglCls)
+      if (pr) pr.classList.remove(hglCls)
+      let el = this.optionsDiv.querySelector('[data-index="' + this.activeIndex + '"]');
+      if (el) el.classList.add(hglCls);
+    }
+  }
+
+  onMouseMove = (ev) => {
+    let i = ev.target.getAttribute("data-index");
+    if (this.activeIndex != i) {
+      this.activeIndex = i;
+      this.highlightActive()
     }
   }
 
@@ -328,6 +379,8 @@ export default class MSField extends React.PureComponent {
       filter
     } = this.state
 
+    this.resetActive();
+
     let isEmpty = !value
     let optionsCount = (options && options.length) || 0
 
@@ -404,6 +457,7 @@ export default class MSField extends React.PureComponent {
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       onChange: this.onChange,
+      onKeyDown: this.onKeyDown,
       name,
       value,
       type
@@ -443,9 +497,10 @@ export default class MSField extends React.PureComponent {
           optionsAreVisible &&
           <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
             <MSFieldOptions 
-              options={ options } 
-              filter={ (!preventFilter && filter) ? text : null }
+              options={ options }
+              filter={ (!preventFilter && filter) ? (text || (isFree ? value: null)) : null }
               onSelect={ this.handleSelect }
+              onMouseMove={ this.onMouseMove }
               itemHeight={itemHeight}
               nameCol={nameCol}
               idCol={idCol}

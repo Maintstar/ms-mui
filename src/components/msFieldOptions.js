@@ -118,13 +118,13 @@ export default class MSFieldOptions extends React.PureComponent {
           lastGroup = g
         }
         // add option
-        items.push(<div key={o[idCol]} value={o[idCol]} className="ms-options_it"
+        items.push(<div key={o[idCol]} value={o[idCol]} data-index={i} className="ms-options_it"
                         style={{top: itemTop(i, itemHeight, lastGroup) }}>{o[nameCol] || <i>&nbsp;</i> }</div>)
       }
     }
 
     // options has to be sorted by group
-    return <div className="ms-options" ref={this.setRef} onMouseDown={this.handleClick}>
+    return <div className="ms-options" ref={this.setRef} onMouseDown={this.handleClick} onMouseMove={this.props.onMouseMove}>
       {
         items
       }

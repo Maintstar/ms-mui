@@ -55,10 +55,10 @@
 .ms-options_it--thick {
   background-color: lightyellow
 }
+.ms-options_it--active {
+  background-color: #eee;
+}
 .ms-options_it--empty {
   color: #aaa;
   font-style: italic;
-}
-.ms-options_it:hover {
-  background-color: #eee;
 }
