@@ -72,6 +72,7 @@ export default class MSField extends React.PureComponent {
   static defaultProps = {
     nameCol: 'name',
     idCol: 'id',
+    descCol: null,
     groupCol: 'group',
     isFree: false,
     isMulti: false,
@@ -372,6 +373,7 @@ export default class MSField extends React.PureComponent {
       
       nameCol,
       idCol,
+      descCol,
       groupCol,
     } = this.props
 
@@ -465,6 +467,19 @@ export default class MSField extends React.PureComponent {
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
     //console.log(value)
 
+    let optionsProps = {
+      options,
+      filter: (!preventFilter && filter) ? (text || (isFree ? value: null)) : null,
+      onSelect: this.handleSelect,
+      onMouseMove: this.onMouseMove,
+      itemHeight,
+      nameCol,
+      idCol,
+      descCol,
+      groupCol,
+    }
+
+
     return (
       <div className={getClassName(classes)} style={style}>
         {
@@ -495,16 +510,7 @@ export default class MSField extends React.PureComponent {
           // options
           optionsAreVisible &&
           <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
-            <MSFieldOptions 
-              options={ options }
-              filter={ (!preventFilter && filter) ? (text || (isFree ? value: null)) : null }
-              onSelect={ this.handleSelect }
-              onMouseMove={ this.onMouseMove }
-              itemHeight={itemHeight}
-              nameCol={nameCol}
-              idCol={idCol}
-              groupCol={groupCol}
-              />
+            <MSFieldOptions {...optionsProps} />
           </div>
         }
         {

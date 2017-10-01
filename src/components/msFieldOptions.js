@@ -47,6 +47,7 @@ export default class MSFieldOptions extends React.PureComponent {
     nameCol: propTypes.string,
     idCol: propTypes.string,
     groupCol: propTypes.string,
+    descCol: propTypes.oneOfType([propTypes.string, propTypes.func]),
     itemHeight: propTypes.number,
 
     onSelect: propTypes.func.isRequired,
@@ -90,7 +91,8 @@ export default class MSFieldOptions extends React.PureComponent {
       options, 
       filter, 
       nameCol, 
-      idCol, 
+      idCol,
+      descCol,
       groupCol,
       itemHeight
     } = this.props
@@ -117,9 +119,22 @@ export default class MSFieldOptions extends React.PureComponent {
           items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(i, itemHeight) }}>{g}</div>)
           lastGroup = g
         }
+
+        // get text
+        let text
+        if (descCol)
+        {
+          if (typeof descCol === 'function')
+            text = descCol(o)
+          else
+            text = o[descCol]
+        }
+        else
+          text = o[nameCol]
+
         // add option
         items.push(<div key={o[idCol]} value={o[idCol]} data-index={i} className="ms-options_it"
-                        style={{top: itemTop(i, itemHeight, lastGroup) }}>{o[nameCol] || <i>&nbsp;</i> }</div>)
+                        style={{top: itemTop(i, itemHeight, lastGroup) }}>{text || <i>&nbsp;</i> }</div>)
       }
     }
 
@@ -133,6 +148,9 @@ export default class MSFieldOptions extends React.PureComponent {
   }
 }
 
+function getText(it, name) {
+  return it[name]
+}
 
 // function MSFieldOption2(props) {
 //   var { o } = props

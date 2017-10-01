@@ -62,12 +62,21 @@ option {
     pointer-events: none;
     transform-origin: left;
     margin-top: -14px;
-    will-change: transform, opacity;
+    /*
+    cite: putting the browser on guard for changes that may or may not occur is a bad idea,
+    and will do more harm that good. Don’t do it.
+    */
+    /*will-change: transform, opacity;*/
 }
 .ms-label--float {
     transform: translate(0, 24px) scale(1.31, 1.4);
     opacity: 0.5;
+    color: rgba(0,0,0,.6);
 }
+.ms_error .ms-label--float, .ms_warning .ms-label--float {
+    color: rgba(0,0,0,.6);
+}
+
 .ms-label--hide {
     opacity: 0.01;
 }
