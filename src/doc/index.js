@@ -244,8 +244,6 @@ export default class extends React.Component {
           Check this page <a href="https://github.com/Maintstar/ms-mui/blob/master/src/doc/index.js">source file</a> with usage details
         </p>
 
-        <button onClick={()=>{this.setState({fadein:1})}}>aaa</button>
-
         <h2>MSSelect</h2>
         <Panel fadeIn={this.state.fadein}>
           <MSSelect {...fp(i++)} label="State" options={states} />
