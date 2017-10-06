@@ -196,7 +196,6 @@ export default class MSField extends React.PureComponent {
         let el = this.optionsDiv.querySelector('[data-index="' + this.activeIndex + '"]');
         if (el) {
           this.select(el.getAttribute('value'));
-          this.setState({open:false});
         }
       }
       if (this.activeIndex < -1) this.activeIndex = -1
@@ -287,6 +286,8 @@ export default class MSField extends React.PureComponent {
         this.props.onChange.call(this, onChangeEvent)
       }
     }
+
+    this.setState({open:false});
   }
 
   getOption(value) {
