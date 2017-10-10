@@ -1,7 +1,7 @@
 import React from 'react';
 import './panel.css'
 import { initClasses, getClassName } from '../components/ms'
-
+import propTypes from 'prop-types'
 
 let animateEl = []
 const classNameAnim1 = "mui-panel--anim1"
@@ -45,6 +45,10 @@ function animate() {
 // }
 
 export default class Panel extends React.PureComponent {
+
+  static propTypes = {
+    fadeIn: propTypes.bool,
+  }
 
   constructor(props) {
     super(props)

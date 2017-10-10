@@ -1,5 +1,7 @@
 body {
     background-color: rgba(0,0,0,0.031);
+    padding: 0;
+    margin: 0;
 }
 
 .grid-example .mui-row > div {

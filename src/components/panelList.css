@@ -1,0 +1,21 @@
+.panel-list {
+    white-space: nowrap;
+    position:relative;
+    overflow-x: hidden;
+    margin-left: -2px;
+    margin-right: -2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.panel-list > div {
+
+}
+
+.panel-list .mui-panel {
+    display: inline-block;
+    width: calc(100%);
+    box-sizing: border-box;
+    margin-right: 15px;
+    vertical-align: top;
+}

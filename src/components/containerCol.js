@@ -2,7 +2,7 @@ import React from 'react';
 import { getClassName, initClasses, addGridClasses, gridBreakpoints } from './ms'
 
 export default class Col extends React.PureComponent {
-  defaultProps() {
+  static defaultProps() {
     let props = {className: ''},
       i,
       v;
