@@ -312,7 +312,7 @@ export default class MSField extends React.PureComponent {
       chips = value.map(v => {
         let f = options.find(f => f[idCol] === v)
         return f ?
-          { id: f[idCol], value: f[nameCol] } :
+          { id: f[idCol], value: f[nameCol] || f[idCol] } :
           { id: v, value: v }
       })
     } else {
