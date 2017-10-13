@@ -1,12 +1,14 @@
 import React from 'react';
-import { addErrorWarnClasses, initClasses, getClassName } from './ms'
+import { addErrorWarnClasses, initClasses, getClassName, addGridClasses } from './ms'
+import './msCheckbox.css'
 
 const getLabel = (p, n) => n ? p + ` (${n})` : p
 
 export default function MSCheckbox(props)  {
-  const { error, warning, className, label, ...rest } = props;
+  const { error, warning, className, label, onSelected, ...rest } = props;
   let cls = initClasses(className, {'mui-checkbox': 1})
   addErrorWarnClasses(cls, error, warning)
+  addGridClasses(cls, rest)
 
   return <div className={getClassName(cls)}>
     <label>
