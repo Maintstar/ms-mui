@@ -58,6 +58,9 @@ export default class MSFieldOptions extends React.PureComponent {
   }
 
   handleClick = (ev) => {
+	// this blocks click of underlied fields, when you click on option and then focus other field automatically
+	// and prevents loosing focus
+    ev.preventDefault()
     let v = ev.target.getAttribute('value')
     let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
     v = isNumber ? +v : v
@@ -125,12 +128,21 @@ export default class MSFieldOptions extends React.PureComponent {
         if (descCol)
         {
           if (typeof descCol === 'function')
+          {
             text = descCol(o)
+          }
           else
+          {
             text = o[descCol]
+          }
         }
         else
           text = o[nameCol]
+
+        // remember that text could be React component.
+        // don't trim it
+        if (text == null || text == '')
+          text = '#' + o[idCol]
 
         // add option
         items.push(<div key={o[idCol]} value={o[idCol]} data-index={i} className="ms-options_it"

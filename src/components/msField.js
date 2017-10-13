@@ -161,7 +161,7 @@ export default class MSField extends React.PureComponent {
     {
       if (value && !isMulti)
       {
-        this.select(null)
+        this.select(null, {cleanSelection: true})
       }
       onChangeFld.value = ev.target.value
       onChangeFld.name = name + "Text"
@@ -200,6 +200,11 @@ export default class MSField extends React.PureComponent {
       }
       if (this.activeIndex < -1) this.activeIndex = -1
       this.highlightActive()
+    }
+    // when empty already and we click backspace, we hide
+    if (kc === 8 && !this.props.text)
+    {
+      this.setState({open: false})
     }
   }
 
@@ -242,7 +247,7 @@ export default class MSField extends React.PureComponent {
     this.select(id)
   }
 
-  select(newValue, { setOnlySent } = {}) {
+  select(newValue, { setOnlySent, cleanSelection } = {}) {
     let { value, isMulti, isFree, onSelected, onClear, name } = this.props
     let sentValue = newValue
     let valueText = null
@@ -264,6 +269,7 @@ export default class MSField extends React.PureComponent {
       }
       else {
         let opt = this.getOption(newValue)
+        newValue = opt[this.props.idCol]
         valueText = opt[this.props.nameCol]
       }
     }
@@ -287,13 +293,25 @@ export default class MSField extends React.PureComponent {
       }
     }
 
-    this.setState({open:false});
+    // if this is not clean selection, when value deselected
+    if (!cleanSelection) {
+      this.setState({open: false});
+    }
+  }
+
+  onClick = () => {
+    console.log('CLICK')
+    this.setState({open:true});
   }
 
   getOption(value) {
     let { options: opts, idCol } = this.props
+    // convert to number if number.
+    if (opts.length > 0 && typeof opts[0][idCol] === 'number') value = +value
     for (let i = 0; i < opts.length; i++) {
       let o = opts[i]
+      // i do compare specifically with == not === to make 1 == '1' be true.
+      // because value comes from attribute always string, but in options we could have number.
       if (o[idCol] === value) {
         return o
       }
@@ -313,7 +331,7 @@ export default class MSField extends React.PureComponent {
       chips = value.map(v => {
         let f = options.find(f => f[idCol] === v)
         return f ?
-          { id: f[idCol], value: f[nameCol] } :
+          { id: f[idCol], value: f[nameCol] || f[idCol] } :
           { id: v, value: v }
       })
     } else {
@@ -459,6 +477,7 @@ export default class MSField extends React.PureComponent {
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       onChange: this.onChange,
+      onClick: this.onClick,
       onKeyDown: this.onKeyDown,
       name,
       value,
