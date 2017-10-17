@@ -1,6 +1,6 @@
 {
   "name": "ms-mui",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "dependencies": {
     "muicss": "^0.9.24",
     "prop-types": "^15.6.0",
