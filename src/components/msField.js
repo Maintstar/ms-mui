@@ -300,7 +300,6 @@ export default class MSField extends React.PureComponent {
   }
 
   onClick = () => {
-    console.log('CLICK')
     this.setState({open:true});
   }
 
