@@ -192,7 +192,7 @@ export default class MSField extends React.PureComponent {
     if (kc === 40 || kc === 38 || kc === 13) {
       if (kc === 40) this.activeIndex++;
       if (kc === 38) this.activeIndex--;
-      if (kc === 13) {
+      if (kc === 13 && this.props.options) {
         let el = this.optionsDiv.querySelector('[data-index="' + this.activeIndex + '"]');
         if (el) {
           this.select(el.getAttribute('value'));
