@@ -23,7 +23,7 @@
     padding-top: 6px;
     padding-bottom: 6px;
     max-height: 250px;
-    overflow: hidden !important;
+    /*overflow: hidden !important;*/
 }
 .ms-field > select,
 .ms-field--dd > input {
