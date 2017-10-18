@@ -198,35 +198,12 @@ export default class extends React.Component {
     return (
       <div style={{width:300, margin: '400px auto 400px auto'}}>
         <h2>MSField isFree</h2>
-        <p>
-          1. + msField text <br/>
-          2. + msField [options] <br/>
-          3. + msField [options, isFree] <br/>
-          4. + msField [options, isMulti] <br/>
-          5. + msField [options, isFree, isMulti] <br/>
-        </p>
         <Panel>
-          <L>msField</L>
+          <L>textarea</L>
+          <MSField type="textarea" {...fp(i++)} label="label" />
+
+          <L>text</L>
           <MSField {...fp(i++)} label="label" />
-
-          <L>msField [options]</L>
-          <MSField {...fp(i++)} label="label" options={states} />
-
-          <L>msField [options, isFree]</L>
-          <MSField {...fp(i++)} label="label" options={states} isFree={true} />
-
-          <L>msField [options, isMulti]</L>
-          <MSField {...fp(i++)} label="label" options={states} isMulti={true}/>
-
-          <L>msField [descCol(func)]</L>
-          <MSField {...fp(i++)} label="label" options={states} descCol={(x, props) => <span>{x['name']} <i>desc</i></span> }  />
-
-          {
-            /*
-            <L>msField [options, isFree, isMulti]</L>
-            < MSField {...fp(i++)} label="label" options={states} isFree={true} isMulti={true} />
-            */
-          }
         </Panel>
       </div>
     )
@@ -276,6 +253,13 @@ export default class extends React.Component {
 
           <L>idCol="id2", nameCol="name2", groupCol="group2"</L>
           <MSField {...fp(i++)} label="options" options={statesOtherCol} idCol="id2" nameCol="name2" groupCol="group2" />
+        </Panel>
+
+        <h2>MSField textarea</h2>
+        <p>Dynamic height textarea, control max height with css max-height</p>
+        <Panel>
+          <L>textarea</L>
+          <MSField type="textarea" {...fp(i++)} label="label" style={{maxHeight: 100}} />
         </Panel>
 
         <h2>MSField</h2>

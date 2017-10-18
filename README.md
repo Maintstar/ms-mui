@@ -16,4 +16,3 @@ Just include it into the build process
 
 ### todo
 - make other controls like tab, container, button, to remove mui dependency
-- descCol - make that description.

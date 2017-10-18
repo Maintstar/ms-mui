@@ -5,7 +5,8 @@
     position: relative;
 }
 .ms-field > input, 
-.ms-field > select {
+.ms-field > select,
+.ms-field > textarea {
     height: 32px;
     box-sizing: border-box;
     display: block;
@@ -16,7 +17,13 @@
     width: 100%;
     padding: 0;
     font-size: 16px;
-    background-color: transparent;
+}
+/*text area first line should be there*/
+.ms-field > textarea {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    max-height: 250px;
+    overflow: hidden !important;
 }
 .ms-field > select,
 .ms-field--dd > input {

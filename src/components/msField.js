@@ -7,6 +7,7 @@ import MSFieldOptions from './msFieldOptions'
 import { isMobile } from '../utils/mobile'
 import requestAnimationFrame from '../utils/requestAnimationFrame'
 import getElementBBox from '../utils/getElementBBox'
+import autosize from 'autosize'
 
 import './msField.css'
 import './msFieldSmall.css'
@@ -87,6 +88,7 @@ export default class MSField extends React.PureComponent {
     groupCol: propTypes.string,
 
     style: propTypes.object,
+    contStyle: propTypes.object,
     onClear: propTypes.func,
     
     label: propTypes.string,
@@ -103,6 +105,9 @@ export default class MSField extends React.PureComponent {
     warning: propTypes.string,
     size: propTypes.string,
     itemHeight: propTypes.number,
+
+    // autoType for textarea
+    autoHeight: propTypes.bool,
 
     isLoading: propTypes.bool,
     isMulti: propTypes.oneOfType([propTypes.bool, propTypes.number]),
@@ -202,7 +207,7 @@ export default class MSField extends React.PureComponent {
       this.highlightActive()
     }
     // when empty already and we click backspace, we hide
-    if (kc === 8 && !this.props.text)
+    if (kc === 8 && this.isValueMode() && !this.props.text)
     {
       this.setState({open: false})
     }
@@ -230,8 +235,21 @@ export default class MSField extends React.PureComponent {
     return this.props.isFree === false && (this.props.options)
   }
 
+  isTextArea = () => {
+    return this.props.type === 'textarea'
+  }
+  isTextAreaAutoSize = () => {
+    return this.props.autoHeight !== false
+  }
+
   handleClear = () => {
     this.select(null)
+    // restore textArea size, when clear.
+    if (this.isTextArea() && this.isTextAreaAutoSize()) {
+      setTimeout(() => {
+        autosize.update(this.input);
+      },0)
+    }
   }
 
   handleRemove = id => {
@@ -344,6 +362,9 @@ export default class MSField extends React.PureComponent {
   }
   setIRef = el => {
     this.input = el
+    if (this.isTextArea() && this.isTextAreaAutoSize()) {
+      autosize(this.input);
+    }
   }
 
   componentDidUpdate() {
@@ -372,6 +393,7 @@ export default class MSField extends React.PureComponent {
       text,
       type,
       style,
+      contStyle,
       options,
       floatingLabel,
       itemHeight,
@@ -480,7 +502,8 @@ export default class MSField extends React.PureComponent {
       onKeyDown: this.onKeyDown,
       name,
       value,
-      type
+      type,
+      style
     }
 
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
@@ -500,7 +523,7 @@ export default class MSField extends React.PureComponent {
 
 
     return (
-      <div className={getClassName(classes)} style={style}>
+      <div className={getClassName(classes)} style={contStyle}>
         {
           // error message
           (error || warning) &&
@@ -518,6 +541,8 @@ export default class MSField extends React.PureComponent {
         }
         {
           // field
+          this.isTextArea() ?
+          <textarea ref={this.setIRef} {...inputProps} /> :
           <input ref={this.setIRef} {...inputProps} />
         }
         {

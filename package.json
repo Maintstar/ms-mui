@@ -2,6 +2,7 @@
   "name": "ms-mui",
   "version": "1.4.2",
   "dependencies": {
+    "autosize": "^4.0.0",
     "muicss": "^0.9.24",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
