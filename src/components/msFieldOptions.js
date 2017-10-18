@@ -141,7 +141,7 @@ export default class MSFieldOptions extends React.PureComponent {
 
         // remember that text could be React component.
         // don't trim it
-        if (text == null || text == '')
+        if (text == null || text === '')
           text = '#' + o[idCol]
 
         // add option
