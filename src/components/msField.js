@@ -547,7 +547,7 @@ export default class MSField extends React.PureComponent {
         }
         {
           // clear button
-          !isEmpty && type !== 'date' &&
+          !isEmpty && type !== 'date' && type !== 'textarea' &&
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {

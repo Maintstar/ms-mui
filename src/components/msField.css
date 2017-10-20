@@ -20,10 +20,10 @@
 }
 /*text area first line should be there*/
 .ms-field > textarea {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 4px;
     max-height: 250px;
     /*overflow: hidden !important;*/
+    padding-bottom: 4px;
 }
 .ms-field > select,
 .ms-field--dd > input {

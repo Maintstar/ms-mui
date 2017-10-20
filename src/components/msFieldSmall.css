@@ -6,6 +6,9 @@
 .ms-field.ms--small > select {
   font-size: 15px;
 }
+.ms-field.ms--small > textarea {
+  font-size: 15px;
+}
 .ms-field.ms--small > input:focus,
 .ms-field.ms--small > select:focus {
 }

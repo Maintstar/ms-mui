@@ -7,6 +7,9 @@
     font-size: 14px;
     height: 26px;
 }
+.ms-field.ms--xsmall > textarea {
+  font-size: 14px;
+}
 .ms-field.ms--xsmall > input:focus,
 .ms-field.ms--xsmall > select:focus {
     height: 27px;
