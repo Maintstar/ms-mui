@@ -76,7 +76,7 @@ function toDate(int) {
 }
 
 export function preprocessValueRender(fld, value) {
-  if (fld.props.type === 'date' && fld.props.dateAsString == null) {
+  if (fld.props.type === 'date' && fld.props.dateAsString !== true) {
     if (value == null || value === '')
       return ""; // we need to return "" to have control be in controllable state.
     else
@@ -86,7 +86,8 @@ export function preprocessValueRender(fld, value) {
 }
 
 export function preprocessValueOnChange(fld, value) {
-  if (fld.props.type === 'date' && fld.props.dateAsString == null) {
+  if (fld.props.type === 'date' && fld.props.dateAsString !== true) {
+    if (value === '') return null;
     return Date.parse(value)
   }
   return value

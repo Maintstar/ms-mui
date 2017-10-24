@@ -24,6 +24,9 @@ test('msField date with string input', () => {
 
   let value2 = preprocessValueOnChange(f, '1970-01-01')
   expect(value2).toBe(0);
+
+  let value3 = preprocessValueOnChange(f, '')
+  expect(value3).toBe(null);
 });
 
 test('msField with empty string with null', () => {
