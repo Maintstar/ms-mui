@@ -68,6 +68,28 @@ function getOptionsStyle(fieldTop, props, grid) {
   return {height: contHeight, bottom: -(contHeight + grid)}
 }
 
+function toDate(int) {
+  let d = new Date(int);
+  let s = d.toISOString().slice(0,10)
+  // s === 1970-01-01, iso date is 10 chars, so we slice 10
+  return s
+}
+
+export function preprocessValueRender(fld, value) {
+  if (fld.props.type === 'date' && typeof value === 'number') {
+    fld.dateFieldIsNumber = true;
+    return toDate(value)
+  }
+  return value
+}
+
+export function preprocessValueOnChange(fld, value) {
+  if (fld.props.type === 'date' && fld.dateFieldIsNumber) {
+    return Date.parse(value)
+  }
+  return value
+}
+
 export default class MSField extends React.PureComponent {
 
   static defaultProps = {
@@ -174,7 +196,9 @@ export default class MSField extends React.PureComponent {
     }
     else
     {
-      onChange.call(this, ev)
+      onChangeFld.value = preprocessValueOnChange(this, ev.target.value)
+      onChangeFld.name = name
+      onChange.call(this, onChangeEvent)
     }
   }
 
@@ -501,7 +525,7 @@ export default class MSField extends React.PureComponent {
       onClick: this.onClick,
       onKeyDown: this.onKeyDown,
       name,
-      value,
+      value: preprocessValueRender(this, value),
       type,
       style
     }
