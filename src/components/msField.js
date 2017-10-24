@@ -76,15 +76,17 @@ function toDate(int) {
 }
 
 export function preprocessValueRender(fld, value) {
-  if (fld.props.type === 'date' && typeof value === 'number') {
-    fld.dateFieldIsNumber = true;
-    return toDate(value)
+  if (fld.props.type === 'date' && fld.props.dateAsString == null) {
+    if (value == null || value === '')
+      return ""; // we need to return "" to have control be in controllable state.
+    else
+      return toDate(value || 0)
   }
   return value
 }
 
 export function preprocessValueOnChange(fld, value) {
-  if (fld.props.type === 'date' && fld.dateFieldIsNumber) {
+  if (fld.props.type === 'date' && fld.props.dateAsString == null) {
     return Date.parse(value)
   }
   return value
@@ -134,6 +136,8 @@ export default class MSField extends React.PureComponent {
     isLoading: propTypes.bool,
     isMulti: propTypes.oneOfType([propTypes.bool, propTypes.number]),
     //isFree,
+    // field onChange will receive string, not milliseconds.
+    dateAsString: propTypes.bool,
 
     // should we hide dropicon
     hideDropIcon: propTypes.bool,
