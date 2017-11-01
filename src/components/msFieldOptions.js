@@ -62,9 +62,12 @@ export default class MSFieldOptions extends React.PureComponent {
 	// and prevents loosing focus
     ev.preventDefault()
     let v = ev.target.getAttribute('value')
-    let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
-    v = isNumber ? +v : v
-    this.props.onSelect(v)
+    // if null, i probably clicked on scroll
+    if (v != null) {
+      let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
+      v = isNumber ? +v : v
+      this.props.onSelect(v)
+    }
   }
 
   setRef = (el) => {
