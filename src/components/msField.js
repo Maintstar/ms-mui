@@ -165,16 +165,7 @@ export default class MSField extends React.PureComponent {
 
   onBlur = () => {
     // otherwise, click will not be able to fire, and options will be hidden already
-    setTimeout(() => {
-      this.setState({open: false, filter: false})
-
-      let { name, text, onChange } = this.props
-      if (onChange && this.isValueMode() && text) {
-        onChangeFld.value = null
-        onChangeFld.name = name + "Text"
-        onChange.call(this, onChangeEvent)
-      }
-    })
+    setTimeout(() => this.setState({open: false, filter: false}))
     window.removeEventListener('scroll', this.windowScroll)
   }
 
