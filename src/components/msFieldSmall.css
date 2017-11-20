@@ -13,5 +13,5 @@
 .ms-field.ms--small > select:focus {
 }
 .ms-field.ms--small > input:focus + .clear {
-  bottom: -4px;
+  bottom: 6px;
 }

@@ -15,7 +15,7 @@
     height: 27px;
 }
 .ms-field.ms--xsmall > input:focus + .clear {
-    bottom: -6px;
+    bottom: 3px;
 }
 .ms-field.ms--xsmall > .ms-label--float {
     transform: translate(0, 20px) scale(1.31, 1.4)
