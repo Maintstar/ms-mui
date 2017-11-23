@@ -68,31 +68,6 @@ function getOptionsStyle(fieldTop, props, grid) {
   return {height: contHeight, bottom: -(contHeight + grid)}
 }
 
-function toDate(int) {
-  let d = new Date(int);
-  let s = d.toISOString().slice(0,10)
-  // s === 1970-01-01, iso date is 10 chars, so we slice 10
-  return s
-}
-
-export function preprocessValueRender(fld, value) {
-  if (fld.props.type === 'date' && fld.props.dateAsString !== true) {
-    if (value == null || value === '')
-      return ""; // we need to return "" to have control be in controllable state.
-    else
-      return toDate(value || 0)
-  }
-  return value
-}
-
-export function preprocessValueOnChange(fld, value) {
-  if (fld.props.type === 'date' && fld.props.dateAsString !== true) {
-    if (value === '') return null;
-    return Date.parse(value)
-  }
-  return value
-}
-
 export default class MSField extends React.PureComponent {
 
   static defaultProps = {
@@ -137,8 +112,6 @@ export default class MSField extends React.PureComponent {
     isLoading: propTypes.bool,
     isMulti: propTypes.oneOfType([propTypes.bool, propTypes.number]),
     //isFree,
-    // field onChange will receive string, not milliseconds.
-    dateAsString: propTypes.bool,
 
     // should we hide dropicon
     hideDropIcon: propTypes.bool,
@@ -201,9 +174,7 @@ export default class MSField extends React.PureComponent {
     }
     else
     {
-      onChangeFld.value = preprocessValueOnChange(this, ev.target.value)
-      onChangeFld.name = name
-      onChange.call(this, onChangeEvent)
+      onChange.call(this, ev)
     }
   }
 
@@ -212,7 +183,7 @@ export default class MSField extends React.PureComponent {
    up = 38
    right = 39
    down = 40
-  */
+   */
 
   resetActive = () => {
     let changed = this.activeIndex !== -1
@@ -530,7 +501,7 @@ export default class MSField extends React.PureComponent {
       onClick: this.onClick,
       onKeyDown: this.onKeyDown,
       name,
-      value: preprocessValueRender(this, value),
+      value,
       type,
       style
     }
@@ -571,8 +542,8 @@ export default class MSField extends React.PureComponent {
         {
           // field
           this.isTextArea() ?
-          <textarea ref={this.setIRef} {...inputProps} /> :
-          <input ref={this.setIRef} {...inputProps} />
+            <textarea ref={this.setIRef} {...inputProps} /> :
+            <input ref={this.setIRef} {...inputProps} />
         }
         {
           // clear button
