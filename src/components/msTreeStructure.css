@@ -1,0 +1,94 @@
+.ms-tree-struct {
+  display: block;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  position: relative;
+  outline: none;
+}
+.ms-tree-struct:focus .ms-tree-struct__value {
+  border-color: #2196F3;
+}
+.ms-tree-struct__back {
+  position: absolute;
+  width: 40px;
+  height: 100%;
+  background-color: #EEEEEE;
+  color: rgba(0,0,0,0.87);
+  line-height: 35px;
+  cursor: pointer;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+}
+.ms-tree-struct__dropdown {
+  position: absolute;
+  bottom: -251px;
+  width: 100%;
+  height: 250px;
+  border-top: 1px solid #2196F3;
+  background-color: white;
+  box-shadow:
+    0 2px 2px 0 rgba(0,0,0,0.14),
+    0 1px 5px 0 rgba(0,0,0,0.12),
+    0 3px 1px -2px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.ms-tree-struct__label {
+  position: absolute;
+  display: block;
+  color: rgba(0,0,0,0.6);
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: 0.3s;
+  pointer-events: none;
+  transform-origin: left;
+  margin-top: -14px;
+}
+.ms-tree-struct__label--float {
+  transform: translate(0, 24px) scale(1.31, 1.4);
+  opacity: 0.5;
+  color: rgba(0,0,0,.6);
+}
+.ms-tree-struct__option {
+  padding: 0 12px;
+  color: rgba(0,0,0,0.87);
+  line-height: 35px;
+  cursor: pointer;
+  text-align: left;
+  text-transform: none;
+  white-space: nowrap;
+}
+.ms-tree-struct__option:hover {
+  background-color: #F5F5F5;
+}
+.ms-tree-struct__options {
+  height: 100%;
+  padding-left: 40px;
+  overflow-y: auto;
+}
+.ms-tree-struct__options--top-level {
+  padding-left: 0;
+}
+.ms-tree-struct__value {
+  height: 32px;
+  box-sizing: border-box;
+  display: block;
+  background: transparent none;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  outline: 0;
+  width: 100%;
+  font-size: 16px;
+  font-family: sans-serif;
+  line-height: 32px;
+  margin: 0;
+  text-transform: none;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding: 0 25px 0 0;
+}

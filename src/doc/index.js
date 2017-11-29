@@ -2,6 +2,7 @@ import React from 'react'
 import MSField from '../components/msField'
 import MSSelect from '../components/msSelect'
 import MSCheckbox from '../components/msCheckbox'
+import MSTreeStructure from '../components/msTreeStructure'
 
 import Button from '../components/button'
 import Table from '../components/table'
@@ -149,6 +150,40 @@ const optionsSmall = [
   {id:'AZ', name:'Arizona'},
 ]
 
+const locationOptions = [
+  { id: 'ru', name: 'Russia' },
+  { id: 'ur', name: 'Udmurt Republic' },
+  { id: 'mo', name: 'Moscow Region' },
+  { id: 'lo', name: 'Leningrad Region' },
+  { id: 'izh', name: 'Izhevsk' },
+  { id: 'mos', name: 'Moscow' },
+  { id: 'spb', name: 'Saint Petersburg' },
+  { id: 'us', name: 'USA' },
+  { id: 'ca', name: 'California' },
+  { id: 'wa', name: 'Washington' },
+  { id: 'tx', name: 'Texas' },
+  { id: 'irv', name: 'Irvine' },
+  { id: 'sea', name: 'Seattle' },
+  { id: 'ost', name: 'Ostin' },
+]
+
+const locationStructure = {
+  $root: { parent: null, children: ['ru', 'us'] },
+  ru: { parent: null, children: ['ur', 'mo', 'lo'] },
+  ur: { parent: 'ru', children: ['izh'] },
+  mo: { parent: 'ru', children: ['mos'] },
+  lo: { parent: 'ru', children: ['spb'] },
+  izh: { parent: 'ur', children: null },
+  mos: { parent: 'mo', children: null },
+  spb: { parent: 'lo', children: null },
+  us: { parent: null, children: ['ca', 'wa', 'tx'] },
+  ca: { parent: 'us', children: ['irv'] },
+  wa: { parent: 'us', children: ['sea'] },
+  tx: { parent: 'us', children: ['ost'] },
+  irv: { parent: 'ca', children: null },
+  sea: { parent: 'wa', children: null },
+  ost: { parent: 'tx', children: null }
+}
 
 
 export default class extends React.Component {
@@ -368,6 +403,15 @@ export default class extends React.Component {
           <MSCheckbox {...fp(i++)} label="label" error="error text" />
 
           <MSField {...fp(i++)} label="After (to see withing form)" />
+        </Panel>
+
+        <h2>MSTreeStructure</h2>
+        <Panel>
+          <MSTreeStructure
+            label="Location"
+            options={locationOptions}
+            structure={locationStructure}
+          />
         </Panel>
 
         <h2>Small MSSelect</h2>
