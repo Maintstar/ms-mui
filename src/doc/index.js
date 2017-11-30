@@ -180,7 +180,7 @@ export default class extends React.Component {
     let n = 'f'+i
     let v = ({
       name:n,
-      value: this.state[n] || "",
+      value: this.state[n] != null ? this.state[n] : "",
       onChange: this.onChange,
       onSelected: this.onSelected
     })
