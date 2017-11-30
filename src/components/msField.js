@@ -168,10 +168,13 @@ export default class MSField extends React.PureComponent {
       {
         this.select(null, {cleanSelection: true})
       }
+      else
+      {
         onChangeFld.value = ev.target.value
         onChangeFld.name = name + "Text"
         onChange.call(this, onChangeEvent)
       }
+    }
     else
     {
       onChange.call(this, ev)
