@@ -117,5 +117,14 @@ option {
     bottom: 2px;
 }
 .mui-col > .clear {
-  right: 7px;
+    right: 7px;
+}
+.mui-container--small > .mui-row > .mui-col > .clear {
+    right: -1px;
+}
+.mui-container--xsmall > .mui-row .mui-col > .clear {
+    right: -4px;
+}
+.mui-container--none > .mui-row .mui-col > .clear {
+    right: -8px;
 }

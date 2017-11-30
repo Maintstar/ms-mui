@@ -345,8 +345,8 @@ export default class extends React.Component {
           <L>MSSelect[xs="6"] container nopad={'{'}1{'}'}]</L>
           <Container nopad={1}>
             <Row>
-              <MSSelect {...fp(i++)} label="left" xs="6" />
-              <MSSelect {...fp(i++)} label="right" xs="6" />
+              <MSField {...fp(i++)} label="left" xs="6" />
+              <MSField {...fp(i++)} label="right" xs="6" />
             </Row>
           </Container>
         </Panel>
