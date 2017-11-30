@@ -168,10 +168,10 @@ export default class MSField extends React.PureComponent {
       {
         this.select(null, {cleanSelection: true})
       }
-      onChangeFld.value = ev.target.value
-      onChangeFld.name = name + "Text"
-      onChange.call(this, onChangeEvent)
-    }
+        onChangeFld.value = ev.target.value
+        onChangeFld.name = name + "Text"
+        onChange.call(this, onChangeEvent)
+      }
     else
     {
       onChange.call(this, ev)
@@ -209,9 +209,9 @@ export default class MSField extends React.PureComponent {
     // when empty already and we click backspace, we hide
     if (kc === 8 && this.isValueMode() && !this.props.text)
     {
-      this.setState({open: false})
+        this.setState({open: false})
+      }
     }
-  }
 
   highlightActive = () => {
     if (this.optionsDiv) {
@@ -262,10 +262,12 @@ export default class MSField extends React.PureComponent {
   }
 
   handleSelect = id => {
-    this.select(id)
+    // select from mouse or click on screen, we want blur in this scenarios
+    // in case with keyboard, up down enter selection, we need to think
+    this.select(id, {blur: true})
   }
 
-  select(newValue, { setOnlySent, cleanSelection } = {}) {
+  select(newValue, { setOnlySent, cleanSelection, blur } = {}) {
     let { value, isMulti, isFree, onSelected, onClear, name } = this.props
     let sentValue = newValue
     let valueText = null
@@ -314,6 +316,13 @@ export default class MSField extends React.PureComponent {
     // if this is not clean selection, when value deselected
     if (!cleanSelection) {
       this.setState({open: false});
+    }
+
+    // we blur field, because we selected. this is better behaviour.
+    if (blur) {
+      setTimeout(() => {
+        this.input.blur()
+      })
     }
   }
 
