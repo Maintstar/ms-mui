@@ -205,7 +205,7 @@ export default class MSField extends React.PureComponent {
         let el = this.optionsDiv.querySelector('[data-index="' + activeIndexOrDefault + '"]');
 
         if (el) {
-          this.select(el.getAttribute('value'));
+          this.select(el.getAttribute('value'), {blur: true});
         }
       }
       if (this.activeIndex < -1) this.activeIndex = -1
