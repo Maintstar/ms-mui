@@ -61,6 +61,7 @@ export default class MSFieldOptions extends React.PureComponent {
     let v = ev.target.getAttribute('value')
     let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
     v = isNumber ? +v : v
+    if (v === this.props.emptyValue) v = null
     this.props.onSelect(v)
   }
 
@@ -94,7 +95,8 @@ export default class MSFieldOptions extends React.PureComponent {
       idCol,
       descCol,
       groupCol,
-      itemHeight
+      itemHeight,
+      emptyValue
     } = this.props
 
     // render items
@@ -108,7 +110,9 @@ export default class MSFieldOptions extends React.PureComponent {
       filterValue = filterValue.split(' ')
       options = options.filter(o => filterValue.every(x => (o[nameCol] + '').toLowerCase().indexOf(x) >= 0))
     }
-
+    if (emptyValue && options[0][nameCol] !== emptyValue) {
+      options.unshift({ [nameCol]: emptyValue, [idCol]: emptyValue })
+    }
     // draw options
     for (let i = this.state.from; i < this.state.from + 13; i++) {
       let o = options[i]
