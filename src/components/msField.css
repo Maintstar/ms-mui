@@ -5,7 +5,8 @@
     position: relative;
 }
 .ms-field > input, 
-.ms-field > select {
+.ms-field > select,
+.ms-field > textarea {
     height: 32px;
     box-sizing: border-box;
     display: block;
@@ -16,7 +17,13 @@
     width: 100%;
     padding: 0;
     font-size: 16px;
-    background-color: transparent;
+}
+/*text area first line should be there*/
+.ms-field > textarea {
+    padding-top: 4px;
+    max-height: 250px;
+    /*overflow: hidden !important;*/
+    padding-bottom: 4px;
 }
 .ms-field > select,
 .ms-field--dd > input {
@@ -91,24 +98,33 @@ option {
 }
 .ms-field .clear {
     position: absolute;
-    right: -9px;
-    padding: 10px;
+    right: -7px;
+    padding: 0 7px;
     cursor: pointer;
-    bottom: -4px;
+    bottom: 6px;
     color: rgba(0,0,0,0.7);
     font-weight: bold;
 }
 
 .ms-field > input:focus + .clear {
-    bottom: -3px;
+    bottom: 7px;
 }
 
 .ms--small .clear {
-    bottom: -5px;
+    bottom: 5px;
 }
 .ms--xsmall .clear {
-    bottom: -8px;
+    bottom: 2px;
 }
 .mui-col > .clear {
-  right: -3px;
+    right: 7px;
+}
+.mui-container--small > .mui-row > .mui-col > .clear {
+    right: -1px;
+}
+.mui-container--xsmall > .mui-row .mui-col > .clear {
+    right: -4px;
+}
+.mui-container--none > .mui-row .mui-col > .clear {
+    right: -8px;
 }

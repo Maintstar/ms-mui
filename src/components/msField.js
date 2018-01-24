@@ -7,6 +7,7 @@ import MSFieldOptions from './msFieldOptions'
 import { isMobile } from '../utils/mobile'
 import requestAnimationFrame from '../utils/requestAnimationFrame'
 import getElementBBox from '../utils/getElementBBox'
+import autosize from 'autosize'
 
 import './msField.css'
 import './msFieldSmall.css'
@@ -87,6 +88,7 @@ export default class MSField extends React.PureComponent {
     groupCol: propTypes.string,
 
     style: propTypes.object,
+    contStyle: propTypes.object,
     onClear: propTypes.func,
     
     label: propTypes.string,
@@ -103,6 +105,9 @@ export default class MSField extends React.PureComponent {
     warning: propTypes.string,
     size: propTypes.string,
     itemHeight: propTypes.number,
+
+    // autoType for textarea
+    autoHeight: propTypes.bool,
 
     isLoading: propTypes.bool,
     isMulti: propTypes.oneOfType([propTypes.bool, propTypes.number]),
@@ -161,11 +166,14 @@ export default class MSField extends React.PureComponent {
     {
       if (value && !isMulti)
       {
-        this.select(null)
+        this.select(null, {cleanSelection: true})
       }
-      onChangeFld.value = ev.target.value
-      onChangeFld.name = name + "Text"
-      onChange.call(this, onChangeEvent)
+      else
+      {
+        onChangeFld.value = ev.target.value
+        onChangeFld.name = name + "Text"
+        onChange.call(this, onChangeEvent)
+      }
     }
     else
     {
@@ -178,7 +186,7 @@ export default class MSField extends React.PureComponent {
    up = 38
    right = 39
    down = 40
-  */
+   */
 
   resetActive = () => {
     let changed = this.activeIndex !== -1
@@ -192,17 +200,23 @@ export default class MSField extends React.PureComponent {
     if (kc === 40 || kc === 38 || kc === 13) {
       if (kc === 40) this.activeIndex++;
       if (kc === 38) this.activeIndex--;
-      if (kc === 13) {
-        let el = this.optionsDiv.querySelector('[data-index="' + this.activeIndex + '"]');
+      if (kc === 13 && this.props.options) {
+        let activeIndexOrDefault = this.activeIndex === -1 ? 0 : this.activeIndex;
+        let el = this.optionsDiv.querySelector('[data-index="' + activeIndexOrDefault + '"]');
+
         if (el) {
-          this.select(el.getAttribute('value'));
-          this.setState({open:false});
+          this.select(el.getAttribute('value'), {blur: true});
         }
       }
       if (this.activeIndex < -1) this.activeIndex = -1
       this.highlightActive()
     }
-  }
+    // when empty already and we click backspace, we hide
+    if (kc === 8 && this.isValueMode() && !this.props.text)
+    {
+        this.setState({open: false})
+      }
+    }
 
   highlightActive = () => {
     if (this.optionsDiv) {
@@ -226,8 +240,21 @@ export default class MSField extends React.PureComponent {
     return this.props.isFree === false && (this.props.options)
   }
 
+  isTextArea = () => {
+    return this.props.type === 'textarea'
+  }
+  isTextAreaAutoSize = () => {
+    return this.props.autoHeight !== false
+  }
+
   handleClear = () => {
     this.select(null)
+    // restore textArea size, when clear.
+    if (this.isTextArea() && this.isTextAreaAutoSize()) {
+      setTimeout(() => {
+        autosize.update(this.input);
+      },0)
+    }
   }
 
   handleRemove = id => {
@@ -240,10 +267,12 @@ export default class MSField extends React.PureComponent {
   }
 
   handleSelect = id => {
-    this.select(id)
+    // select from mouse or click on screen, we want blur in this scenarios
+    // in case with keyboard, up down enter selection, we need to think
+    this.select(id, {blur: true})
   }
 
-  select(newValue, { setOnlySent } = {}) {
+  select(newValue, { setOnlySent, cleanSelection, blur } = {}) {
     let { value, isMulti, isFree, onSelected, onClear, name } = this.props
     let sentValue = newValue
     let valueText = null
@@ -265,6 +294,7 @@ export default class MSField extends React.PureComponent {
       }
       else {
         let opt = this.getOption(newValue)
+        newValue = opt[this.props.idCol]
         valueText = opt[this.props.nameCol]
       }
     }
@@ -287,12 +317,32 @@ export default class MSField extends React.PureComponent {
         this.props.onChange.call(this, onChangeEvent)
       }
     }
+
+    // if this is not clean selection, when value deselected
+    if (!cleanSelection) {
+      this.setState({open: false});
+    }
+
+    // we blur field, because we selected. this is better behaviour.
+    if (blur) {
+      setTimeout(() => {
+        this.input.blur()
+      })
+    }
+  }
+
+  onClick = () => {
+    this.setState({open:true});
   }
 
   getOption(value) {
     let { options: opts, idCol } = this.props
+    // convert to number if number.
+    if (opts.length > 0 && typeof opts[0][idCol] === 'number') value = +value
     for (let i = 0; i < opts.length; i++) {
       let o = opts[i]
+      // i do compare specifically with == not === to make 1 == '1' be true.
+      // because value comes from attribute always string, but in options we could have number.
       if (o[idCol] === value) {
         return o
       }
@@ -326,6 +376,9 @@ export default class MSField extends React.PureComponent {
   }
   setIRef = el => {
     this.input = el
+    if (this.isTextArea() && this.isTextAreaAutoSize()) {
+      autosize(this.input);
+    }
   }
 
   componentDidUpdate() {
@@ -354,6 +407,7 @@ export default class MSField extends React.PureComponent {
       text,
       type,
       style,
+      contStyle,
       options,
       floatingLabel,
       itemHeight,
@@ -458,10 +512,12 @@ export default class MSField extends React.PureComponent {
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       onChange: this.onChange,
+      onClick: this.onClick,
       onKeyDown: this.onKeyDown,
       name,
       value,
-      type
+      type,
+      style
     }
 
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
@@ -481,7 +537,7 @@ export default class MSField extends React.PureComponent {
 
 
     return (
-      <div className={getClassName(classes)} style={style}>
+      <div className={getClassName(classes)} style={contStyle}>
         {
           // error message
           (error || warning) &&
@@ -499,11 +555,13 @@ export default class MSField extends React.PureComponent {
         }
         {
           // field
-          <input ref={this.setIRef} {...inputProps} />
+          this.isTextArea() ?
+            <textarea ref={this.setIRef} {...inputProps} /> :
+            <input ref={this.setIRef} {...inputProps} />
         }
         {
           // clear button
-          !isEmpty &&
+          !isEmpty && type !== 'date' && type !== 'textarea' &&
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {

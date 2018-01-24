@@ -58,11 +58,17 @@ export default class MSFieldOptions extends React.PureComponent {
   }
 
   handleClick = (ev) => {
+	// this blocks click of underlied fields, when you click on option and then focus other field automatically
+	// and prevents loosing focus
+    ev.preventDefault()
     let v = ev.target.getAttribute('value')
-    let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
-    v = isNumber ? +v : v
-    if (v === this.props.emptyValue) v = null
-    this.props.onSelect(v)
+    // if null, i probably clicked on scroll
+    if (v != null) {
+      let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
+      v = isNumber ? +v : v
+      if (v === this.props.emptyValue) v = null
+      this.props.onSelect(v)
+    }
   }
 
   setRef = (el) => {
@@ -129,14 +135,20 @@ export default class MSFieldOptions extends React.PureComponent {
         if (descCol)
         {
           if (typeof descCol === 'function')
+          {
             text = descCol(o)
+          }
           else
+          {
             text = o[descCol]
+          }
         }
         else
           text = o[nameCol]
 
-        if (text == null || text.trim() == '')
+        // remember that text could be React component.
+        // don't trim it
+        if (text == null || text === '')
           text = '#' + o[idCol]
 
         // add option
