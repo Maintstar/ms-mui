@@ -116,16 +116,19 @@ export default class MSFieldOptions extends React.PureComponent {
       filterValue = filterValue.split(' ')
       options = options.filter(o => filterValue.every(x => (o[nameCol] + '').toLowerCase().indexOf(x) >= 0))
     }
-    if (emptyValue && options[0][nameCol] !== emptyValue) {
-      options.unshift({ [nameCol]: emptyValue, [idCol]: emptyValue })
-    }
+
     // draw options
     for (let i = this.state.from; i < this.state.from + 13; i++) {
       let o = options[i]
       if (o) {
-        let g = o[groupCol]
+        let g = o[groupCol] || null
         // add group name
-        if ((lastGroup == null && g != null) || (lastGroup !== g)) {
+        if (emptyValue && (items.length === 0 || !items[0] || (items[0].key !== emptyValue))) {
+          items.push(<div key={emptyValue} value={emptyValue} data-index={0} className="ms-options_it"
+                          style={{top: itemTop(0, itemHeight, lastGroup) }}>{emptyValue}</div>)
+          i = i + 1
+        }
+        if ((lastGroup == null &&  g != null) || (lastGroup !== g)) {
           items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(i, itemHeight) }}>{g}</div>)
           lastGroup = g
         }
