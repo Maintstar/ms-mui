@@ -66,6 +66,7 @@ export default class MSFieldOptions extends React.PureComponent {
     if (v != null) {
       let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
       v = isNumber ? +v : v
+      if (v === this.props.emptyValue) v = null
       this.props.onSelect(v)
     }
   }
@@ -100,7 +101,8 @@ export default class MSFieldOptions extends React.PureComponent {
       idCol,
       descCol,
       groupCol,
-      itemHeight
+      itemHeight,
+      emptyValue
     } = this.props
 
     // render items
@@ -119,9 +121,15 @@ export default class MSFieldOptions extends React.PureComponent {
     for (let i = this.state.from; i < this.state.from + 13; i++) {
       let o = options[i]
       if (o) {
-        let g = o[groupCol]
+        // add NONE value
+        if (emptyValue && (items.length === 0 || !items[0] || (items[0].key !== emptyValue))) {
+          items.push(<div key={emptyValue} value={emptyValue} data-index={0} className="ms-options_it"
+                          style={{top: itemTop(0, itemHeight, lastGroup) }}>{emptyValue}</div>)
+          i = i + 1
+        }
         // add group name
-        if ((lastGroup == null && g != null) || (lastGroup !== g)) {
+        let g = o[groupCol] || null
+        if ((lastGroup == null &&  g != null) || (lastGroup !== g)) {
           items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(i, itemHeight) }}>{g}</div>)
           lastGroup = g
         }
