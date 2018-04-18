@@ -411,6 +411,8 @@ export default class MSField extends React.PureComponent {
       options,
       floatingLabel,
       itemHeight,
+      emptyValue,
+
 
       className,
       error,
@@ -533,6 +535,7 @@ export default class MSField extends React.PureComponent {
       idCol,
       descCol,
       groupCol,
+      emptyValue
     }
 
 
