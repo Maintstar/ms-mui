@@ -411,6 +411,8 @@ export default class MSField extends React.PureComponent {
       options,
       floatingLabel,
       itemHeight,
+      emptyValue,
+      autoComplete,
 
       className,
       error,
@@ -517,7 +519,8 @@ export default class MSField extends React.PureComponent {
       name,
       value,
       type,
-      style
+      style,
+      autoComplete
     }
 
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
@@ -533,6 +536,7 @@ export default class MSField extends React.PureComponent {
       idCol,
       descCol,
       groupCol,
+      emptyValue
     }
 
 
