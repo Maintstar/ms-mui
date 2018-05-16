@@ -1,5 +1,5 @@
 export function isMobile() {
-  return window.innerWidth <= 800 && window.innerHeight <= 650;
+  return window.innerWidth <= 1024 && window.innerHeight <= 1024;
 }
 
 
