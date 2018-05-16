@@ -154,6 +154,7 @@ export default class MSField extends React.PureComponent {
         onChangeFld.name = name + "Text"
         onChange.call(this, onChangeEvent)
       }
+      this.props.onBlur && this.props.onBlur(onChangeEvent)
     })
     window.removeEventListener('scroll', this.windowScroll)
   }
