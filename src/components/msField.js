@@ -125,6 +125,13 @@ export default class MSField extends React.PureComponent {
       filter: false,
       touched: false
     }
+
+    this.onBlurSetTimeout = null
+  }
+
+  componentWillUnmount() {
+    this.onBlurSetTimeout && clearTimeout(this.onBlurSetTimeout)
+    window.removeEventListener('scroll', this.windowScroll)
   }
 
   onFocus = () => {
@@ -138,7 +145,7 @@ export default class MSField extends React.PureComponent {
 
   onBlur = () => {
     // otherwise, click will not be able to fire, and options will be hidden already
-    setTimeout(() => {
+    this.onBlurSetTimeout = setTimeout(() => {
       this.setState({open: false, filter: false})
 
       let { name, text, onChange } = this.props
@@ -147,6 +154,7 @@ export default class MSField extends React.PureComponent {
         onChangeFld.name = name + "Text"
         onChange.call(this, onChangeEvent)
       }
+      this.props.onBlur && this.props.onBlur(onChangeEvent)
     })
     window.removeEventListener('scroll', this.windowScroll)
   }
