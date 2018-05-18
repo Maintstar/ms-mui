@@ -64,9 +64,12 @@ export default class MSFieldOptions extends React.PureComponent {
     let v = ev.target.getAttribute('value')
     // if null, i probably clicked on scroll
     if (v != null) {
-      let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
-      v = isNumber ? +v : v
-      if (v === this.props.emptyValue) v = null
+      if (v === this.props.emptyValue) {
+        v = null
+      } else {
+        let isNumber = typeof this.props.options[0][this.props.idCol] === 'number'
+        v = isNumber ? +v : v
+      }
       this.props.onSelect(v)
     }
   }

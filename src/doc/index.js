@@ -240,7 +240,7 @@ export default class extends React.Component {
         <h2>MSField with options</h2>
         <Panel>
           <L>1000 options</L>
-          <MSField {...fp(i++)} label="options" options={bigOptions} />
+          <MSField emptyValue='Null' {...fp(i++)} label="options" options={bigOptions} />
 
           <L>grouped</L>
           <MSField {...fp(i++)} label="options" options={statesGroups} />
