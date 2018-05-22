@@ -79,7 +79,8 @@ export default class MSField extends React.PureComponent {
     isMulti: false,
     preventFilter: false,
     floatingLabel: true,
-    itemHeight: 35
+    itemHeight: 35,
+    dataAttr: {}
   }
 
   static propTypes = {
@@ -105,6 +106,7 @@ export default class MSField extends React.PureComponent {
     warning: propTypes.string,
     size: propTypes.string,
     itemHeight: propTypes.number,
+    dataAttr: propTypes.object,
 
     // autoType for textarea
     autoHeight: propTypes.bool,
@@ -413,6 +415,7 @@ export default class MSField extends React.PureComponent {
       itemHeight,
       emptyValue,
       autoComplete,
+      dataAttr,
 
       className,
       error,
@@ -520,7 +523,8 @@ export default class MSField extends React.PureComponent {
       value,
       type,
       style,
-      autoComplete
+      autoComplete,
+      ...dataAttr
     }
 
     let optionsAreVisible = Array.isArray(options) && options.length > 0 && this.state.touched
