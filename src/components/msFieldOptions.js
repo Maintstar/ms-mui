@@ -121,19 +121,19 @@ export default class MSFieldOptions extends React.PureComponent {
     }
 
     // draw options
-    for (let i = this.state.from; i < this.state.from + 13; i++) {
+    for (let i = this.state.from, index = this.state.from; i < this.state.from + 13; i++, index++) {
       let o = options[i]
       if (o) {
         // add NONE value
         if (emptyValue && (items.length === 0 || !items[0] || (items[0].key !== emptyValue))) {
           items.push(<div key={emptyValue} value={emptyValue} data-index={0} className="ms-options_it"
-                          style={{top: itemTop(0, itemHeight, lastGroup) }}>{emptyValue}</div>)
-          i = i + 1
+                          style={{top: itemTop(index, itemHeight, lastGroup) }}>{emptyValue}</div>)
+          index = index + 1
         }
         // add group name
         let g = o[groupCol] || null
         if ((lastGroup == null &&  g != null) || (lastGroup !== g)) {
-          items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(i, itemHeight) }}>{g}</div>)
+          items.push(<div key={'group_' + g} className="ms-options_gr" style={{top: groupTop(index, itemHeight) }}>{g}</div>)
           lastGroup = g
         }
 
@@ -160,7 +160,7 @@ export default class MSFieldOptions extends React.PureComponent {
 
         // add option
         items.push(<div key={o[idCol]} value={o[idCol]} data-index={i} className="ms-options_it"
-                        style={{top: itemTop(i, itemHeight, lastGroup) }}>{text || <i>&nbsp;</i> }</div>)
+                        style={{top: itemTop(index, itemHeight, lastGroup) }}>{text || <i>&nbsp;</i> }</div>)
       }
     }
 
