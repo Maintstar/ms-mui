@@ -107,6 +107,7 @@ export default class MSField extends React.PureComponent {
     size: propTypes.string,
     itemHeight: propTypes.number,
     dataAttr: propTypes.object,
+    maxLength: propTypes.string,
 
     // autoType for textarea
     autoHeight: propTypes.bool,
@@ -415,6 +416,7 @@ export default class MSField extends React.PureComponent {
       itemHeight,
       emptyValue,
       autoComplete,
+      maxLength,
       dataAttr,
 
       className,
@@ -524,6 +526,7 @@ export default class MSField extends React.PureComponent {
       type,
       style,
       autoComplete,
+      maxLength,
       ...dataAttr
     }
 
