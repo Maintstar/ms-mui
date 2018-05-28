@@ -1,4 +1,6 @@
 import React from 'react'
+import autosize from 'autosize'
+
 import {addSizeClasses, addErrorWarnClasses, getClassName, initClasses, addGridClasses, getFieldHeightBySize} from './ms'
 import Loading from '../components/loading'
 import propTypes from 'prop-types'
@@ -7,7 +9,7 @@ import MSFieldOptions from './msFieldOptions'
 import { isMobile } from '../utils/mobile'
 import requestAnimationFrame from '../utils/requestAnimationFrame'
 import getElementBBox from '../utils/getElementBBox'
-import autosize from 'autosize'
+import OptionsBody from '../utils/initOptionsBody'
 
 import './msField.css'
 import './msFieldSmall.css'
@@ -129,6 +131,8 @@ export default class MSField extends React.PureComponent {
       touched: false
     }
 
+    this.input = React.createRef();
+    this.optionsBody = new OptionsBody()
     this.onBlurTimeOut = null
   }
 
@@ -141,6 +145,7 @@ export default class MSField extends React.PureComponent {
     // we make timeout, so browser already scroll to that field, and keyboard opened without lag
     // user has time to input something, and we don't see lags
     //setTimeout(() => {
+    this.optionsBody.updateDimensions(this.input.current)
     this.setState({open: true, touched: true})
     //}, 300)
     window.addEventListener('scroll', this.windowScroll)
@@ -262,7 +267,7 @@ export default class MSField extends React.PureComponent {
     // restore textArea size, when clear.
     if (this.isTextArea() && this.isTextAreaAutoSize()) {
       setTimeout(() => {
-        autosize.update(this.input);
+        autosize.update(this.input.current);
       },0)
     }
   }
@@ -336,12 +341,13 @@ export default class MSField extends React.PureComponent {
     // we blur field, because we selected. this is better behaviour.
     if (blur) {
       setTimeout(() => {
-        this.input.blur()
+        this.input.current.blur()
       })
     }
   }
 
   onClick = () => {
+    this.optionsBody.updateDimensions(this.input.current)
     this.setState({open:true});
   }
 
@@ -384,12 +390,6 @@ export default class MSField extends React.PureComponent {
   setRef = el => {
     this.optionsDiv = el
   }
-  setIRef = el => {
-    this.input = el
-    if (this.isTextArea() && this.isTextAreaAutoSize()) {
-      autosize(this.input);
-    }
-  }
 
   componentDidUpdate() {
     this.updatePos()
@@ -401,7 +401,7 @@ export default class MSField extends React.PureComponent {
 
   updatePos = () => {
     if (this.optionsDiv) {
-      let st = getOptionsStyle(getElementBBox(this.input).top, this.props, this.grid)
+      let st = getOptionsStyle(getElementBBox(this.input.current).top, this.props, this.grid)
 
       this.optionsDiv.style.bottom = st.bottom != null ? st.bottom + 'px' : ''
       this.optionsDiv.style.top = st.top != null ? st.top + 'px' : ''
@@ -574,8 +574,8 @@ export default class MSField extends React.PureComponent {
         {
           // field
           this.isTextArea() ?
-            <textarea ref={this.setIRef} {...inputProps} /> :
-            <input ref={this.setIRef} {...inputProps} />
+            <textarea ref={this.input} {...inputProps} /> :
+            <input ref={this.input} {...inputProps} />
         }
         {
           // clear button
@@ -583,11 +583,16 @@ export default class MSField extends React.PureComponent {
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {
-          // options
-          optionsAreVisible &&
-          <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
-            <MSFieldOptions {...optionsProps} />
-          </div>
+          this.state.open
+          ? this.optionsBody.renderOptions(
+            {
+              children: optionsAreVisible &&
+              <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
+                <MSFieldOptions {...optionsProps} />
+              </div>
+            }
+          )
+          : this.optionsBody.removeOptions()
         }
         {
           // loading spinner

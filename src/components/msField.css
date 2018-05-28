@@ -128,3 +128,7 @@ option {
 .mui-container--none > .mui-row .mui-col > .clear {
     right: -8px;
 }
+
+#msFieldOptionBody {
+    position: absolute;
+}

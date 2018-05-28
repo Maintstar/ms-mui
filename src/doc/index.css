@@ -1,5 +1,7 @@
 body {
+    cursor: pointer;
     background-color: rgba(0,0,0,0.031);
+    position: relative;
 }
 
 .grid-example .mui-row > div {
