@@ -81,6 +81,7 @@ export default class MSField extends React.PureComponent {
     isMulti: false,
     preventFilter: false,
     floatingLabel: true,
+    disabled: false,
     itemHeight: 35,
     dataAttr: {}
   }
@@ -96,6 +97,9 @@ export default class MSField extends React.PureComponent {
     
     label: propTypes.string,
     name: propTypes.string.isRequired,
+    disabled: propTypes.bool,
+    min: propTypes.string,
+    max: propTypes.string,
 
     // selected value of control
     value: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
@@ -425,6 +429,7 @@ export default class MSField extends React.PureComponent {
       autoComplete,
       maxLength,
       dataAttr,
+      disabled,
 
       className,
       error,
@@ -522,6 +527,15 @@ export default class MSField extends React.PureComponent {
       }
     }
 
+    let dateProps = {}
+
+    if (type === 'date') {
+      dateProps = {
+        min: this.props.min,
+        max: this.props.max
+      }
+    }
+
     let inputProps = {
       onFocus: this.onFocus,
       onBlur: this.onBlur,
@@ -534,6 +548,8 @@ export default class MSField extends React.PureComponent {
       style,
       autoComplete,
       maxLength,
+      disabled,
+      ...dateProps,
       ...dataAttr
     }
 
