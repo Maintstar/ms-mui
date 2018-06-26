@@ -92,6 +92,7 @@ export default class MSField extends React.PureComponent {
     groupCol: propTypes.string,
 
     style: propTypes.object,
+    labelStyle: propTypes.object,
     contStyle: propTypes.object,
     onClear: propTypes.func,
     
@@ -421,6 +422,7 @@ export default class MSField extends React.PureComponent {
       text,
       type,
       style,
+      labelStyle,
       contStyle,
       options,
       floatingLabel,
@@ -585,7 +587,7 @@ export default class MSField extends React.PureComponent {
         {
           // label
           label &&
-          <label className={getClassName(labelClass)}>{label}</label>
+          <label className={getClassName(labelClass)} style={labelStyle}>{label}</label>
         }
         {
           // field
