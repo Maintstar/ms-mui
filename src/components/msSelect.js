@@ -24,6 +24,7 @@ export default class MSSelect extends React.PureComponent {
     groupCol: propTypes.string,
 
     style: propTypes.object,
+    labelStyle: propTypes.object,
 
     options: propTypes.arrayOf(propTypes.shape({
       id: propTypes.oneOfType([
@@ -53,7 +54,8 @@ export default class MSSelect extends React.PureComponent {
 
       options, 
       value, 
-      emptyValue, 
+      emptyValue,
+      labelStyle,
 
       label,
       name,
@@ -116,7 +118,7 @@ export default class MSSelect extends React.PureComponent {
         {
           // label
           label &&
-          <label className={getClassName(labelClass)}>{label}</label>
+          <label className={getClassName(labelClass)} style={labelStyle}>{label}</label>
         }
         <select {...selProps}>          
           { 
