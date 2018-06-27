@@ -46,6 +46,7 @@ option {
     white-space: pre;
     min-height: 1.2em;
     padding: 5px;
+    color: black;
 }
 .ms-field > input:focus,
 .ms-field > select:focus {
