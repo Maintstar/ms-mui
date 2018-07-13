@@ -133,4 +133,5 @@ option {
 
 #msFieldOptionBody {
     position: absolute;
+    z-index: 999999999;
 }
