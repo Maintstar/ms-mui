@@ -95,7 +95,8 @@ export default class MSField extends React.PureComponent {
     labelStyle: propTypes.object,
     contStyle: propTypes.object,
     onClear: propTypes.func,
-    
+    onBlur: propTypes.func,
+
     label: propTypes.string,
     name: propTypes.string.isRequired,
     disabled: propTypes.bool,
@@ -166,6 +167,12 @@ export default class MSField extends React.PureComponent {
         onChangeFld.value = null
         onChangeFld.name = name + "Text"
         onChange.call(this, onChangeEvent)
+      }
+
+      if (this.props.onBlur) {
+        onChangeFld.value = null
+        onChangeFld.name = name + "Text"
+        this.props.onBlur.call(this, onChangeEvent)
       }
     })
     window.removeEventListener('scroll', this.windowScroll)
@@ -320,7 +327,9 @@ export default class MSField extends React.PureComponent {
     }
 
     if (onClear && newValue == null) {
-      onClear()
+      onChangeFld.value = valueText
+      onChangeFld.name = name
+      onClear(onChangeEvent)
     }
 
     // call only selected if selected, or onChange if no onSelected
