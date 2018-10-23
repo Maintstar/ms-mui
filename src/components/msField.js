@@ -82,6 +82,7 @@ export default class MSField extends React.PureComponent {
     preventFilter: false,
     floatingLabel: true,
     disabled: false,
+    isPortal: true,
     itemHeight: 35,
     dataAttr: {}
   }
@@ -100,6 +101,7 @@ export default class MSField extends React.PureComponent {
     label: propTypes.string,
     name: propTypes.string.isRequired,
     disabled: propTypes.bool,
+    isPortal: propTypes.bool,
     min: propTypes.string,
     max: propTypes.string,
 
@@ -441,6 +443,7 @@ export default class MSField extends React.PureComponent {
       maxLength,
       dataAttr,
       disabled,
+      isPortal,
 
       className,
       error,
@@ -610,16 +613,21 @@ export default class MSField extends React.PureComponent {
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {
-          this.state.open
-          ? this.optionsBody.renderOptions(
+          isPortal
+            ? this.state.open ? this.optionsBody.renderOptions(
             {
               children: optionsAreVisible &&
               <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
                 <MSFieldOptions {...optionsProps} />
               </div>
             }
-          )
-          : this.optionsBody.removeOptions()
+            )
+            : this.optionsBody.removeOptions()
+            :
+            this.state.open && optionsAreVisible &&
+            <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
+              <MSFieldOptions {...optionsProps} />
+            </div>
         }
         {
           // loading spinner
