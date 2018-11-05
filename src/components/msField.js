@@ -50,7 +50,7 @@ function getOptionsStyle(fieldTop, props, grid) {
   let { size, itemHeight, options } = props
   let optionsCount = (options && options.length) || 0
   let fieldHeight = getFieldHeightBySize(size)
-  let contHeight = Math.min(optionsCount * itemHeight + 1, maxContHeight)
+  let contHeight = Math.min((optionsCount + 1) * (itemHeight + 1), maxContHeight)
 
   // because when field is in grid mode xs=6...
   // box-sizing: border-box; which makes size to be different because of border calc
