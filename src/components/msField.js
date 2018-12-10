@@ -50,7 +50,7 @@ function getOptionsStyle(fieldTop, props, grid) {
   let { size, itemHeight, options } = props
   let optionsCount = (options && options.length) || 0
   let fieldHeight = getFieldHeightBySize(size)
-  let contHeight = Math.min(optionsCount * itemHeight + 1, maxContHeight)
+  let contHeight = Math.min((optionsCount + 1) * (itemHeight + 1), maxContHeight)
 
   // because when field is in grid mode xs=6...
   // box-sizing: border-box; which makes size to be different because of border calc
@@ -82,6 +82,7 @@ export default class MSField extends React.PureComponent {
     preventFilter: false,
     floatingLabel: true,
     disabled: false,
+    isPortal: true,
     itemHeight: 35,
     dataAttr: {}
   }
@@ -100,6 +101,7 @@ export default class MSField extends React.PureComponent {
     label: propTypes.string,
     name: propTypes.string.isRequired,
     disabled: propTypes.bool,
+    isPortal: propTypes.bool,
     min: propTypes.string,
     max: propTypes.string,
 
@@ -441,6 +443,7 @@ export default class MSField extends React.PureComponent {
       maxLength,
       dataAttr,
       disabled,
+      isPortal,
 
       className,
       error,
@@ -610,16 +613,21 @@ export default class MSField extends React.PureComponent {
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {
-          this.state.open
-          ? this.optionsBody.renderOptions(
+          isPortal
+            ? this.state.open ? this.optionsBody.renderOptions(
             {
               children: optionsAreVisible &&
               <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
                 <MSFieldOptions {...optionsProps} />
               </div>
             }
-          )
-          : this.optionsBody.removeOptions()
+            )
+            : this.optionsBody.removeOptions()
+            :
+            this.state.open && optionsAreVisible &&
+            <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
+              <MSFieldOptions {...optionsProps} />
+            </div>
         }
         {
           // loading spinner
