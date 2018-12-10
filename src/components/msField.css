@@ -131,6 +131,45 @@ option {
     right: -8px;
 }
 
+.ms-field__stretch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+}
+
+.ms-field__stretch-icon {
+    background: url(fullscreen.svg) no-repeat;
+}
+
+.ms-field--full-screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f5f5f5;
+    margin-bottom: 0;
+    padding: 20px;
+    z-index: 10;
+}
+
+.ms-field--full-screen textarea, .ms-field--full-screen input {
+    height: 100%;
+    max-height: none;
+    background: white;
+    border: 1px solid rgba(0,0,0,.08);
+}
+
+.ms-field--full-screen .ms-field__stretch {
+    height: 16px;
+    width: 16px;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+}
+
 #msFieldOptionBody {
     position: absolute;
     z-index: 999999999;

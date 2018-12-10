@@ -82,6 +82,7 @@ export default class MSField extends React.PureComponent {
     preventFilter: false,
     floatingLabel: true,
     disabled: false,
+    stretch: false,
     isPortal: true,
     itemHeight: 35,
     dataAttr: {}
@@ -91,6 +92,7 @@ export default class MSField extends React.PureComponent {
     nameCol: propTypes.string,
     idCol: propTypes.string,
     groupCol: propTypes.string,
+    stretch: propTypes.bool,
 
     style: propTypes.object,
     labelStyle: propTypes.object,
@@ -136,7 +138,8 @@ export default class MSField extends React.PureComponent {
     this.state = {
       open: false,
       filter: false,
-      touched: false
+      touched: false,
+      isFullScreen: false
     }
 
     this.input = React.createRef();
@@ -156,6 +159,7 @@ export default class MSField extends React.PureComponent {
     this.optionsBody.updateDimensions(this.input.current)
     this.setState({open: true, touched: true})
     //}, 300)
+    this.props.onFocus && this.props.onFocus()
     window.addEventListener('scroll', this.windowScroll)
   }
 
@@ -425,6 +429,8 @@ export default class MSField extends React.PureComponent {
     }
   }
 
+  handleStretch = () => this.setState({ isFullScreen: !this.state.isFullScreen })
+
   render() {
     let {
       label,
@@ -444,6 +450,7 @@ export default class MSField extends React.PureComponent {
       dataAttr,
       disabled,
       isPortal,
+      stretch,
 
       className,
       error,
@@ -465,13 +472,14 @@ export default class MSField extends React.PureComponent {
     } = this.props
 
     let {
-      filter
+      filter,
+      isFullScreen
     } = this.state
 
     this.resetActive();
 
     let isEmpty = !value
-
+    if (isFullScreen) floatingLabel = false
     // make classes
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
@@ -481,7 +489,7 @@ export default class MSField extends React.PureComponent {
     if (isEmpty && !hideDropIcon && options) {
       classes['ms-field--dd'] = 1
     }
-
+    if (isFullScreen) classes['ms-field--full-screen'] = 1
     if (value) {
       classes['ms-field--filled'] = 1
     }
@@ -595,6 +603,11 @@ export default class MSField extends React.PureComponent {
           // chips
           isMulti && chips && chips.length > 0 &&
           <MSChips options={chips} onRemove={this.handleRemove}/>
+        }
+        {stretch &&
+          (isFullScreen
+          ? <div className='ms-field__stretch' onClick={this.handleStretch}>×</div>
+          : <div className='ms-field__stretch ms-field__stretch-icon' onClick={this.handleStretch} />)
         }
         {
           // label

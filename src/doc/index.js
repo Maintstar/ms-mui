@@ -259,7 +259,7 @@ export default class extends React.Component {
         <p>Dynamic height textarea, control max height with css max-height</p>
         <Panel>
           <L>textarea</L>
-          <MSField type="textarea" {...fp(i++)} label="label" />
+          <MSField type="textarea" {...fp(i++)} label="label" stretch/>
         </Panel>
 
         <h2>MSField</h2>
