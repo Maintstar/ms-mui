@@ -26,11 +26,10 @@
     /*overflow: hidden !important;*/
     padding-bottom: 4px;
 }
-.ms-field > select,
-.ms-field--dd > input {
+.ms-field > select + .ms-field--dd, .ms-field > input + .ms-field--dd {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==);
     background-repeat: no-repeat;
-    background-position: right center;
+    background-position: center center;
 
     /*padding: 0 25px 0 0;*/
 }
@@ -101,11 +100,13 @@ option {
 .ms-field .clear {
     position: absolute;
     right: -7px;
-    padding: 0 7px;
     cursor: pointer;
     bottom: 6px;
     color: rgba(0,0,0,0.7);
     font-weight: bold;
+    width: 20px;
+    height: 20px;
+    text-align: center;
 }
 
 .ms-field > input:focus + .clear {

@@ -184,6 +184,11 @@ export default class MSField extends React.PureComponent {
     window.removeEventListener('scroll', this.windowScroll)
   }
 
+  toggle = (ev) => {
+    if (!this.state.open) this.input.current.focus()
+    ev.target.blur()
+  }
+
   onChange = ev => {
     let { value, name, onChange, isMulti} = this.props
 
@@ -269,16 +274,11 @@ export default class MSField extends React.PureComponent {
     }
   }
 
-  isValueMode = () => {
-    return this.props.isFree === false && (this.props.options)
-  }
+  isValueMode = () => this.props.isFree === false && (this.props.options)
 
-  isTextArea = () => {
-    return this.props.type === 'textarea'
-  }
-  isTextAreaAutoSize = () => {
-    return this.props.autoHeight !== false
-  }
+  isTextArea = () => this.props.type === 'textarea'
+
+  isTextAreaAutoSize = () => this.props.autoHeight !== false
 
   handleClear = () => {
     this.select(null)
@@ -407,9 +407,7 @@ export default class MSField extends React.PureComponent {
     return chips
   }
 
-  setRef = el => {
-    this.optionsDiv = el
-  }
+  setRef = el => this.optionsDiv = el
 
   componentDidUpdate() {
     this.updatePos()
@@ -430,6 +428,55 @@ export default class MSField extends React.PureComponent {
   }
 
   handleStretch = () => this.setState({ isFullScreen: !this.state.isFullScreen })
+
+  getValue = (chips, value) => {
+    if (this.props.isFree === true) {
+      // we are ok, value ==> value
+    } else {
+      if (this.props.text != null) {
+        if (this.props.options) value = this.props.text
+      } else {
+        if (this.props.isMulti) {
+          value = ''
+        } else {
+          // if single value dropdown, then select one
+          if (chips && chips.length) value = chips[0].value
+        }
+      }
+    }
+    return value
+  }
+
+  setLabelClasses = (chips, floatingLabel, value) => {
+    let labelClass = initClasses(null, {'ms-label':1})
+    if (floatingLabel) {
+      if (this.props.isMulti === true) {
+        // value selected
+        if (chips.length > 0) {
+          if (this.state.open) {
+            labelClass['ms-label--hide'] = 1
+            labelClass['ms-label--float'] = 1
+          }
+          else {
+            labelClass['ms-label--float'] = 1
+          }
+        }
+        // no value selected
+        else {
+          if (this.state.open) {
+
+          }
+          else {
+            labelClass['ms-label--float'] = 1
+          }
+        }
+      }
+      else {
+        if (!value && !this.state.open)
+          labelClass['ms-label--float'] = 1
+      }
+    }
+  }
 
   render() {
     let {
@@ -471,10 +518,7 @@ export default class MSField extends React.PureComponent {
       groupCol,
     } = this.props
 
-    let {
-      filter,
-      isFullScreen
-    } = this.state
+    let { filter, isFullScreen } = this.state
 
     this.resetActive();
 
@@ -486,77 +530,18 @@ export default class MSField extends React.PureComponent {
     addErrorWarnClasses(classes, error, warning)
     this.grid = addGridClasses(classes, this.props, false)
 
-    if (isEmpty && !hideDropIcon && options) {
-      classes['ms-field--dd'] = 1
-    }
     if (isFullScreen) classes['ms-field--full-screen'] = 1
-    if (value) {
-      classes['ms-field--filled'] = 1
-    }
+    if (value) classes['ms-field--filled'] = 1
 
     let chips = this.getSelectedOptions(value)
-    if (isFree === true) {
-      // we are ok, value ==> value
-    }
-    else {
-      if (text != null) {
-        if (options)
-        {
-          value = text
-        }
-      }
-      else
-      {
-        if (isMulti) {
-          value = ''
-        }
-        else {
-          // if single value dropdown, then select one
-          if (chips && chips.length) {
-            value = chips[0].value
-          }
-        }
-      }
-    }
+    value = this.getValue(chips, value)
 
     // get label class
-    let labelClass = initClasses(null, {'ms-label':1})
-    if (floatingLabel) {
-      if (isMulti === true) {
-        // value selected
-        if (chips.length > 0) {
-          if (this.state.open) {
-            labelClass['ms-label--hide'] = 1
-            labelClass['ms-label--float'] = 1
-          }
-          else {
-            labelClass['ms-label--float'] = 1
-          }
-        }
-        // no value selected
-        else {
-          if (this.state.open) {
-
-          }
-          else {
-            labelClass['ms-label--float'] = 1
-          }
-        }
-      }
-      else {
-        if (!value && !this.state.open)
-          labelClass['ms-label--float'] = 1
-      }
-    }
+    let labelClass = this.setLabelClasses(chips, floatingLabel, value)
 
     let dateProps = {}
 
-    if (type === 'date') {
-      dateProps = {
-        min: this.props.min,
-        max: this.props.max
-      }
-    }
+    if (type === 'date') dateProps = { min: this.props.min, max: this.props.max }
 
     let inputProps = {
       onFocus: this.onFocus,
@@ -621,8 +606,12 @@ export default class MSField extends React.PureComponent {
             <input ref={this.input} {...inputProps} />
         }
         {
+          !hideDropIcon && options && type !== 'date' && type !== 'textarea' &&
+          <div className="ms-field--dd clear" onFocus={this.toggle} tabIndex='0'/>
+        }
+        {
           // clear button
-          !isEmpty && type !== 'date' && type !== 'textarea' &&
+          !options && !isEmpty && type !== 'date' && type !== 'textarea' &&
           <div className="clear" onClick={this.handleClear}>×</div>
         }
         {
@@ -634,10 +623,8 @@ export default class MSField extends React.PureComponent {
                 <MSFieldOptions {...optionsProps} />
               </div>
             }
-            )
-            : this.optionsBody.removeOptions()
-            :
-            this.state.open && optionsAreVisible &&
+            ) : this.optionsBody.removeOptions()
+            : this.state.open && optionsAreVisible &&
             <div className="ms-options_cont" ref={this.setRef} style={this.state.open ? null : styleHidden}>
               <MSFieldOptions {...optionsProps} />
             </div>
