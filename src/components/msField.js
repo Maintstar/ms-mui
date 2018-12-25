@@ -476,6 +476,7 @@ export default class MSField extends React.PureComponent {
           labelClass['ms-label--float'] = 1
       }
     }
+    return labelClass
   }
 
   render() {
