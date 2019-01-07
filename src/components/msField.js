@@ -610,11 +610,11 @@ export default class MSField extends React.PureComponent {
           !hideDropIcon && options && type !== 'date' && type !== 'textarea' &&
           <div className="ms-field--dd clear" onFocus={this.toggle} tabIndex='0'/>
         }
-        {
+        {/*
           // clear button
           !options && !isEmpty && type !== 'date' && type !== 'textarea' &&
           <div className="clear" onClick={this.handleClear}>×</div>
-        }
+        */}
         {
           isPortal
             ? this.state.open ? this.optionsBody.renderOptions(
