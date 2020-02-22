@@ -83,6 +83,7 @@ export default class MSField extends React.PureComponent {
     floatingLabel: true,
     disabled: false,
     stretch: false,
+    required: false,
     isPortal: true,
     itemHeight: 35,
     dataAttr: {}
@@ -131,6 +132,7 @@ export default class MSField extends React.PureComponent {
     // should we hide dropicon
     hideDropIcon: propTypes.bool,
     preventFilter: propTypes.bool
+    required: propTypes.bool
   }
 
   constructor(props) {
@@ -517,6 +519,7 @@ export default class MSField extends React.PureComponent {
       idCol,
       descCol,
       groupCol,
+      required,
     } = this.props
 
     let { filter, isFullScreen } = this.state
@@ -528,7 +531,7 @@ export default class MSField extends React.PureComponent {
     // make classes
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
-    addErrorWarnClasses(classes, error, warning)
+    addErrorWarnClasses(classes, error, warning, required)
     this.grid = addGridClasses(classes, this.props, false)
 
     if (isFullScreen) classes['ms-field--full-screen'] = 1

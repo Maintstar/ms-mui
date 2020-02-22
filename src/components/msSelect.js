@@ -15,7 +15,8 @@ export default class MSSelect extends React.PureComponent {
     nameCol: 'name',
     idCol: 'id',
     groupCol: 'group',
-    emptyValue: ''
+    emptyValue: '',
+    required: false,
   }
 
   static propTypes = {
@@ -44,6 +45,7 @@ export default class MSSelect extends React.PureComponent {
 
     onChange: propTypes.func,
     className: propTypes.string,
+    required: propTypes.bool,
   }
 
   render() {
@@ -66,13 +68,14 @@ export default class MSSelect extends React.PureComponent {
       warning, 
 
       onChange, 
-      style 
+      style,
+      required,
     } = this.props
 
     options = options || defOptions
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
-    addErrorWarnClasses(classes, error, warning)
+    addErrorWarnClasses(classes, error, warning, required)
     addGridClasses(classes, this.props, false)
 
     // get label class
