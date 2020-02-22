@@ -131,8 +131,8 @@ export default class MSField extends React.PureComponent {
 
     // should we hide dropicon
     hideDropIcon: propTypes.bool,
-    preventFilter: propTypes.bool
-    required: propTypes.bool
+    preventFilter: propTypes.bool,
+    required: propTypes.bool,
   }
 
   constructor(props) {
