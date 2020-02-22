@@ -64,13 +64,14 @@ export default class MSSelect extends React.PureComponent {
       warning, 
 
       onChange, 
-      style 
+      style,
+      required,
     } = this.props
 
     options = options || defOptions
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
-    addErrorWarnClasses(classes, error, warning)
+    addErrorWarnClasses(classes, error, warning, required)
     addGridClasses(classes, this.props, false)
 
     // get label class

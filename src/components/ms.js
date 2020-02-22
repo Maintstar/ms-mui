@@ -72,7 +72,8 @@ export function addGridClasses(classes, props, changeProps = true) {
   return classes['mui-col'] === 1
 }
 
-export function addErrorWarnClasses(classes, error, warning) {
+export function addErrorWarnClasses(classes, error, warning, required) {
+  if (required) classes['ms_required'] = 1
   if (error) classes['ms_error'] = 1
   if (warning) classes['ms_warning'] = 1
   return classes

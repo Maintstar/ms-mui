@@ -203,7 +203,7 @@ export default class extends React.Component {
           <MSField type="textarea" {...fp(i++)} label="label" />
 
           <L>text</L>
-          <MSField {...fp(i++)} label="label" />
+          <MSField {...fp(i++)} label="label" required />
         </Panel>
       </div>
     )
@@ -223,7 +223,7 @@ export default class extends React.Component {
 
         <h2>MSSelect</h2>
         <Panel fadeIn={this.state.fadein}>
-          <MSSelect {...fp(i++)} label="State" options={states} />
+          <MSSelect {...fp(i++)} label="State" options={states} required />
           <L>error="Error"</L>
           <MSSelect {...fp(i++)} label="State" options={states} error="Error" />
           <L>error="Warning"</L>
@@ -240,7 +240,7 @@ export default class extends React.Component {
         <h2>MSField with options</h2>
         <Panel>
           <L>1000 options</L>
-          <MSField {...fp(i++)} label="options" options={bigOptions} />
+          <MSField {...fp(i++)} label="options" options={bigOptions} required />
 
           <L>grouped</L>
           <MSField {...fp(i++)} label="options" options={statesGroups} />
@@ -259,7 +259,7 @@ export default class extends React.Component {
         <p>Dynamic height textarea, control max height with css max-height</p>
         <Panel>
           <L>textarea</L>
-          <MSField type="textarea" {...fp(i++)} label="label" />
+          <MSField type="textarea" {...fp(i++)} label="label" required />
         </Panel>
 
         <h2>MSField</h2>

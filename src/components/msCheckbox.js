@@ -7,7 +7,7 @@ const getLabel = (p, n) => n ? p + ` (${n})` : p
 export default function MSCheckbox(props)  {
   const { error, warning, className, label, onSelected, ...rest } = props;
   let cls = initClasses(className, {'mui-checkbox': 1})
-  addErrorWarnClasses(cls, error, warning)
+  addErrorWarnClasses(cls, error, warning, rest.required)
   addGridClasses(cls, rest)
 
   return <div className={getClassName(cls)}>

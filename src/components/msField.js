@@ -78,6 +78,7 @@ export default class MSField extends React.PureComponent {
     isFree: false,
     isMulti: false,
     preventFilter: false,
+    required: false,
     floatingLabel: true,
     itemHeight: 35
   }
@@ -93,6 +94,7 @@ export default class MSField extends React.PureComponent {
     
     label: propTypes.string,
     name: propTypes.string.isRequired,
+    required: propTypes.bool,
 
     // selected value of control
     value: propTypes.oneOfType([propTypes.array, propTypes.number, propTypes.string]),
@@ -439,6 +441,7 @@ export default class MSField extends React.PureComponent {
       idCol,
       descCol,
       groupCol,
+      required,
     } = this.props
 
     let {
@@ -452,7 +455,7 @@ export default class MSField extends React.PureComponent {
     // make classes
     const classes = initClasses(className, defClass)
     addSizeClasses(classes, size)
-    addErrorWarnClasses(classes, error, warning)
+    addErrorWarnClasses(classes, error, warning, required)
     this.grid = addGridClasses(classes, this.props, false)
 
     if (isEmpty && !hideDropIcon && options) {
