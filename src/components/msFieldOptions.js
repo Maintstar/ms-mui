@@ -159,7 +159,7 @@ export default class MSFieldOptions extends React.PureComponent {
           text = '#' + o[idCol]
 
         // add option
-        items.push(<div key={o[idCol]} value={o[idCol]} data-index={i} className="ms-options_it"
+        items.push(<div key={o[idCol] + o[nameCol]} value={o[idCol]} data-index={i} className="ms-options_it"
                         style={{top: itemTop(index, itemHeight, lastGroup) }}>{text || <i>&nbsp;</i> }</div>)
       }
     }
