@@ -308,7 +308,7 @@ export default class MSField extends React.PureComponent {
   }
 
   select(newValue, { setOnlySent, cleanSelection, blur } = {}) {
-    let { value, isMulti, isFree, onSelected, onClear, name } = this.props
+    let { value, isMulti, isFree, onSelected, onClear, name, autoComplete } = this.props
     let sentValue = newValue
     let valueText = null
 
@@ -341,7 +341,7 @@ export default class MSField extends React.PureComponent {
     }
 
     // call only selected if selected, or onChange if no onSelected
-    if (!isFree && onSelected) {
+    if ((!isFree && onSelected) || autoComplete) {
       // sentValueId
       onSelected.call(this, newValue, valueText, this, sentValue)
     }
