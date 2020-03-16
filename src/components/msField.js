@@ -341,7 +341,7 @@ export default class MSField extends React.PureComponent {
     }
 
     // call only selected if selected, or onChange if no onSelected
-    if ((!isFree && onSelected) || autoComplete) {
+    if ((!isFree && onSelected) || (autoComplete && onSelected)) {
       // sentValueId
       onSelected.call(this, newValue, valueText, this, sentValue)
     }
