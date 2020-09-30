@@ -117,7 +117,8 @@ export default class MSFieldOptions extends React.PureComponent {
     if (filter) {
       let filterValue = filter.trim().toLowerCase()
       filterValue = filterValue.split(' ')
-      options = options.filter(o => filterValue.every(x => (o[nameCol] + '').toLowerCase().indexOf(x) >= 0))
+      options = options.filter(o => filterValue.every(x => (o[nameCol] + '').toLowerCase().indexOf(x) >= 0
+        || (o[idCol] + '').toLowerCase().indexOf(x) >= 0))
     }
 
     // draw options
