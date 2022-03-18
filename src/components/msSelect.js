@@ -49,25 +49,25 @@ export default class MSSelect extends React.PureComponent {
   }
 
   render() {
-    let { 
+    let {
       nameCol,
       idCol,
       groupCol,
 
-      options, 
-      value, 
+      options,
+      value,
       emptyValue,
       labelStyle,
 
       label,
       name,
 
-      className, 
-      size, 
-      error, 
-      warning, 
+      className,
+      size,
+      error,
+      warning,
 
-      onChange, 
+      onChange,
       style,
       required,
     } = this.props
@@ -86,11 +86,11 @@ export default class MSSelect extends React.PureComponent {
     if (emptyValue === false) emptyValue = null
     if (emptyValue === '') emptyValue = ' '
 
-    let hasText = 
+    let hasText =
       // option selected
-      (option != null) || 
+      (option != null) ||
       // not selected but empty value is not empty
-      (option == null && emptyValue && emptyValue !== ' ') || 
+      (option == null && emptyValue && emptyValue !== ' ') ||
       // not selected but first one has text
       (option == null && !emptyValue && options[0] != null && options[0][nameCol])
 
@@ -101,7 +101,8 @@ export default class MSSelect extends React.PureComponent {
     let selProps = {
       name,
       value,
-      onChange
+      onChange,
+      style,
     }
 
     // filter/group options
@@ -112,7 +113,7 @@ export default class MSSelect extends React.PureComponent {
     let groups = Object.keys(grouped)
 
     return (
-      <div className={getClassName(classes)} style={style}>
+      <div className={getClassName(classes)}>
         {
           // error message
           (error || warning) &&
@@ -123,24 +124,24 @@ export default class MSSelect extends React.PureComponent {
           label &&
           <label className={getClassName(labelClass)} style={labelStyle}>{label}</label>
         }
-        <select {...selProps}>          
-          { 
+        <select {...selProps}>
+          {
             // empty value
-            emptyValue && <option value="">{emptyValue}</option> 
+            emptyValue && <option value="">{emptyValue}</option>
           }
-          { 
+          {
             // render groups
             groups.length > 1 &&
             groups.map(g => <MSSelectGroup
-              idCol={idCol} 
+              idCol={idCol}
               nameCol={nameCol}
               groupCol={groupCol}
               key={g}
-              group={g} 
-              options={grouped[g]} 
+              group={g}
+              options={grouped[g]}
             />)
           }
-          { 
+          {
             // render options
             groups.length === 1 &&
             options.map(x => <option key={x[idCol]} value={x[idCol]}>{x[nameCol]}</option>)
